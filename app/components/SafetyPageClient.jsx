@@ -424,8 +424,8 @@ const handleNav = (target) => {
                 <AlertTriangle size={14} className="text-amber-500"/> Legal & Contact
               </h4>
               <div className={`text-xs font-mono space-y-2 ${darkMode ? 'text-gray-300' : 'text-slate-600'}`}>
-                <p className={`font-bold text-sm ${darkMode ? 'text-[#ccff00]' : 'text-indigo-600'}`}>Operated by Mohd Asif</p>
-                <p className="opacity-80">(Proprietor)</p>
+                <p className={`font-bold text-sm ${darkMode ? 'text-[#ccff00]' : 'text-indigo-600'}`}>Founded by Kashif Khan</p>
+                <p className="opacity-80 text-xs">Legally operated by Mohd Asif (Proprietor)</p>
                 <p>Mahoba, Uttar Pradesh, India</p>
               </div>
             </div>

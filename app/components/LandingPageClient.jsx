@@ -119,6 +119,9 @@ const LandingPageClient = ({ initialDarkMode = true }) => {
     router.prefetch('/about');
     router.prefetch('/safety');
     router.prefetch('/faq');
+    router.prefetch('/contact');
+    router.prefetch('/hire-teen-freelancers');
+    router.prefetch('/freelance-jobs-for-teens');
   }, [router]);
 
   // Optimized GPU Event Delegation Cursor
@@ -158,9 +161,7 @@ const LandingPageClient = ({ initialDarkMode = true }) => {
         'get started': 'https://app.teenversehub.in/login',
         'auth': 'https://app.teenversehub.in/login',
         'login': 'https://app.teenversehub.in/login',
-        'start earning': 'https://app.teenversehub.in/login',
-        'hire talent': 'https://app.teenversehub.in/login',
-        'parent portal': 'https://app.teenversehub.in/login' // Or '/parent-login' if you have a specific route
+        'parent portal': 'https://parent.teenversehub.in'
     };
 
     // 2. Internal SEO Routes (Stays on your Next.js Landing Site)
@@ -170,7 +171,11 @@ const LandingPageClient = ({ initialDarkMode = true }) => {
         'about': '/about',
         'faq': '/faq', 
         'safety': '/safety', 
-        'contact': '/contact'
+        'contact': '/contact',
+        'hire talent': '/hire-teen-freelancers',
+        'post a project': '/hire-teen-freelancers',
+        'start earning': '/freelance-jobs-for-teens', // 🔥 Routing to creator SEO page
+        "i'm a creator": '/freelance-jobs-for-teens'  // 🔥 Catching the exact hero button text
     };
     
     setIsMobileMenuOpen(false); 
@@ -187,7 +192,7 @@ const LandingPageClient = ({ initialDarkMode = true }) => {
         return;
     }
 
-    // Handle smooth scrolling for on-page sections (like "How it works")
+    // Handle smooth scrolling for on-page sections
     const sectionIdMap = { 'how it works': 'how-it-works', 'explore': 'explore', 'home': 'hero' };
     const section = document.getElementById(sectionIdMap[cleanTarget] || cleanTarget);
     if (section) section.scrollIntoView({ behavior: 'smooth' });
@@ -206,6 +211,7 @@ const LandingPageClient = ({ initialDarkMode = true }) => {
       if (lower.includes('about')) { router.push('/about'); return; }
       if (lower.includes('faq')) { router.push('/faq'); return; }
       if (lower.includes('contact')) { router.push('/contact'); return; }
+      if (lower.includes('hire')) { router.push('/hire-teen-freelancers'); return; }
       
       handleNav(link);
   };
@@ -241,7 +247,7 @@ const LandingPageClient = ({ initialDarkMode = true }) => {
 
       <motion.div style={{ scaleX }} className="fixed top-0 left-0 right-0 h-1.5 bg-[#ccff00] origin-left z-[100]" />
 
-      {/* --- NAVBAR (Now uses Pure CSS animate-slide-down) --- */}
+      {/* --- NAVBAR --- */}
       <nav className="animate-slide-down fixed w-full z-50 top-0 py-4 px-6">
         <div className={`max-w-7xl mx-auto rounded-2xl px-6 py-3 flex justify-between items-center shadow-2xl relative z-50 transition-all ${darkMode ?
         'bg-black/80 backdrop-blur-xl border border-white/10' : 'bg-white/80 backdrop-blur-xl border border-indigo-100 shadow-indigo-100/50'}`}>
@@ -323,7 +329,6 @@ const LandingPageClient = ({ initialDarkMode = true }) => {
          />
          
          <div className="relative z-10 max-w-5xl">
-            {/* 🔥 All top-level elements now use pure CSS for instant rendering 🔥 */}
             <div className={`animate-fade-up delay-100 inline-flex items-center gap-2 px-4 py-2 rounded-full border text-xs font-mono font-bold tracking-widest mb-8 ${darkMode ? 'border-indigo-500/30 bg-indigo-500/10 text-indigo-300' : 'border-indigo-200 bg-indigo-50 text-indigo-700'}`}>
               <ShieldCheck size={14} className={darkMode ? 'text-[#ccff00]' : 'text-indigo-600'} />
               VERIFIED & SECURE PLATFORM
@@ -339,16 +344,19 @@ const LandingPageClient = ({ initialDarkMode = true }) => {
             </p>
 
             <div className="animate-fade-up delay-600 flex flex-col sm:flex-row gap-4 justify-center items-center">
+               {/* 🔥 UPDATED: Now routes to the creator SEO page */}
                <motion.button 
                  whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
-                 onClick={() => handleNav('auth')}
+                 onClick={() => handleNav("i'm a creator")}
                  className={`hover-target relative px-10 py-5 font-black text-lg rounded-2xl flex items-center gap-3 transition-shadow ${darkMode ? 'bg-[#ccff00] text-black shadow-[0_0_30px_rgba(204,255,0,0.3)] hover:shadow-[0_0_50px_rgba(204,255,0,0.5)]' : 'bg-indigo-600 text-white shadow-xl shadow-indigo-200 hover:shadow-2xl hover:shadow-indigo-300'}`}
                >
                   I'M A CREATOR <Rocket size={20}/>
                </motion.button>
+               
+               {/* 🔥 Routes to the client SEO page */}
                <motion.button 
                   whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
-                  onClick={() => handleNav('auth')}
+                  onClick={() => handleNav('hire talent')}
                   className={`hover-target px-10 py-5 border rounded-2xl font-bold flex items-center gap-3 ${darkMode ? 'border-white/10 bg-white/5 backdrop-blur text-white hover:bg-white/10' : 'border-slate-200 bg-white text-slate-900 hover:bg-slate-50 shadow-md'}`}
                >
                   HIRE TALENT <ArrowRight size={20}/>
@@ -772,7 +780,7 @@ const LandingPageClient = ({ initialDarkMode = true }) => {
                                     <li className={`flex items-center gap-3 text-sm font-bold ${darkMode ? 'text-white' : 'text-slate-800'}`}><Star size={18} className={darkMode ? 'text-[#ccff00]' : 'text-indigo-600'}/> Secure Payment Processing</li>
                                     <li className={`flex items-center gap-3 text-sm font-bold ${darkMode ? 'text-white' : 'text-slate-800'}`}><Star size={18} className={darkMode ? 'text-[#ccff00]' : 'text-indigo-600'}/> Gain Real Experience</li>
                                 </ul>
-                                <button onClick={() => handleNav('auth')} className={`mt-4 px-8 py-3 font-bold rounded-xl transition-colors ${darkMode ? 'bg-white text-black hover:bg-[#ccff00]' : 'bg-indigo-600 text-white hover:bg-indigo-700 shadow-lg'}`}>Start Profile</button>
+                                <button onClick={() => handleNav('start earning')} className={`mt-4 px-8 py-3 font-bold rounded-xl transition-colors ${darkMode ? 'bg-white text-black hover:bg-[#ccff00]' : 'bg-indigo-600 text-white hover:bg-indigo-700 shadow-lg'}`}>Start Profile</button>
                             </div>
                             <div className="flex-1">
                                 <Image 
@@ -908,7 +916,7 @@ const LandingPageClient = ({ initialDarkMode = true }) => {
       </section>
 
       {/* --- FOOTER --- */}
-      <footer className={`pt-20 pb-10 border-t ${darkMode ? 'bg-black border-white/10 text-white' : 'bg-slate-50 border-slate-200 text-slate-900'}`}>
+      <footer className={`pt-20 pb-10 border-t ${darkMode ? 'bg-black border-white/10 text-white' : 'bg-white border-slate-200 text-slate-900'}`}>
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16 items-start">
             
@@ -963,8 +971,8 @@ const LandingPageClient = ({ initialDarkMode = true }) => {
                 <AlertTriangle size={14} className="text-amber-500"/> Legal & Contact
               </h4>
               <div className={`text-xs font-mono space-y-2 ${darkMode ? 'text-gray-300' : 'text-slate-600'}`}>
-                <p className={`font-bold text-sm ${darkMode ? 'text-[#ccff00]' : 'text-indigo-600'}`}>Operated by Mohd Asif</p>
-                <p className="opacity-80">(Proprietor)</p>
+                <p className={`font-bold text-sm ${darkMode ? 'text-[#ccff00]' : 'text-indigo-600'}`}>Founded by Kashif Khan</p>
+                <p className="opacity-80 text-xs">Legally operated by Mohd Asif (Proprietor)</p>
                 <p>Mahoba, Uttar Pradesh, India</p>
                 <div className="pt-2">
                   <p className={darkMode ? 'text-gray-500' : 'text-slate-400'}>Support:</p>
