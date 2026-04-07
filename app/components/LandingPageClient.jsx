@@ -115,7 +115,7 @@ const LandingPageClient = ({ initialDarkMode = true }) => {
 
   // Prefetching
   useEffect(() => {
-    router.prefetch('/auth');
+    router.prefetch('/');
     router.prefetch('/about');
     router.prefetch('/safety');
     router.prefetch('/faq');
@@ -152,18 +152,42 @@ const LandingPageClient = ({ initialDarkMode = true }) => {
   // Handlers
   const handleNav = (target) => {
     const cleanTarget = target.toLowerCase();
-    const routeMap = {
-        'get started': '/auth', 'auth': '/auth', 'login': '/auth', 'start earning': '/auth',
-        'parent portal': '/parent-login', 'hire talent': '/auth', 'about us': '/about',
-        'faq': '/faq', 'safety': '/safety'
+    
+    // 1. External App Routes (Jumps to your React Dashboard Subdomain)
+    const externalRouteMap = {
+        'get started': 'https://app.teenversehub.in/login',
+        'auth': 'https://app.teenversehub.in/login',
+        'login': 'https://app.teenversehub.in/login',
+        'start earning': 'https://app.teenversehub.in/login',
+        'hire talent': 'https://app.teenversehub.in/login',
+        'parent portal': 'https://app.teenversehub.in/login' // Or '/parent-login' if you have a specific route
+    };
+
+    // 2. Internal SEO Routes (Stays on your Next.js Landing Site)
+    const internalRouteMap = {
+        'home': '/',
+        'about us': '/about', 
+        'about': '/about',
+        'faq': '/faq', 
+        'safety': '/safety', 
+        'contact': '/contact'
     };
     
     setIsMobileMenuOpen(false); 
-    if (routeMap[cleanTarget]) {
-        router.push(routeMap[cleanTarget]);
+    
+    // Handle jumping to the external app dashboard
+    if (externalRouteMap[cleanTarget]) {
+        window.location.href = externalRouteMap[cleanTarget]; 
         return;
     }
 
+    // Handle Next.js internal page routing
+    if (internalRouteMap[cleanTarget]) {
+        router.push(internalRouteMap[cleanTarget]);
+        return;
+    }
+
+    // Handle smooth scrolling for on-page sections (like "How it works")
     const sectionIdMap = { 'how it works': 'how-it-works', 'explore': 'explore', 'home': 'hero' };
     const section = document.getElementById(sectionIdMap[cleanTarget] || cleanTarget);
     if (section) section.scrollIntoView({ behavior: 'smooth' });
@@ -171,10 +195,18 @@ const LandingPageClient = ({ initialDarkMode = true }) => {
 
   const handleFooterLink = (link) => {
       const lower = link.toLowerCase();
-      if (lower.includes('terms')) { router.push('/terms'); return; }
-      if (lower.includes('privacy')) { router.push('/privacy'); return; }
-      if (lower.includes('refund')) { router.push('/disputes'); return; } 
-      if (lower === 'safety center' || lower === 'safety') { router.push('/safety'); return; } 
+      
+      // Route to the consolidated Legal Center
+      if (lower.includes('terms')) { router.push('/legal?doc=terms'); return; }
+      if (lower.includes('privacy')) { router.push('/legal?doc=privacy'); return; }
+      if (lower.includes('refund') || lower.includes('dispute')) { router.push('/legal?doc=disputes'); return; } 
+      
+      // Route to other main pages
+      if (lower.includes('safety')) { router.push('/safety'); return; } 
+      if (lower.includes('about')) { router.push('/about'); return; }
+      if (lower.includes('faq')) { router.push('/faq'); return; }
+      if (lower.includes('contact')) { router.push('/contact'); return; }
+      
       handleNav(link);
   };
 

@@ -121,7 +121,7 @@ const SafetyPageClient = ({ initialDarkMode = true }) => {
   // Prefetching
   useEffect(() => {
     router.prefetch('/');
-    router.prefetch('/auth');
+  
     router.prefetch('/about');
     router.prefetch('/faq');
   }, [router]);
@@ -154,17 +154,38 @@ const SafetyPageClient = ({ initialDarkMode = true }) => {
     };
   }, [cursorX, cursorY]);
 
-  const handleNav = (target) => {
+const handleNav = (target) => {
     const cleanTarget = target.toLowerCase();
-    const routeMap = {
-        'get started': '/auth', 'auth': '/auth',
-        'home': '/', 'about us': '/about', 'about': '/about',
-        'faq': '/faq', 'safety': '/safety', 'contact': '/contact'
+    
+    // 1. External App Routes (Jumps to your React Dashboard Subdomain)
+    const externalRouteMap = {
+        'get started': 'https://app.teenversehub.in/login',
+        'auth': 'https://app.teenversehub.in/login',
+        'login': 'https://app.teenversehub.in/login'
+    };
+
+    // 2. Internal SEO Routes (Stays on your Next.js Landing Site)
+    const internalRouteMap = {
+        'home': '/',
+        'about us': '/about', 
+        'about': '/about',
+        'faq': '/faq', 
+        'safety': '/safety',
+        'contact': '/contact'
     };
     
     setIsMobileMenuOpen(false);
-    if (routeMap[cleanTarget]) {
-        router.push(routeMap[cleanTarget]);
+    
+    // Handle jumping to the external app dashboard
+    if (externalRouteMap[cleanTarget]) {
+        window.location.href = externalRouteMap[cleanTarget]; 
+        return;
+    }
+
+    // Handle Next.js internal page routing
+    if (internalRouteMap[cleanTarget]) {
+        router.push(internalRouteMap[cleanTarget]);
+        return;
     }
   };
 
