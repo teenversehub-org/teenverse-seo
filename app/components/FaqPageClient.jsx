@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { 
   Rocket, Menu, X, Sun, Moon, 
-  ArrowRight, HelpCircle, Plus, Minus, MessageCircle, AlertTriangle
+  ArrowRight, HelpCircle, Plus, Minus, MessageCircle, AlertTriangle, ShieldCheck, Globe
 } from 'lucide-react';
 import { motion, useScroll, useSpring, useMotionValue, useInView, AnimatePresence } from 'framer-motion';
 
@@ -116,7 +116,6 @@ const FaqPageClient = ({ initialDarkMode = true }) => {
   // Prefetching
   useEffect(() => {
     router.prefetch('/');
-   
     router.prefetch('/about');
     router.prefetch('/safety');
   }, [router]);
@@ -184,11 +183,21 @@ const handleNav = (target) => {
     }
   };
 
-  const handleFooterLink = (link) => {
+ const handleFooterLink = (link) => {
       const lower = link.toLowerCase();
-      if (lower.includes('terms')) { router.push('/terms'); return; }
-      if (lower.includes('privacy')) { router.push('/privacy'); return; }
+      
+      // Route to the consolidated Legal Center
+      if (lower.includes('terms')) { router.push('/legal?doc=terms'); return; }
+      if (lower.includes('privacy')) { router.push('/legal?doc=privacy'); return; }
+      if (lower.includes('refund') || lower.includes('dispute')) { router.push('/legal?doc=disputes'); return; } 
+      
+      // Route to other main pages
+      if (lower.includes('safety')) { router.push('/safety'); return; } 
       if (lower.includes('about')) { router.push('/about'); return; }
+      if (lower.includes('faq')) { router.push('/faq'); return; }
+      if (lower.includes('contact')) { router.push('/contact'); return; }
+      if (lower.includes('hire')) { router.push('/hire-teen-freelancers'); return; }
+      
       handleNav(link);
   };
 
@@ -218,7 +227,7 @@ const handleNav = (target) => {
 
       <motion.div style={{ scaleX }} className="fixed top-0 left-0 right-0 h-1.5 bg-[#ccff00] origin-left z-[100]" />
 
-      {/* --- NAVBAR (Instant CSS Load) --- */}
+      {/* --- NAVBAR (Unified with Homepage) --- */}
       <nav className="animate-slide-down fixed w-full z-50 top-0 py-4 px-6">
         <div className={`max-w-7xl mx-auto rounded-2xl px-6 py-3 flex justify-between items-center shadow-2xl relative z-50 transition-all ${darkMode ? 'bg-black/80 backdrop-blur-xl border border-white/10' : 'bg-white/80 backdrop-blur-xl border border-indigo-100 shadow-indigo-100/50'}`}>
            <div className="flex items-center gap-3 cursor-pointer hover-target group" onClick={() => handleNav('home')}>
@@ -229,7 +238,8 @@ const handleNav = (target) => {
            </div>
 
            <div className="hidden md:flex items-center gap-8 text-sm font-bold uppercase tracking-wider">
-              {['Home', 'About Us', 'FAQ'].map((item) => (
+              {/* ✅ Unified Links */}
+              {['Home', 'About Us', 'Safety', 'FAQ'].map((item) => (
                 <button key={item} onClick={() => handleNav(item)} className={`transition-colors hover-target ${darkMode ? 'text-gray-300 hover:text-[#ccff00]' : 'text-slate-600 hover:text-indigo-600'}`}>{item}</button>
               ))}
               <div className={`w-px h-4 ${darkMode ? 'bg-white/20' : 'bg-slate-200'}`}></div>
@@ -254,13 +264,20 @@ const handleNav = (target) => {
             >
               <div className={`border rounded-2xl p-6 flex flex-col gap-6 shadow-2xl backdrop-blur-2xl ${darkMode ? 'bg-[#0a0a0a] border-white/15' : 'bg-white border-indigo-100'}`}>
                  <div className="flex flex-col gap-4">
-                   {['Home', 'About Us', 'FAQ'].map((item) => (
+                   {/* ✅ Unified Links */}
+                   {['Home', 'About Us', 'Safety', 'FAQ'].map((item) => (
                      <button key={item} onClick={() => handleNav(item)} className={`text-left text-lg font-bold transition-colors flex items-center justify-between group py-2 ${darkMode ? 'text-gray-300 hover:text-[#ccff00]' : 'text-slate-700 hover:text-indigo-600'}`}>
                        {item} <ArrowRight size={16} className={`opacity-0 group-hover:opacity-100 transition-opacity ${darkMode ? 'text-[#ccff00]' : 'text-indigo-600'}`} />
                      </button>
                    ))}
                  </div>
                  <div className={`h-px w-full ${darkMode ? 'bg-white/10' : 'bg-slate-100'}`}></div>
+                 <div className="flex items-center justify-between font-mono text-sm">
+                    <span className={darkMode ? 'text-gray-400' : 'text-slate-500'}>Switch Theme</span>
+                    <button onClick={toggleTheme} className={`p-3 rounded-full ${darkMode ? 'bg-white/5 hover:bg-white/10 text-white' : 'bg-slate-100 hover:bg-slate-200 text-indigo-600'}`}>
+                      {darkMode ? <Sun size={18}/> : <Moon size={18}/>}
+                    </button>
+                 </div>
                  <button onClick={() => handleNav('auth')} className={`w-full py-4 rounded-xl font-black uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg ${darkMode ? 'bg-[#ccff00] text-black' : 'bg-indigo-600 text-white'}`}>
                    Get Started <Rocket size={18} />
                  </button>
@@ -370,7 +387,34 @@ const handleNav = (target) => {
         </div>
       </section>
 
-      {/* --- FOOTER --- */}
+      {/* --- ✅ NEW SECTION: REDIRECT TO MAIN APP PLATFORM --- */}
+      <section className={`py-24 px-6 border-t ${darkMode ? 'bg-[#0a0a0a] border-white/5' : 'bg-white border-slate-200'}`}>
+        <div className="max-w-6xl mx-auto">
+          <RevealOnScroll>
+            <div className={`p-10 md:p-16 rounded-[3rem] text-center relative overflow-hidden ${darkMode ? 'bg-[#111] border border-white/10' : 'bg-indigo-600 text-white shadow-2xl shadow-indigo-300'}`}>
+              <div className={`absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] pointer-events-none`} />
+              
+              <div className="relative z-10">
+                <Globe className={`mx-auto mb-6 w-16 h-16 ${darkMode ? 'text-[#ccff00]' : 'text-indigo-200'}`} />
+                <h2 className={`text-3xl md:text-5xl font-black mb-6 ${darkMode ? 'text-white' : 'text-white'}`}>
+                  Ready to dive in?
+                </h2>
+                <p className={`text-lg md:text-xl mb-10 max-w-2xl mx-auto font-medium ${darkMode ? 'text-gray-400' : 'text-indigo-100'}`}>
+                  Head over to our main platform to discover talented creators, explore safe digital services, or start earning today.
+                </p>
+                <button 
+                  onClick={() => handleNav('get started')} 
+                  className={`px-8 py-4 font-black text-lg rounded-2xl inline-flex items-center gap-3 transition-transform hover:scale-105 shadow-xl ${darkMode ? 'bg-[#ccff00] text-black shadow-[#ccff00]/20' : 'bg-white text-indigo-700 shadow-white/20'}`}
+                >
+                  Go to Main Platform <ArrowRight size={20} />
+                </button>
+              </div>
+            </div>
+          </RevealOnScroll>
+        </div>
+      </section>
+
+      {/* --- FOOTER (Unified with Homepage) --- */}
       <footer className={`pt-20 pb-10 border-t ${darkMode ? 'bg-black border-white/10 text-white' : 'bg-slate-50 border-slate-200 text-slate-900'}`}>
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16 items-start">
@@ -397,7 +441,8 @@ const handleNav = (target) => {
             <div className="md:pl-8">
               <h4 className={`font-bold uppercase tracking-widest text-xs mb-6 ${darkMode ? 'text-gray-400' : 'text-slate-900'}`}>Company</h4>
               <ul className={`space-y-3 text-sm ${darkMode ? 'text-gray-500' : 'text-slate-500'}`}>
-                {['About Us', 'FAQ', 'Careers', 'Contact'].map(l => (
+                {/* ✅ Unified Company Links */}
+                {['About Us', 'FAQ', 'Careers', 'Blog', 'Contact'].map(l => (
                   <li key={l}>
                     <button onClick={() => handleFooterLink(l)} className={`transition-colors ${darkMode ? 'hover:text-white' : 'hover:text-indigo-600'}`}>
                       {l}
@@ -410,7 +455,8 @@ const handleNav = (target) => {
             <div className="md:pl-4">
               <h4 className={`font-bold uppercase tracking-widest text-xs mb-6 ${darkMode ? 'text-gray-400' : 'text-slate-900'}`}>Legal & Trust</h4>
               <ul className={`space-y-3 text-sm ${darkMode ? 'text-gray-500' : 'text-slate-500'}`}>
-                {['Terms of Service', 'Privacy Policy', 'Refund Policy', 'Safety Guidelines'].map(l => (
+                {/* ✅ Unified Legal Links */}
+                {['Terms of Service', 'Privacy Policy', 'Refund Policy', 'Safety Center'].map(l => (
                   <li key={l}>
                     <button onClick={() => handleFooterLink(l)} className={`transition-colors ${darkMode ? 'hover:text-white' : 'hover:text-indigo-600'}`}>
                       {l}
@@ -425,8 +471,8 @@ const handleNav = (target) => {
                 <AlertTriangle size={14} className="text-amber-500"/> Legal & Contact
               </h4>
               <div className={`text-xs font-mono space-y-2 ${darkMode ? 'text-gray-300' : 'text-slate-600'}`}>
-                <p className={`font-bold text-sm ${darkMode ? 'text-[#ccff00]' : 'text-indigo-600'}`}>Founded by Kashif Khan</p>
-                <p className="opacity-80 text-xs">Legally operated by Mohd Asif (Proprietor)</p>
+                <p className={`font-bold text-sm ${darkMode ? 'text-[#ccff00]' : 'text-indigo-600'}`}>Operated by Mohd Asif</p>
+                <p className="opacity-80">(Proprietor)</p>
                 <p>Mahoba, Uttar Pradesh, India</p>
                 <div className="pt-2">
                   <p className={darkMode ? 'text-gray-500' : 'text-slate-400'}>Support:</p>

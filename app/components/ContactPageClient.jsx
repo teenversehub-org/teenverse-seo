@@ -188,13 +188,21 @@ const ContactPageClient = ({ initialDarkMode = true }) => {
 
   const handleFooterLink = (link) => {
       const lower = link.toLowerCase();
+      
+      // Route to the consolidated Legal Center
       if (lower.includes('terms')) { router.push('/legal?doc=terms'); return; }
       if (lower.includes('privacy')) { router.push('/legal?doc=privacy'); return; }
+      if (lower.includes('refund') || lower.includes('dispute')) { router.push('/legal?doc=disputes'); return; } 
+      
+      // Route to other main pages
+      if (lower.includes('safety')) { router.push('/safety'); return; } 
       if (lower.includes('about')) { router.push('/about'); return; }
       if (lower.includes('faq')) { router.push('/faq'); return; }
+      if (lower.includes('contact')) { router.push('/contact'); return; }
+      if (lower.includes('hire')) { router.push('/hire-teen-freelancers'); return; }
+      
       handleNav(link);
   };
-
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
