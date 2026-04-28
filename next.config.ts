@@ -1,6 +1,9 @@
-import type { NextConfig } from 'next';
+import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
+  turbopack: {
+    root: process.cwd(),
+  },
   images: {
     remotePatterns: [
       {
@@ -12,7 +15,6 @@ const nextConfig: NextConfig = {
     ],
   },
 
-  // ✅ ADD THIS BLOCK
   async redirects() {
     return [
       {
@@ -24,10 +26,10 @@ const nextConfig: NextConfig = {
           },
         ],
         destination: 'https://www.teenversehub.in/:path*',
-        permanent: true, // 🔥 converts 307 → 308
+        permanent: true,
       },
-    ];
+    ]
   },
-};
+}
 
-export default nextConfig;
+export default nextConfig

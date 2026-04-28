@@ -1,28 +1,73 @@
-import { Inter, Space_Grotesk } from 'next/font/google';
-import "./globals.css"; // (Keep whatever CSS imports you already have here)
+import type { Metadata } from 'next'
 
-// 1. Configure the fonts to output CSS variables
-const inter = Inter({ 
-  subsets: ['latin'], 
-  variable: '--font-inter',
-  display: 'swap',
-});
+import StructuredData from './components/StructuredData'
+import { SITE } from './lib/site'
+import './globals.css'
 
-const spaceGrotesk = Space_Grotesk({ 
-  subsets: ['latin'], 
-  variable: '--font-space',
-  display: 'swap',
-});
+export const metadata: Metadata = {
+  metadataBase: new URL(SITE.baseUrl),
+  title: {
+    default: 'TeenVerse Hub | Safer Teen Freelancing and Startup Hiring',
+    template: '%s | TeenVerse Hub',
+  },
+  description: SITE.description,
+  applicationName: SITE.name,
+  authors: [{ name: SITE.founder }],
+  creator: SITE.founder,
+  publisher: SITE.name,
+  category: 'business',
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+      'max-video-preview': -1,
+    },
+  },
+  openGraph: {
+    siteName: SITE.name,
+    locale: 'en_IN',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+  },
+}
+
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: SITE.name,
+  alternateName: SITE.shortName,
+  url: SITE.baseUrl,
+  email: SITE.supportEmail,
+  founder: {
+    '@type': 'Person',
+    name: SITE.founder,
+  },
+  description: SITE.description,
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Mahoba',
+    addressRegion: 'Uttar Pradesh',
+    addressCountry: 'IN',
+  },
+}
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode
-}) {
+}>) {
   return (
-    // 2. Inject the variables into the HTML tag
-    <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable}`}>
-      <body>{children}</body>
+    <html lang="en">
+      <body>
+        <StructuredData data={organizationSchema} />
+        {children}
+      </body>
     </html>
-  );
+  )
 }
