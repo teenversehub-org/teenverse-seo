@@ -24,25 +24,26 @@ export const metadata = buildMetadata({
 
 const guardianCards = [
   {
-    icon: ShieldCheck,
+    // THE CURE: Icons passed as JSX elements
+    icon: <ShieldCheck />,
     title: 'Start with the trust pages',
     description:
       'Parents and guardians should be able to review safety, payments, verification, and contact information without needing insider knowledge of freelance platforms.',
   },
   {
-    icon: Eye,
+    icon: <Eye />,
     title: 'Visibility matters',
     description:
       'A trustworthy teen platform explains what activity is visible, how support works, and what happens if a problem is reported.',
   },
   {
-    icon: Users,
+    icon: <Users />,
     title: 'Consent should be explicit',
     description:
       'Under-18 participation should be framed through clear consent and payout expectations rather than vague assumptions that families will figure it out later.',
   },
   {
-    icon: CheckCircle2,
+    icon: <CheckCircle2 />,
     title: 'Small first projects work best',
     description:
       'Families gain confidence faster when teens start with clear, limited digital tasks that can be reviewed and discussed openly.',
@@ -52,33 +53,36 @@ const guardianCards = [
 export default function GuardianGuidePage() {
   return (
     <MarketingShell>
+      {/* HERO SECTION - Updated with a premium 'Collaborative Trust' image */}
       <Hero
-        eyebrow="Parent and guardian guide"
-        title="Families need a clear trust path before they support a teen’s first freelance work."
-        description="TeenVerse Hub should make it easy for parents and guardians to understand how the marketplace is meant to work, what the safeguards are, and where to go if they need more clarity."
+        eyebrow="Guardian Resources"
+        title="Clear trust for the whole family."
+        description="TeenVerse Hub helps families understand how the marketplace is meant to work, what the safeguards are, and where to go if they need more clarity."
         primaryAction={{ href: '/safety', label: 'Read trust and safety' }}
         secondaryAction={{ href: '/verification-process', label: 'Review verification' }}
         proof={[
-          'Consent and visibility questions addressed',
-          'Payment pages linked clearly',
-          'Support path visible before signup',
+          'Explicit consent model',
+          'Transparent payment flows',
+          'Direct human support path',
         ]}
-        image="https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&q=80&w=1400"
-        imageAlt="Parent and teenager reviewing something together on a laptop"
+        image="https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&q=80&w=1200"
+        imageAlt="Parent and teenager discussing digital work safely at home"
       />
 
       <Section className="pt-0">
         <SectionHeading
-          eyebrow="What guardians need"
+          eyebrow="What families need"
           title="The guide should answer practical questions, not just make promises."
-          description="That means using plain language about consent, visibility, payments, platform rules, and reporting instead of relying on brand tone alone."
+          description="We use plain language about consent, visibility, payments, platform rules, and reporting instead of relying on brand tone alone."
         />
-        <div className="mt-10">
-          <FeatureGrid items={guardianCards} columns={2} />
+        <div className="mt-16">
+          {/* Removed columns={2} for better fluid alignment */}
+          <FeatureGrid items={guardianCards} />
         </div>
       </Section>
 
-      <Section className="bg-white/70">
+      {/* SECTION TRANSITION - Using the premium Aurora border-y theme */}
+      <Section className="border-y border-slate-900/5 bg-slate-50/50 dark:border-white/5 dark:bg-white/[0.02]">
         <CtaBand
           title="A strong guardian page increases signups on both sides."
           description="When families trust the system, teens are more likely to join and clients are more likely to believe the platform takes its responsibilities seriously."

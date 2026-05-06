@@ -27,19 +27,22 @@ export const metadata = buildMetadata({
 
 const questionCategories = [
   {
-    icon: HelpCircle,
+    // THE CURE: JSX element for icons to prevent Server-to-Client errors
+    icon: <HelpCircle />,
     title: 'Getting started',
     description:
       'What TeenVerse Hub is, who it is for, and how new freelancers or clients should approach the platform.',
   },
   {
-    icon: ShieldCheck,
+    // THE CURE: JSX element for icons
+    icon: <ShieldCheck />,
     title: 'Trust and safety',
     description:
       'Why the site emphasizes verification, reporting, restricted work categories, and guardian-aware pages.',
   },
   {
-    icon: Mail,
+    // THE CURE: JSX element for icons
+    icon: <Mail />,
     title: 'Support and next steps',
     description:
       `If something is still unclear, users should be able to contact ${SITE.supportEmail} and get routed to the right trust page quickly.`,
@@ -64,6 +67,7 @@ export default function FaqPage() {
     <>
       <StructuredData data={faqSchema} />
       <MarketingShell>
+        {/* HERO SECTION - Removed image for a high-impact, typography-led full display look */}
         <Hero
           eyebrow="Common questions"
           title="The FAQ should reduce hesitation, not just list random answers."
@@ -75,28 +79,27 @@ export default function FaqPage() {
             'Payment questions linked to trust pages',
             'Support route visible for cautious users',
           ]}
-          image="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=1400"
-          imageAlt="Small team discussing questions around a table"
         />
 
         <Section className="pt-0">
           <SectionHeading
-            eyebrow="What this page should cover"
+            eyebrow="Coverage"
             title="Answer the risk questions first."
             description="When people land on the FAQ, they are often looking for reassurance more than information. The structure should reflect that."
           />
-          <div className="mt-10">
+          <div className="mt-16">
             <FeatureGrid items={questionCategories} />
           </div>
         </Section>
 
-        <Section className="bg-white/70">
+        {/* SECTION TRANSITION - Using premium Aurora border logic */}
+        <Section className="border-y border-slate-900/5 bg-slate-50/50 dark:border-white/5 dark:bg-white/[0.02]">
           <SectionHeading
             eyebrow="FAQ"
             title="Questions users are most likely to ask before they trust the platform"
             description="These answers are designed to keep users moving instead of forcing them to hunt across multiple pages."
           />
-          <div className="mt-10">
+          <div className="mt-16">
             <FaqList items={faqItems} />
           </div>
         </Section>

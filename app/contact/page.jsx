@@ -24,27 +24,27 @@ export const metadata = buildMetadata({
 
 const contactCards = [
   {
-    icon: Mail,
-    title: 'General support',
-    description: `Email ${SITE.supportEmail} for help with the platform, account questions, or clarification on policies and pages.`,
+    icon: <Mail className="h-6 w-6" />,
+    title: 'General Support',
+    description: `Reach out to ${SITE.supportEmail} for account assistance, platform guidance, and active policy clarification.`,
   },
   {
-    icon: ShieldCheck,
-    title: 'Trust and safety questions',
+    icon: <ShieldCheck className="h-6 w-6" />,
+    title: 'Trust & Safety',
     description:
-      'Use this route for questions about verification, guardian visibility, suspicious activity, or marketplace rules.',
+      'Report suspicious activity, verify guardian controls, and review marketplace rules with our dedicated safety team.',
   },
   {
-    icon: MessageSquare,
-    title: 'Partnerships and press',
+    icon: <MessageSquare className="h-6 w-6" />,
+    title: 'Partnerships & Press',
     description:
-      'Use the contact path for startup partnerships, school or community outreach, founder interviews, and company updates.',
+      'Connect with us for startup collaborations, community outreach, founder interviews, and official press inquiries.',
   },
   {
-    icon: AlertTriangle,
-    title: 'Reporting concerns',
+    icon: <AlertTriangle className="h-6 w-6" />,
+    title: 'Reporting Concerns',
     description:
-      'If a user sees unsafe behavior or a potentially risky listing, the site should make the reporting route obvious and easy to act on.',
+      'Flag inappropriate content, escalate urgent safety concerns, and help us maintain strict platform integrity.',
   },
 ]
 
@@ -52,51 +52,52 @@ export default function ContactPage() {
   return (
     <MarketingShell>
       <Hero
-        eyebrow="Contact the team"
-        title="Real marketplaces should be easy to reach."
-        description="TeenVerse Hub builds trust faster when visitors can find an email address, operator details, relevant help pages, and a clear escalation path without digging through the footer."
-        primaryAction={{ href: `mailto:${SITE.supportEmail}`, label: 'Email support' }}
-        secondaryAction={{ href: '/faq', label: 'Read the FAQ first' }}
+        eyebrow="Get in Touch"
+        title="Support that builds trust. Communication that scales."
+        description="We believe in transparent communication. Whether you need technical assistance, partnership details, or safety support, our team is directly accessible."
+        primaryAction={{ href: `mailto:${SITE.supportEmail}`, label: 'Email Support' }}
+        secondaryAction={{ href: '/faq', label: 'Read the FAQ' }}
         proof={[
           `Support: ${SITE.supportEmail}`,
           `Location: ${SITE.location}`,
           `Operator: ${SITE.operator}`,
         ]}
-        image="https://images.unsplash.com/photo-1516321165247-4aa89a48be28?auto=format&fit=crop&q=80&w=1400"
-        imageAlt="Customer support conversation at a laptop"
+        image="https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&q=80&w=1200"
+        imageAlt="Support team working together in a modern office"
       />
 
       <Section className="pt-0">
         <SectionHeading
-          eyebrow="Where to route users"
-          title="Support becomes part of credibility when it is easy to understand."
-          description="This page should make it obvious which path to use for general help, trust issues, partnerships, or safety reporting."
+          eyebrow="Select Your Support Path"
+          title="Find the exact channel for your inquiry."
+          description="To ensure the fastest resolution time, please select the communication route that best matches your current needs."
         />
-        <div className="mt-10">
+        <div className="mt-12">
           <FeatureGrid items={contactCards} columns={2} />
         </div>
       </Section>
 
-      <Section className="bg-white/70">
-        <div className="rounded-[2rem] border border-slate-200 bg-white p-8 shadow-sm sm:p-10">
-          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-emerald-700">
-            Suggested support standard
+      <Section className="bg-slate-50/70 dark:bg-slate-900/30">
+        <div className="mx-auto max-w-4xl rounded-lg border border-slate-200 bg-white p-6 text-center shadow-sm dark:border-white/10 dark:bg-slate-900 sm:p-8">
+          <p className="text-xs font-black uppercase tracking-widest text-emerald-600 dark:text-emerald-400">
+            Our Commitment to You
           </p>
-          <h2 className="mt-4 text-3xl font-semibold tracking-tight text-slate-950">
-            Set clear expectations before trust turns into frustration.
+          <h2 className="mx-auto mt-5 max-w-2xl text-3xl font-black tracking-normal text-slate-950 dark:text-white">
+            Clear expectations. Reliable responses. Unwavering support.
           </h2>
-          <ul className="mt-6 space-y-3 text-sm leading-7 text-slate-600">
-            <li className="flex gap-3">
-              <span className="mt-2 h-2.5 w-2.5 rounded-full bg-emerald-500" />
-              <span>Reply to support requests within one business day whenever possible.</span>
+          
+          <ul className="mx-auto mt-10 flex max-w-2xl flex-col gap-5 text-left text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+            <li className="flex items-start gap-4">
+              <span className="mt-2 flex h-2 w-2 shrink-0 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.6)]" />
+              <span><strong>Timely Resolutions:</strong> We aim to respond to all platform inquiries within one standard business day.</span>
             </li>
-            <li className="flex gap-3">
-              <span className="mt-2 h-2.5 w-2.5 rounded-full bg-emerald-500" />
-              <span>Link users to the exact trust, payment, or legal page that answers their issue.</span>
+            <li className="flex items-start gap-4">
+              <span className="mt-2 flex h-2 w-2 shrink-0 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.6)]" />
+              <span><strong>Direct Guidance:</strong> We provide direct links to the relevant trust, payment, and legal resources you need.</span>
             </li>
-            <li className="flex gap-3">
-              <span className="mt-2 h-2.5 w-2.5 rounded-full bg-emerald-500" />
-              <span>Keep the same company details visible here, in the footer, and on trust pages.</span>
+            <li className="flex items-start gap-4">
+              <span className="mt-2 flex h-2 w-2 shrink-0 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.6)]" />
+              <span><strong>Radical Transparency:</strong> We maintain visible and accurate company details across all platform touchpoints.</span>
             </li>
           </ul>
         </div>
@@ -104,10 +105,10 @@ export default function ContactPage() {
 
       <Section>
         <CtaBand
-          title="The contact page should reinforce the whole trust stack."
-          description="Users trust new marketplaces faster when support, policies, and identity details all tell the same story."
-          primaryAction={{ href: '/legal', label: 'Open the legal center' }}
-          secondaryAction={{ href: '/safety', label: 'Review trust and safety' }}
+          title="Explore our foundational trust and safety policies."
+          description="We prioritize radical transparency and security to ensure a safe, productive environment for every user."
+          primaryAction={{ href: '/legal', label: 'Open Legal Center' }}
+          secondaryAction={{ href: '/safety', label: 'Review Trust & Safety' }}
         />
       </Section>
     </MarketingShell>

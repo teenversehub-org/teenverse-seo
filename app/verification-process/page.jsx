@@ -24,25 +24,29 @@ export const metadata = buildMetadata({
 
 const verificationCards = [
   {
-    icon: ShieldCheck,
+    // THE CURE: Passed as <ShieldCheck /> instead of ShieldCheck
+    icon: <ShieldCheck />,
     title: 'Verification is trust work',
     description:
       'On a marketplace for younger users, verification is not cosmetic. It is part of how the company shows buyers and guardians that the platform takes accountability seriously.',
   },
   {
-    icon: FileCheck,
+    // THE CURE: Passed as <FileCheck /> instead of FileCheck
+    icon: <FileCheck />,
     title: 'Use verification when it matters',
     description:
       'The strongest use cases are payout eligibility, sensitive account actions, or trust-sensitive milestones rather than unnecessary friction at every step.',
   },
   {
-    icon: Users,
+    // THE CURE: Passed as <Users /> instead of Users
+    icon: <Users />,
     title: 'Guardian-aware context',
     description:
       'When users are under 18, the verification and consent model should make it clear who is approving, who is visible, and how financial access is handled.',
   },
   {
-    icon: CheckCircle2,
+    // THE CURE: Passed as <CheckCircle2 /> instead of CheckCircle2
+    icon: <CheckCircle2 />,
     title: 'Keep the explanation simple',
     description:
       'A good verification page avoids jargon and tells users what is checked, when it is checked, and why the platform needs it.',
@@ -53,7 +57,7 @@ export default function VerificationProcessPage() {
   return (
     <MarketingShell>
       <Hero
-        eyebrow="Verification process"
+        eyebrow="Verification Process"
         title="Verification should reduce uncertainty, not create mystery."
         description="TeenVerse Hub needs a dedicated verification page because identity, eligibility, and guardian-aware safeguards are central to why the marketplace feels more legitimate than a generic platform."
         primaryAction={{ href: '/payments-protection', label: 'See payment protections' }}
@@ -63,22 +67,22 @@ export default function VerificationProcessPage() {
           'Explain when checks happen',
           'Explain how under-18 workflows differ',
         ]}
-        image="https://images.unsplash.com/photo-1556740749-887f6717d7e4?auto=format&fit=crop&q=80&w=1400"
-        imageAlt="Person reviewing verification information on a screen"
+        image="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=1200"
+        imageAlt="Verification dashboard and data review"
       />
 
       <Section className="pt-0">
         <SectionHeading
-          eyebrow="What this page should answer"
+          eyebrow="What this page answers"
           title="Users should leave knowing exactly why verification exists."
-          description="That clarity reduces drop-off and also gives search engines a dedicated trust page tied to one very specific intent."
+          description="That clarity reduces drop-off and gives search engines a dedicated trust page tied to one very specific intent."
         />
-        <div className="mt-10">
-          <FeatureGrid items={verificationCards} columns={2} />
+        <div className="mt-16">
+          <FeatureGrid items={verificationCards} />
         </div>
       </Section>
 
-      <Section className="bg-white/70">
+      <Section className="border-t border-slate-900/5 bg-slate-50/50 dark:border-white/5 dark:bg-white/[0.02]">
         <CtaBand
           title="Verification works best when it connects to the rest of the trust system."
           description="Link this page tightly with safety, payments, FAQs, and the parent guide so users can move from concern to confidence in one session."

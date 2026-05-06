@@ -24,7 +24,7 @@ import { SITE, buildMetadata } from '../lib/site'
 export const metadata = buildMetadata({
   title: 'Hire Teen Freelancers and Student Talent',
   description:
-    'Hire teen freelancers and student talent for content, design, video editing, research, and social support through a marketplace designed around clearer trust and safer workflows.',
+    'Hire teen freelancers and student talent for content, design, video editing, research, and social support through a cleaner, trust-first marketplace.',
   path: '/hire-teen-freelancers',
   keywords: [
     'hire teen freelancers',
@@ -37,53 +37,53 @@ export const metadata = buildMetadata({
 
 const valueCards = [
   {
-    icon: TrendingUp,
-    title: 'Gen Z-native execution',
+    icon: <TrendingUp />, // THE CURE: JSX element
+    title: 'Fresh digital instincts',
     description:
-      'Young creators are often strongest at short-form editing, social content, trend fluency, and digital-first communication.',
+      'Teen talent is especially strong in short-form editing, social content, online culture, and fast digital execution.',
   },
   {
-    icon: DollarSign,
-    title: 'Lean startup economics',
+    icon: <DollarSign />, // THE CURE: JSX element
+    title: 'Smart startup economics',
     description:
-      'Teen talent works best for focused deliverables, repeatable content tasks, and early-stage experiments that do not need full agency overhead.',
+      'This works best for scoped deliverables, repeatable content work, and early experiments that do not need agency overhead.',
   },
   {
-    icon: ShieldCheck,
-    title: 'Clearer trust story',
+    icon: <ShieldCheck />, // THE CURE: JSX element
+    title: 'Cleaner trust layer',
     description:
-      'TeenVerse Hub is framed around safer onboarding, category guardrails, visible policy pages, and more explicit payment expectations than a generic “hire anyone” marketplace.',
+      'TeenVerse Hub uses clearer onboarding, trust pages, category guardrails, and simpler payment framing than a generic hire-anyone marketplace.',
   },
 ]
 
 const categories = [
   {
-    icon: Video,
+    icon: <Video />, // THE CURE: JSX element
     title: 'Video editing',
     description: 'Short-form clips, creator edits, ad variations, and social-first video tasks.',
   },
   {
-    icon: PenTool,
+    icon: <PenTool />, // THE CURE: JSX element
     title: 'Content support',
     description: 'Captions, blog drafts, newsletters, research-backed writing, and repurposing.',
   },
   {
-    icon: Layout,
+    icon: <Layout />, // THE CURE: JSX element
     title: 'Design assistance',
     description: 'Social posts, thumbnails, decks, lightweight brand assets, and layout cleanup.',
   },
   {
-    icon: Search,
+    icon: <Search />, // THE CURE: JSX element
     title: 'Research help',
     description: 'Competitor scans, lead research, list building, and market snapshots.',
   },
   {
-    icon: Users,
+    icon: <Users />, // THE CURE: JSX element
     title: 'Community and social',
     description: 'Posting support, moderation basics, trend research, and engagement workflows.',
   },
   {
-    icon: Briefcase,
+    icon: <Briefcase />, // THE CURE: JSX element
     title: 'Project assistance',
     description: 'Structured digital tasks that let startups move faster without bloating payroll.',
   },
@@ -113,39 +113,40 @@ const comparisons = [
 export default function HireTeenFreelancersPage() {
   return (
     <MarketingShell>
+      {/* HERO SECTION - Image Kept as requested */}
       <Hero
         eyebrow="For startups, founders, and lean teams"
-        title="Hire teen freelancers for digital work that benefits from speed, trend fluency, and fresh eyes."
-        description="TeenVerse Hub is designed to help startup teams hire emerging talent more confidently for content, design, editing, research, and social support while keeping trust, payment clarity, and age-aware expectations visible."
+        title="Hire teen freelancers for work that needs speed and fresh perspective."
+        description="TeenVerse Hub helps startup teams hire young digital talent for content, design, editing, research, and social support through a cleaner trust-first workflow."
         primaryAction={{ href: SITE.appUrl, label: 'Post a Project' }}
         secondaryAction={{ href: '/payments-protection', label: 'Review payments and protection' }}
         proof={[
-          'Best for narrow, digital-first deliverables',
-          'Trust pages built into the buyer journey',
-          'A clearer fit than generic marketplaces for teen talent',
+          'Built for scoped digital work',
+          'Trust pages inside the buyer journey',
+          'Sharper fit than generic marketplaces',
         ]}
-        image="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=1400"
-        imageAlt="Startup team reviewing work together"
+        image="/graphics/startup-hiring-board.png"
+        imageAlt="Startup hiring board graphic for teen freelancer categories"
       />
 
       <Section className="pt-0">
         <SectionHeading
-          eyebrow="Why startups use it"
-          title="The best early use cases are focused, affordable, and easy to review."
-          description="Teen talent is strongest when the brief is clear, the workflow is structured, and the task can be delivered digitally without risky ambiguity."
+          eyebrow="Business Case"
+          title="Focused, affordable, and easy to review."
+          description="Teen talent performs best when the brief is clear, the workflow is structured, and the task is digital-first."
         />
-        <div className="mt-10">
+        <div className="mt-16">
           <FeatureGrid items={valueCards} />
         </div>
       </Section>
 
-      <Section className="bg-white/70">
+      <Section className="border-y border-slate-900/5 bg-slate-50/50 dark:border-white/5 dark:bg-white/[0.02]">
         <SectionHeading
           eyebrow="High-intent categories"
           title="Start with work that is easy to buy and easy to judge."
-          description="That makes conversion smoother for clients and helps TeenVerse Hub rank for service-specific commercial intent over time."
+          description="That improves conversion for clients and supports stronger service-specific SEO over time."
         />
-        <div className="mt-10">
+        <div className="mt-16">
           <FeatureGrid items={categories} />
         </div>
       </Section>
@@ -153,18 +154,18 @@ export default function HireTeenFreelancersPage() {
       <Section>
         <SectionHeading
           eyebrow="Client workflow"
-          title="How to hire teen talent safely and productively"
-          description="A good first hiring experience should reduce uncertainty, not create more of it."
+          title="How to hire teen talent with less friction"
+          description="A strong first project should feel clear, controlled, and easy to repeat."
         />
-        <div className="mt-10">
+        <div className="mt-16">
           <ComparisonList items={comparisons} />
         </div>
       </Section>
 
-      <Section className="bg-white/70">
+      <Section className="pt-0">
         <CtaBand
-          title="Want better trust before the first hire?"
-          description="Review the safety model, verification process, and guardian guide before you ask cautious buyers to create an account. Those pages do real conversion work on a marketplace like this."
+          title="Trust matters before the first hire."
+          description="Review the safety model, verification process, and guardian guide before you ask cautious buyers to commit."
           primaryAction={{ href: '/safety', label: 'View trust and safety' }}
           secondaryAction={{ href: '/verification-process', label: 'See the verification process' }}
         />

@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
-
 import StructuredData from './components/StructuredData'
 import { SITE } from './lib/site'
 import './globals.css'
+
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.baseUrl),
@@ -40,9 +40,11 @@ export const metadata: Metadata = {
 const organizationSchema = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
+  '@id': `${SITE.baseUrl}/#organization`,
   name: SITE.name,
   alternateName: SITE.shortName,
   url: SITE.baseUrl,
+  logo: `${SITE.baseUrl}/icon.svg`,
   email: SITE.supportEmail,
   founder: {
     '@type': 'Person',
@@ -55,6 +57,27 @@ const organizationSchema = {
     addressRegion: 'Uttar Pradesh',
     addressCountry: 'IN',
   },
+  contactPoint: {
+    '@type': 'ContactPoint',
+    contactType: 'customer support',
+    email: SITE.supportEmail,
+    areaServed: 'IN',
+    availableLanguage: ['en', 'hi'],
+  },
+}
+
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  '@id': `${SITE.baseUrl}/#website`,
+  name: SITE.name,
+  alternateName: SITE.shortName,
+  url: SITE.baseUrl,
+  description: SITE.description,
+  publisher: {
+    '@id': `${SITE.baseUrl}/#organization`,
+  },
+  inLanguage: 'en-IN',
 }
 
 export default function RootLayout({
@@ -63,9 +86,9 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
-      <body>
-        <StructuredData data={organizationSchema} />
+    <html lang="en" className="scroll-smooth">
+      <body className="antialiased">
+        <StructuredData data={[organizationSchema, websiteSchema]} />
         {children}
       </body>
     </html>

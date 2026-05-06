@@ -22,7 +22,7 @@ import { SITE, buildMetadata } from '../lib/site'
 export const metadata = buildMetadata({
   title: 'Freelance Jobs for Teens and Students',
   description:
-    'Find safer freelance jobs for teens and students, build a portfolio, gain real project experience, and learn how to earn through digital skills with clearer platform guardrails.',
+    'Find safer freelance jobs for teens and students, build a portfolio, gain real project experience, and earn through digital skills with clearer platform guardrails.',
   path: '/freelance-jobs-for-teens',
   keywords: [
     'freelance jobs for teens',
@@ -35,43 +35,43 @@ export const metadata = buildMetadata({
 
 const benefits = [
   {
-    icon: Award,
+    icon: <Award />, // THE CURE: JSX element
     title: 'Build proof, not just a profile',
     description:
-      'The goal is to turn early skills into visible portfolio pieces, repeatable client work, and real confidence.',
+      'Turn early skills into visible portfolio pieces, repeatable client work, and real confidence.',
   },
   {
-    icon: ShieldCheck,
+    icon: <ShieldCheck />, // THE CURE: JSX element
     title: 'Work inside clearer rules',
     description:
-      'TeenVerse Hub is meant to feel more structured than random online job boards or generic platforms built mainly for adults.',
+      'TeenVerse Hub is designed to feel more structured than random online job boards or adult-first platforms.',
   },
   {
-    icon: DollarSign,
-    title: 'Learn how paid work actually works',
+    icon: <DollarSign />, // THE CURE: JSX element
+    title: 'Learn how paid work really works',
     description:
-      'Freelancing is not just about earning. It is also about scope, approvals, revisions, communication, and professional habits.',
+      'Freelancing is not only about earning. It is also about scope, revisions, approvals, and professional habits.',
   },
 ]
 
 const skillCards = [
   {
-    icon: Video,
+    icon: <Video />, // THE CURE: JSX element
     title: 'Video editing',
     description: 'Great for teens who already make reels, shorts, gaming edits, or creator clips.',
   },
   {
-    icon: PenTool,
+    icon: <PenTool />, // THE CURE: JSX element
     title: 'Writing and captions',
     description: 'A strong first category for students who can research, write, and explain ideas clearly.',
   },
   {
-    icon: Layout,
+    icon: <Layout />, // THE CURE: JSX element
     title: 'Design basics',
     description: 'Useful for social graphics, thumbnails, decks, posters, and starter brand assets.',
   },
   {
-    icon: TrendingUp,
+    icon: <TrendingUp />, // THE CURE: JSX element
     title: 'Social support',
     description: 'Content repurposing, trend research, posting help, and community support tasks.',
   },
@@ -101,40 +101,42 @@ const roadmaps = [
 export default function FreelanceJobsForTeensPage() {
   return (
     <MarketingShell>
+      {/* HERO SECTION - Image kept as requested */}
       <Hero
         eyebrow="For teen freelancers and students"
-        title="Start freelancing with a platform built around first work experience, not chaos."
-        description="TeenVerse Hub is designed for teenagers and young adults who want safer online work, stronger portfolios, and real digital experience through structured freelance opportunities."
+        title="Start freelancing with a platform built for your first real projects."
+        description="TeenVerse Hub helps teenagers and young adults build safer online work, stronger portfolios, and real digital experience without the chaos of random job boards."
         primaryAction={{ href: SITE.appUrl, label: 'Create Your Profile' }}
         secondaryAction={{ href: '/guardian-guide', label: 'Show the guardian guide' }}
         proof={[
           'Beginner-friendly digital categories',
-          'Trust pages parents can actually review',
-          'Built for experience as well as earnings',
+          'Trust pages parents can review',
+          'Built for experience and earnings',
         ]}
-        image="https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&q=80&w=1400"
-        imageAlt="Teen student working on a laptop"
+        image="/graphics/teen-earning-map.png"
+        imageAlt="Teen earning map graphic from first skill to first paid digital project"
       />
 
       <Section className="pt-0">
         <SectionHeading
           eyebrow="Why this is different"
-          title="Most freelance platforms were not built for your first client."
-          description="TeenVerse Hub works better when it explains the rules, shows the trust system, and helps you start with smaller, safer digital work."
+          title="Built for your first client."
+          description="TeenVerse Hub works better when it explains the rules, shows the trust system, and helps you start smaller."
         />
-        <div className="mt-10">
+        <div className="mt-16">
           <FeatureGrid items={benefits} />
         </div>
       </Section>
 
-      <Section className="bg-white/70">
+      <Section className="border-y border-slate-900/5 bg-slate-50/50 dark:border-white/5 dark:bg-white/[0.02]">
         <SectionHeading
           eyebrow="Best starter categories"
           title="Choose one clear service and get good at delivering it."
-          description="A focused skill makes it easier to build samples, easier to sell your work, and easier for clients to trust what you do."
+          description="A focused skill is easier to package, easier to prove, and easier for clients to trust."
         />
-        <div className="mt-10">
-          <FeatureGrid items={skillCards} columns={2} />
+        <div className="mt-16">
+          {/* Removed columns={2} to allow the premium fluid grid to handle layout */}
+          <FeatureGrid items={skillCards} />
         </div>
       </Section>
 
@@ -142,16 +144,16 @@ export default function FreelanceJobsForTeensPage() {
         <SectionHeading
           eyebrow="Your path"
           title="Small wins beat vague ambition."
-          description="Clear process, proof of work, and safe habits matter more than pretending you already run a full agency."
+          description="Clear process, proof of work, and safe habits matter more than pretending you already run an agency."
         />
-        <div className="mt-10">
+        <div className="mt-16">
           <ComparisonList items={roadmaps} />
         </div>
       </Section>
 
-      <Section className="bg-white/70">
+      <Section className="pt-0">
         <CtaBand
-          title="Show the trust pages before anyone worries."
+          title="Show the trust pages early."
           description="TeenVerse Hub will convert better when teens, parents, and clients can each find the exact page that answers their biggest risk question."
           primaryAction={{ href: '/safety', label: 'Read the safety page' }}
           secondaryAction={{ href: '/payments-protection', label: 'Understand payments' }}
