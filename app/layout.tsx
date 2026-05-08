@@ -3,6 +3,17 @@ import StructuredData from './components/StructuredData'
 import { SITE } from './lib/site'
 import './globals.css'
 
+const themeInitScript = `
+(() => {
+  try {
+    const storedTheme = window.localStorage.getItem('tvh-theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const isDark = storedTheme === 'dark' || (!storedTheme && prefersDark);
+    document.documentElement.classList.toggle('dark', isDark);
+    document.documentElement.style.colorScheme = isDark ? 'dark' : 'light';
+  } catch (_) {}
+})();
+`
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.baseUrl),
@@ -86,8 +97,9 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <body className="antialiased">
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
         <StructuredData data={[organizationSchema, websiteSchema]} />
         {children}
       </body>

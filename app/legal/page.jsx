@@ -1,445 +1,235 @@
-
-
 import {
+  AlertTriangle,
+  BadgeCheck,
   Briefcase,
-  CheckCircle,
-  DollarSign,
-  FileText,
-  Gavel,
-  Lock,
-  Scale,
-  UserCheck,
+  CheckCircle2,
+  ShieldCheck,
+  TrendingUp,
   Zap,
+  ArrowRight,
+  MousePointerClick
 } from 'lucide-react'
-
-import MarketingShell from '../components/MarketingShell'
-import {
-  CtaBand,
-  FeatureGrid,
-  Hero,
-  Section,
-  SectionHeading,
-} from '../components/MarketingPrimitives'
-import StructuredData from '../components/StructuredData'
 import { SITE, buildMetadata } from '../lib/site'
+import StructuredData from '../components/StructuredData'
+import SiteHeader from '../components/SiteHeader'
+import SiteFooter from '../components/SiteFooter'
 
 export const metadata = buildMetadata({
-  title: 'Legal Center, Terms, Privacy, and Guardian Policies',
-  description:
-    'Review the official TeenVerseHub legal center, including terms of service, identity verification, privacy, fees, disputes, parent or guardian agreement, and IP rights.',
-  path: '/legal',
+  title: "TeenVerseHub Legal Center | Terms, Privacy, Guardian Consent, KYC, and Payments",
+  description: "Review TeenVerseHub legal information for terms, privacy, guardian consent, KYC, payment protection, disputes, verification, moderation, and intellectual property.",
+  path: "/legal",
   keywords: [
-    'teenversehub legal',
-    'teenversehub terms of service',
-    'teenversehub privacy policy',
-    'teenversehub fees and payments',
-    'teenversehub parent guardian agreement',
-    'teen freelance platform legal policies',
+    "TeenVerseHub legal",
+    "teen platform terms privacy",
+    "teen online safety",
+    "minor protection platform",
+    "TeenVerseHub",
+    "TeenVerse Hub",
+    "teen freelancing platform India",
+    "safe online jobs for teens",
+    "teen talent ecosystem",
+    "AI powered teen platform",
+    "teen digital skills",
+    "guardian consent teen platform",
+    "verified teen freelancers",
+    "student earning platform"
   ],
 })
 
-const legalCards = [
+const pageSchema = {
+  '@context': 'https://schema.org',
+  '@type': "WebPage",
+  headline: "TeenVerseHub Legal Center | Terms, Privacy, Guardian Consent, KYC, and Payments",
+  name: "TeenVerseHub Legal Center | Terms, Privacy, Guardian Consent, KYC, and Payments",
+  description: "Review TeenVerseHub legal information for terms, privacy, guardian consent, KYC, payment protection, disputes, verification, moderation, and intellectual property.",
+  author: { '@type': 'Organization', name: SITE.shortName },
+  publisher: { '@type': 'Organization', name: SITE.shortName },
+  mainEntityOfPage: `${SITE.baseUrl}/legal`,
+}
+
+const pageFeatures = [
   {
-    icon: <FileText />,
-    title: 'Terms of Service',
-    description: 'The operating rules for eligibility, account responsibility, and prohibited activity.',
-    link: { href: '#terms', label: 'Read terms' },
+    icon: <ShieldCheck className="h-8 w-8" />,
+    title: "Guardian Consent Flow",
+    description: "Teens can enter guardian details, guardians receive a verification request, participation is approved, and consent can be stored securely through OTP, email, or digital consent forms.",
+    span: "md:col-span-7",
+    glow: "bg-emerald-600/30",
+    ring: "ring-emerald-500/20"
   },
   {
-    icon: <CheckCircle />,
-    title: 'Identity & Verification',
-    description: 'Consent, DigiLocker usage, and guardian verification for minors.',
-    link: { href: '#verification', label: 'Read verification' },
+    icon: <AlertTriangle className="h-8 w-8" />,
+    title: "Scam and Risk Detection",
+    description: "AI systems and moderation pipelines can flag suspicious offers, inappropriate messages, off-platform pressure, harassment, and unsafe work patterns.",
+    span: "md:col-span-5",
+    glow: "bg-rose-600/30",
+    ring: "ring-rose-500/20"
   },
   {
-    icon: <Lock />,
-    title: 'Privacy Policy',
-    description: 'How we collect, use, limit visibility of, and retain user and financial data.',
-    link: { href: '#privacy', label: 'Read privacy' },
+    icon: <BadgeCheck className="h-8 w-8" />,
+    title: "KYC and Age Verification",
+    description: "Aadhaar, PAN where applicable, selfie checks, face match systems, and fraud detection can help reduce fake accounts and improve payout trust.",
+    span: "md:col-span-5",
+    glow: "bg-indigo-600/30",
+    ring: "ring-indigo-500/20"
   },
   {
-    icon: <DollarSign />,
-    title: 'Fees and Payments',
-    description: 'Platform fees, settlement policy, and tax responsibility.',
-    link: { href: '#fees', label: 'Read payments' },
-  },
-  {
-    icon: <Gavel />,
-    title: 'Dispute Resolution',
-    description: 'How project disputes, evidence review, and escalation are handled.',
-    link: { href: '#disputes', label: 'Read disputes' },
-  },
-  {
-    icon: <UserCheck />,
-    title: 'Guardian Agreement',
-    description: 'Financial responsibility and supervision for minor accounts.',
-    link: { href: '#parent-agreement', label: 'Read guardian terms' },
-  },
-  {
-    icon: <Briefcase />,
-    title: 'Intellectual Property',
-    description: 'Ownership transfer after payment and portfolio display rights.',
-    link: { href: '#ip-rights', label: 'Read IP policy' },
-  },
-  {
-    icon: <Scale />,
-    title: 'Legal Entity',
-    description: 'Proprietorship details, governing law, and jurisdiction.',
-    link: { href: '#legal-disclaimer', label: 'Read entity details' },
-  },
+    icon: <MousePointerClick className="h-8 w-8" />,
+    title: "Restricted Communication",
+    description: "Platform communication systems, reporting tools, content review, and anti-harassment moderation keep risky interactions easier to detect and act on.",
+    span: "md:col-span-7",
+    glow: "bg-amber-600/30",
+    ring: "ring-amber-500/20"
+  }
 ]
 
-const documents = [
+const roadmapSteps = [
   {
-    id: 'terms',
-    title: 'Terms of Service',
-    icon: <FileText />,
-    kicker: 'Effective Date: January 1, 2026',
-    intro: 'Welcome to TeenVerseHub. By accessing or using our platform, you ("User") agree to be bound by these Terms.',
-    sections: [
-      {
-        title: '1. Intermediary Status',
-        paragraphs: [
-          'TeenVerseHub operates solely as a technology intermediary connecting Freelancers and Clients. We are not an employer, recruiting agency, or contracting agent. We do not control, supervise, or guarantee the quality of work delivered by Freelancers.'
-        ],
-        note: 'TeenVerseHub does not determine pricing, scope, or delivery of services between Clients and Freelancers. TeenVerseHub does not guarantee job availability, earnings, or client engagement.'
-      },
-      {
-        title: '2. Eligibility & Account Security',
-        bullets: [
-          'Age Requirement: TeenVerseHub accounts may only be created by individuals aged 18 or above. Users aged 14–17 may participate only under a verified parent or legal guardian account. All payments are processed to the guardian\'s financial account.',
-          'Account Responsibility: You are responsible for all activity under your account. TeenVerseHub is not liable for loss caused by unauthorized use of your account.'
-        ]
-      },
-      {
-        title: '3. Prohibited Activities',
-        paragraphs: ['You agree NOT to:'],
-        bullets: [
-          'Circumvent our payment system (e.g., sharing phone numbers/UPI to pay offline).',
-          'Post illegal, abusive, or sexually explicit content.',
-          'Use the platform for academic dishonesty (e.g., doing homework for others).',
-          'Offer services involving illegal goods, adult content, gambling, or any activity prohibited under Indian law.'
-        ],
-        warning: 'Violation may result in suspension or termination of the account. Any remaining funds will be handled according to applicable laws and payment provider policies.'
-      },
-      {
-        title: '4. Limitation of Liability',
-        paragraphs: [
-          'TeenVerseHub shall not be liable for indirect, incidental, or consequential damages arising from the use of the platform.'
-        ]
-      },
-      {
-        title: '5. Platform Availability',
-        paragraphs: [
-          'TeenVerseHub does not guarantee uninterrupted or error-free operation of the platform. Maintenance, updates, or technical issues may cause temporary unavailability.'
-        ]
-      },
-      {
-        title: '6. Force Majeure',
-        paragraphs: [
-          'TeenVerseHub shall not be liable for failure or delay caused by events beyond reasonable control including natural disasters, internet outages, or regulatory actions.'
-        ]
-      }
+    title: "Consent and Identity",
+    theme: "indigo",
+    icon: <Zap className="h-6 w-6 text-indigo-400" />,
+    points: [
+      "Collect guardian details when required",
+      "Verify guardian approval through OTP or email",
+      "Run age and identity checks where needed",
+      "Store consent and review account risk"
     ]
   },
   {
-    id: 'verification',
-    title: 'Identity & Verification',
-    icon: <CheckCircle />,
-    intro: 'This section outlines our strict protocols regarding identity verification and DigiLocker usage.',
-    sections: [
-      {
-        title: '1. DigiLocker Consent',
-        paragraphs: [
-          'By proceeding with verification, you explicitly consent to TeenVerseHub requesting and accessing your government-issued documents (such as PAN or Aadhaar XML, where legally permitted) via DigiLocker, solely for the purpose of identity verification and regulatory compliance.',
-          'Access to DigiLocker is initiated only by the user through an explicit verification request. TeenVerseHub does not access documents automatically or without user action.',
-          'TeenVerseHub does not store your Aadhaar number or biometric information. Only document references and verification status are stored.',
-          'Where DigiLocker is unavailable, TeenVerseHub may offer alternative lawful verification methods with equivalent consent protections.'
-        ]
-      },
-      {
-        title: '2. Minors and Guardian Verification',
-        paragraphs: [
-          'Users below the age of 18 are required to complete verification through their parent or legal guardian. TeenVerseHub does not access or verify government documents of minors directly. Only guardian documents are used for verification and payout eligibility.'
-        ]
-      },
-      {
-        title: '3. Purpose-Limited Use',
-        paragraphs: [
-          'Verification is performed only when required for financial actions such as payouts or paid engagements. TeenVerseHub does not perform identity verification at the time of signup.'
-        ]
-      },
-      {
-        title: '4. Data Retention & Audits',
-        paragraphs: [
-          'Verification records are retained only as long as required for legal, accounting, or regulatory purposes. Users may request deletion of their data where permitted by law.',
-          'All verification access is logged with timestamps for audit and compliance purposes.',
-          'Verification confirms identity and eligibility for payouts and does not constitute endorsement, certification, or employment by TeenVerseHub.'
-        ]
-      }
-    ]
-  },
-  {
-    id: 'privacy',
-    title: 'Privacy Policy',
-    icon: <Lock />,
-    intro: 'TeenVerseHub respects your privacy. This policy outlines how we handle your data in compliance with the Digital Personal Data Protection Act, 2023 (India).',
-    sections: [
-      {
-        title: '1. Data Collection',
-        bullets: [
-          'Personal Data: Name, Email, Phone, Date of Birth (for age verification).',
-          'KYC Data: Government-issued documents voluntarily shared by the user via DigiLocker are used for identity verification but strictly adhere to our Identity & Verification policy.',
-          'Financial Data: Bank account or UPI details for payouts.'
-        ]
-      },
-      {
-        title: '2. Data Usage & Minors',
-        paragraphs: [
-          "We strictly limit the visibility of creators' data. Clients only see: First Name, Skills, and Portfolio. We strictly NEVER sell data to third-party advertisers."
-        ]
-      },
-      {
-        title: '3. Data Retention',
-        paragraphs: [
-          'We retain account data for as long as the account is active. Upon deletion request, data is removed within 30 days, except where retention is required by law (e.g., transaction logs for tax audits).'
-        ]
-      }
-    ]
-  },
-  {
-    id: 'fees',
-    title: 'Fees & Payments',
-    icon: <DollarSign />,
-    sections: [
-      {
-        title: '1. Service Fees',
-        paragraphs: [
-          'TeenVerseHub charges a flat 5% Platform Fee on all successful transactions. The Platform Fee is a facilitation charge and is exclusive of any applicable taxes. TeenVerseHub shall levy such taxes only if and when required under applicable law. All amounts displayed are exclusive of any taxes unless expressly stated otherwise.',
-          'TeenVerseHub’s revenue is limited strictly to its platform facilitation fee.'
-        ],
-        example: [
-          'Example: Project Cost ₹1,000',
-          'TeenVerse Fee (5%): -₹50',
-          'Freelancer Receives: ₹950'
-        ]
-      },
-      {
-        title: '2. Settlement Policy',
-        paragraphs: [
-          'All payments are processed and held by the payment gateway partner in accordance with their settlement and escrow-like mechanisms. TeenVerseHub does not hold or store customer funds. If a Client does not respond within 7 days of submission, the payment gateway may release the funds to the Freelancer according to its settlement and dispute policies.'
-        ]
-      },
-      {
-        title: '3. Chargebacks & Payment Disputes',
-        paragraphs: [
-          "If a payment is reversed due to a bank dispute or chargeback initiated by a Client, TeenVerseHub reserves the right to recover the corresponding amount from the freelancer's balance."
-        ]
-      },
-      {
-        title: '4. Tax Liability (TDS)',
-        paragraphs: [
-          'Freelancers are solely responsible for reporting their income and paying applicable taxes. TeenVerseHub does not deduct TDS at present. TeenVerseHub does not act as an e-commerce operator for the purpose of tax collection at source unless mandated under applicable law.'
-        ]
-      },
-      {
-        title: '5. GST Status',
-        paragraphs: [
-          'TeenVerseHub is currently not registered under the Goods and Services Tax (GST) Act. If registration becomes mandatory under Indian law, applicable taxes will be charged accordingly.'
-        ]
-      }
-    ]
-  },
-  {
-    id: 'disputes',
-    title: 'Dispute Resolution',
-    icon: <Gavel />,
-    intro: 'In the event of a disagreement between Client and Freelancer, TeenVerseHub encourages mutual resolution. If that fails, TeenVerseHub may assist in facilitating dispute resolution between Clients and Freelancers.',
-    sections: [
-      {
-        title: '1. Dispute Resolution Process',
-        ordered: [
-          'User raises a Dispute ticket via the Dashboard.',
-          'Funds are frozen immediately by the payment gateway pending review.',
-          'Both parties submit evidence (chat logs, file deliverables).',
-          'TeenVerseHub may assist in facilitating dispute resolution between users based on the provided evidence.'
-        ],
-        paragraphs: [
-          'However, the final legal resolution remains subject to applicable laws and courts. Any formal legal dispute shall be conducted in accordance with applicable Indian law.'
-        ]
-      },
-      {
-        title: '2. Refund Eligibility',
-        paragraphs: [
-          'Refunds, if applicable, are processed through the payment gateway according to their refund and settlement policies.'
-        ],
-        bullets: [
-          'Full Refund: If Freelancer delivered nothing or missed a strict deadline.',
-          'Partial Refund: If work was delivered but incomplete/low quality.',
-          'No Refund: If Client changes their mind after work has already been completed according to specs.'
-        ]
-      }
-    ]
-  },
-  {
-    id: 'parent-agreement',
-    title: 'Parent/Guardian Agreement',
-    icon: <UserCheck />,
-    sections: [
-      {
-        title: '1. Financial Responsibility',
-        warning: 'Critical: By approving an account, you legally bind yourself to these terms.',
-        paragraphs: [
-          'As the Guardian, you acknowledge that the financial account linked for withdrawals legally belongs to you or is authorized by you. You are responsible for any tax implications of earnings generated under this account.'
-        ]
-      },
-      {
-        title: '2. Supervision',
-        paragraphs: [
-          "While TeenVerseHub employs safety filters, you agree to supervise the account's online interactions. TeenVerseHub is not liable for interactions that occur off-platform."
-        ]
-      },
-      {
-        title: '3. Right to Revoke',
-        paragraphs: [
-          'You retain the absolute right to revoke your consent at any time. Upon revocation, we will freeze the account and process any pending payouts to your bank account before deletion.'
-        ]
-      }
-    ]
-  },
-  {
-    id: 'ip-rights',
-    title: 'Intellectual Property (IP)',
-    icon: <Briefcase />,
-    sections: [
-      {
-        title: '1. Ownership Transfer',
-        paragraphs: ['Unless otherwise agreed in writing:'],
-        bullets: [
-          'Before Payment: The Freelancer retains full copyright and ownership of all work.',
-          'After Payment: Upon successful release of funds, full ownership and IP rights transfer exclusively to the Client.'
-        ]
-      },
-      {
-        title: '2. Portfolio Rights',
-        paragraphs: [
-          'Freelancers retain a non-exclusive license to display the completed work in their TeenVerseHub portfolio for self-promotion purposes only, unless a Non-Disclosure Agreement (NDA) was signed.'
-        ]
-      }
+    title: "Moderation and Protection",
+    theme: "fuchsia",
+    icon: <TrendingUp className="h-6 w-6 text-fuchsia-400" />,
+    points: [
+      "Keep communication inside platform systems",
+      "Filter risky messages and suspicious offers",
+      "Enable reporting and manual review",
+      "Use payment and dispute workflows"
     ]
   }
 ]
 
-function LegalBlock({ block }) {
-  return (
-    <div className="border-t border-slate-200 pt-10 first:border-t-0 first:pt-0 dark:border-white/10">
-      <h3 className="text-xl font-bold text-slate-950 dark:text-white">{block.title}</h3>
-      {block.paragraphs?.map((p, i) => (
-        <p key={i} className="mt-4 text-[0.95rem] leading-[1.8] text-slate-600 dark:text-slate-300">{p}</p>
-      ))}
-      {block.bullets && (
-        <ul className="mt-6 space-y-4 text-[0.95rem] leading-[1.8] text-slate-600 dark:text-slate-300">
-          {block.bullets.map((item, i) => (
-            <li key={i} className="flex gap-4">
-              <Zap className="mt-1 h-4 w-4 shrink-0 text-indigo-500" />
-              <span>{item}</span>
-            </li>
-          ))}
-        </ul>
-      )}
-      {block.ordered && (
-        <ol className="mt-6 list-decimal space-y-3 pl-6 text-[0.95rem] leading-[1.8] text-slate-600 dark:text-slate-300">
-          {block.ordered.map((item, i) => <li key={i}>{item}</li>)}
-        </ol>
-      )}
-      {block.example && (
-        <div className="mt-6 rounded-2xl border border-slate-200 bg-slate-50 p-6 font-mono text-[0.9rem] text-slate-700 dark:border-white/10 dark:bg-slate-950 dark:text-slate-200">
-          {block.example.map((line, i) => <p key={i}>{line}</p>)}
-        </div>
-      )}
-      {block.note && (
-        <p className="mt-6 rounded-2xl border border-blue-100 bg-blue-50/50 p-6 text-[0.95rem] leading-[1.8] text-slate-600 dark:border-blue-500/10 dark:bg-blue-500/5 dark:text-slate-300">
-          <strong>Note:</strong> {block.note}
-        </p>
-      )}
-      {block.warning && (
-        <p className="mt-6 rounded-2xl border border-amber-200 bg-amber-50 p-6 text-[0.95rem] font-medium text-amber-800 dark:border-amber-500/20 dark:bg-amber-500/10 dark:text-amber-200">
-          {block.warning}
-        </p>
-      )}
-    </div>
-  )
-}
-
-function LegalDocument({ document }) {
-  return (
-    <article id={document.id} className="scroll-mt-36 overflow-hidden rounded-[32px] border border-slate-200 bg-white shadow-sm dark:border-white/10 dark:bg-slate-900">
-      <div className="flex flex-col gap-6 border-b border-slate-200 p-8 dark:border-white/10 sm:flex-row sm:items-center">
-        <div className="flex h-14 w-14 items-center justify-center rounded-[20px] bg-indigo-50 text-indigo-600 dark:bg-indigo-500/10 dark:text-indigo-400">
-          {document.icon}
-        </div>
-        <div>
-          <h2 className="text-2xl font-black tracking-tight text-slate-950 dark:text-white">{document.title}</h2>
-          <p className="mt-1 text-sm font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400">{document.kicker || 'Official Policy'}</p>
-        </div>
-      </div>
-      <div className="p-8 sm:p-10">
-        {document.intro && <p className="text-[1.1rem] leading-[1.8] text-slate-600 dark:text-slate-300">{document.intro}</p>}
-        <div className="mt-12 space-y-12">{document.sections.map((b) => <LegalBlock key={b.title} block={b} />)}</div>
-      </div>
-    </article>
-  )
-}
-
 export default function LegalPage() {
   return (
     <>
-      <StructuredData data={{ '@context': 'https://schema.org', '@type': 'WebPage', name: 'Legal Center' }} />
-      <MarketingShell>
-        <Hero
-          eyebrow="Legal Center"
-          title="Official policies for a safer marketplace."
-          description="Review the rules that govern platform access, verification, privacy, fees, disputes, and guardian consent."
-          primaryAction={{ href: '#terms', label: 'Read Terms' }}
-          secondaryAction={{ href: '/contact', label: 'Ask a Question' }}
-          proof={['Effective Jan 2026', 'Guardian-aware', 'India-based']}
-          image="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&q=80&w=1200"
-          imageAlt="Legal documents"
-        />
+      <StructuredData data={pageSchema} />
+      <SiteHeader />
 
-        <Section className="pt-0">
-          <SectionHeading eyebrow="Index" title="Trust-sensitive policies." description="Find every operating rule you need before joining." />
-          <div className="mt-16"><FeatureGrid items={legalCards} /></div>
-        </Section>
+      <main className="min-h-screen bg-[#f7f9ff] text-slate-950 selection:bg-indigo-200 selection:text-slate-950 transition-colors duration-500 dark:bg-[#030712] dark:text-white dark:selection:bg-indigo-500/30 dark:selection:text-indigo-200">
+        <section className="relative isolate flex min-h-[90vh] flex-col items-center justify-center overflow-hidden px-6 pb-20 pt-32">
+          <div className="tv-grid-mesh pointer-events-none absolute inset-0 opacity-80" />
+          <div className="pointer-events-none absolute left-1/2 top-1/2 h-[600px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-[100%] bg-indigo-600/20 opacity-70 blur-[120px] tv-orbit" />
+          <div className="pointer-events-none absolute right-[-10%] top-[-10%] h-[500px] w-[500px] rounded-[100%] bg-fuchsia-600/20 opacity-60 blur-[100px] tv-orbit [animation-delay:-7s]" />
 
-        <Section className="border-y border-slate-900/5 bg-slate-50/50 dark:border-white/5 dark:bg-white/[0.02]">
-          <div className="grid gap-12">{documents.map((d) => <LegalDocument key={d.id} document={d} />)}</div>
-        </Section>
+          <div className="tv-reveal relative z-10 mx-auto max-w-5xl text-center">
+            <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-indigo-200 bg-white/80 px-5 py-2 text-sm font-bold uppercase tracking-widest text-indigo-700 shadow-xl shadow-indigo-100/70 backdrop-blur-xl dark:border-white/10 dark:bg-white/5 dark:text-indigo-300 dark:shadow-2xl">
+              <BadgeCheck className="h-4 w-4" />
+              {"Trust and Safety Layer"}
+            </div>
+            <h1 className="text-4xl font-black leading-[1.08] tracking-tighter text-slate-950 dark:text-white sm:text-7xl md:text-8xl">
+              {"Legal Center"} <br className="hidden md:block" />
+              <span className="bg-gradient-to-r from-indigo-400 via-fuchsia-400 to-emerald-400 bg-clip-text text-transparent">
+                {"For Trust and Compliance"}
+              </span>
+            </h1>
+            <p className="mx-auto mt-8 max-w-3xl text-lg leading-relaxed text-slate-600 dark:text-slate-400 md:text-xl">
+              {"TeenVerseHub is designed around the reality that many users are minors, so safety, consent, moderation, identity checks, reporting, and payment protection must be part of the platform experience instead of afterthoughts."}
+            </p>
+            <div className="mt-12 flex w-full flex-col items-center justify-center gap-4 sm:flex-row sm:gap-6">
+              <a href={"/guardian-guide"} className="group relative inline-flex w-full max-w-sm items-center justify-center gap-3 overflow-hidden rounded-full bg-slate-950 px-8 py-4 text-base font-black text-white shadow-xl shadow-slate-300/50 transition-transform hover:scale-105 active:scale-95 dark:bg-white dark:text-slate-950 dark:shadow-none sm:w-auto">
+                {"Guardian Guide"}
+                <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+              </a>
+              <a href={"/verification-process"} className="inline-flex w-full max-w-sm items-center justify-center gap-3 rounded-full border border-indigo-200 bg-white/70 px-8 py-4 text-base font-bold text-slate-900 shadow-sm backdrop-blur-lg transition-colors hover:bg-white dark:border-white/20 dark:bg-white/5 dark:text-white dark:hover:bg-white/10 dark:hover:text-white sm:w-auto">
+                <ShieldCheck className="h-5 w-5" />
+                {"Verification Process"}
+              </a>
+            </div>
+          </div>
 
-        <Section id="legal-disclaimer">
-          <div className="mx-auto max-w-[1000px] overflow-hidden rounded-[32px] bg-white/60 p-10 shadow-sm ring-1 ring-slate-900/5 backdrop-blur-2xl dark:bg-white/[0.03] dark:ring-white/10 sm:p-16">
-            <div className="grid gap-10 lg:grid-cols-[1.2fr_0.8fr] lg:text-left text-center">
-              <div>
-                <div className="flex items-center gap-4 justify-center lg:justify-start">
-                  <Scale className="h-10 w-10 text-indigo-600" />
-                  <h2 className="text-3xl font-black text-slate-950 dark:text-white">Governing Law</h2>
-                </div>
-                <p className="mt-6 text-slate-600 dark:text-slate-300">Terms are governed by Indian law. Disputes are subject to the jurisdiction of New Delhi, India.</p>
+          <div className="tv-reveal relative z-10 mt-20 grid w-full max-w-4xl grid-cols-1 gap-px overflow-hidden rounded-3xl border border-indigo-100 bg-indigo-100/70 shadow-[0_24px_80px_rgba(79,70,229,0.12)] backdrop-blur-2xl dark:border-white/10 dark:bg-white/10 dark:shadow-[0_8px_32px_rgba(0,0,0,0.4)] sm:mt-24 sm:grid-cols-3">
+            {[
+              { label: "Consent", value: "Guardian Approval" },
+              { label: "Protection", value: "AI + Manual Review" },
+              { label: "Trust", value: "KYC + Reporting" },
+            ].map((stat, idx) => (
+              <div key={idx} className="bg-white/85 p-8 text-center backdrop-blur-xl dark:bg-[#0f172a]/80">
+                <div className="text-sm font-bold uppercase tracking-widest text-slate-500">{stat.label}</div>
+                <div className="mt-2 text-2xl font-black text-slate-950 dark:text-white">{stat.value}</div>
               </div>
-              <div className="rounded-3xl bg-slate-50 p-8 dark:bg-white/5">
-                <p className="font-black text-slate-950 dark:text-white">Legal Entity</p>
-                <p className="mt-2">TeenVerseHub (Proprietorship)</p>
-                <p>Operator: Mohd Asif</p>
-                <p>Mahoba, Uttar Pradesh</p>
+            ))}
+          </div>
+        </section>
+
+        <section className="relative overflow-hidden px-6 py-24 sm:py-32">
+          <div className="mx-auto max-w-7xl">
+            <div className="tv-reveal max-w-3xl">
+              <h2 className="text-4xl font-black tracking-tight text-slate-950 dark:text-white sm:text-5xl">
+                {"Teen safety requires layered systems."}
+              </h2>
+              <p className="mt-6 text-xl leading-relaxed text-slate-600 dark:text-slate-400">
+                {"The platform vision combines guardian consent, identity checks, restricted communication, AI moderation, reporting, fraud monitoring, and safer payment rules for a more responsible teen work environment."}
+              </p>
+            </div>
+
+            <div className="tv-mobile-depth mt-16 grid grid-cols-1 gap-6 md:mt-20 md:grid-cols-12 md:auto-rows-fr md:gap-8">
+              {pageFeatures.map((feature, i) => (
+                <div key={i} className={`tv-card-motion tv-reveal group relative z-0 flex min-h-[280px] flex-col overflow-hidden rounded-[2rem] border border-white/70 bg-white/70 p-7 shadow-[0_20px_60px_rgba(79,70,229,0.10)] backdrop-blur-3xl transition-[transform,box-shadow,background-color] duration-500 hover:z-10 hover:bg-white dark:border-white/10 dark:bg-white/[0.03] dark:shadow-[0_8px_32px_rgba(0,0,0,0.3)] dark:hover:bg-white/[0.06] dark:hover:shadow-[0_16px_64px_rgba(0,0,0,0.5)] sm:rounded-[2.5rem] sm:p-10 ${feature.span}`}>
+                  <div className={`pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full blur-[80px] transition-all duration-700 group-hover:scale-150 group-hover:opacity-80 ${feature.glow}`} />
+                  <div className={`relative z-10 mb-8 inline-flex h-16 w-16 items-center justify-center rounded-3xl border border-white/80 bg-slate-950 text-white shadow-2xl backdrop-blur-xl ring-1 dark:border-white/20 dark:bg-white/10 sm:h-20 sm:w-20 ${feature.ring}`}>{feature.icon}</div>
+                  <h3 className="relative z-10 text-2xl font-black tracking-tight text-slate-950 dark:text-white sm:text-3xl">{feature.title}</h3>
+                  <p className="relative z-10 mt-6 flex-1 text-lg leading-relaxed text-slate-600 dark:text-slate-300">{feature.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="relative overflow-hidden border-y border-indigo-100 bg-white/70 px-6 py-24 dark:border-white/5 dark:bg-[#070b14] sm:py-32">
+          <div className="mx-auto max-w-7xl">
+            <div className="grid grid-cols-1 gap-16 lg:grid-cols-12 lg:gap-24">
+              <div className="tv-reveal lg:sticky lg:top-32 lg:col-span-5 lg:h-max">
+                <h2 className="text-4xl font-black leading-tight tracking-tight text-slate-950 dark:text-white sm:text-5xl">{"Protection has to be built before scale."}</h2>
+                <p className="mt-6 text-lg leading-relaxed text-slate-600 dark:text-slate-400">{"Because TeenVerseHub serves teenagers, the platform must treat consent, KYC, moderation, fraud monitoring, reporting, and payment safety as core product systems."}</p>
+              </div>
+              <div className="flex flex-col gap-8 lg:col-span-7">
+                <div className="tv-card-motion tv-reveal relative rounded-[2rem] border border-indigo-100 bg-gradient-to-br from-indigo-50 to-white p-7 shadow-2xl shadow-indigo-100/70 backdrop-blur-xl dark:border-indigo-500/20 dark:bg-gradient-to-br dark:from-indigo-950/40 dark:to-slate-900/40 dark:shadow-2xl sm:rounded-[2.5rem] sm:p-10">
+                  <div className="mb-6 flex items-center gap-4 border-b border-slate-200 pb-6 dark:border-white/10"><Briefcase className="h-8 w-8 text-indigo-400" /><h3 className="text-2xl font-black text-slate-950 dark:text-white">{"Risk Areas We Address"}</h3></div>
+                  <ul className="space-y-4">{[
+                    "Fake accounts and suspicious clients",
+                    "Off-platform pressure and unclear payments",
+                    "Inappropriate messages or harassment",
+                    "Scam offers promising easy money"
+                  ].map((item, idx) => (<li key={idx} className="flex items-start gap-4"><CheckCircle2 className="mt-1 h-5 w-5 shrink-0 text-indigo-400" /><span className="text-lg text-slate-700 dark:text-slate-300">{item}</span></li>))}</ul>
+                </div>
+                <div className="tv-card-motion tv-reveal relative rounded-[2rem] border border-emerald-100 bg-gradient-to-br from-emerald-50 to-white p-7 shadow-2xl shadow-emerald-100/70 backdrop-blur-xl dark:border-emerald-500/20 dark:bg-gradient-to-br dark:from-emerald-950/40 dark:to-slate-900/40 dark:shadow-2xl sm:rounded-[2.5rem] sm:p-10">
+                  <div className="mb-6 flex items-center gap-4 border-b border-slate-200 pb-6 dark:border-white/10"><TrendingUp className="h-8 w-8 text-emerald-400" /><h3 className="text-2xl font-black text-slate-950 dark:text-white">{"Trust Systems"}</h3></div>
+                  <p className="mb-6 text-lg text-slate-700 dark:text-slate-300">{"A safer platform depends on multiple systems working together, not only warning text on a page."}</p>
+                  <ul className="space-y-4">{[
+                    "AI moderation and manual review options",
+                    "Reporting systems and content review",
+                    "Guardian-aware onboarding",
+                    "Fraud monitoring and payment checks"
+                  ].map((item, idx) => (<li key={idx} className="flex items-start gap-4"><Zap className="mt-1 h-5 w-5 shrink-0 text-emerald-400" /><span className="text-lg text-slate-700 dark:text-slate-300">{item}</span></li>))}</ul>
+                </div>
               </div>
             </div>
           </div>
-        </Section>
+        </section>
 
-        <Section className="pt-0">
-          <CtaBand title="Need clarification?" description="Contact support before beginning paid work." primaryAction={{ href: '/contact', label: 'Contact Support' }} secondaryAction={{ href: '/guardian-guide', label: 'Guardian Guide' }} />
-        </Section>
-      </MarketingShell>
+        <section className="relative isolate mx-auto my-24 max-w-[1300px] overflow-hidden rounded-[3rem] border border-white/10 bg-[#090e1a] px-6 py-24 shadow-[0_40px_100px_rgba(0,0,0,0.6)] sm:my-32 sm:px-16 sm:py-32">
+          <div className="pointer-events-none absolute inset-0"><div className="absolute -left-[20%] top-[10%] h-[600px] w-[600px] rounded-full bg-indigo-600/10 blur-[150px]" /><div className="absolute -right-[20%] bottom-[10%] h-[600px] w-[600px] rounded-full bg-fuchsia-600/10 blur-[150px]" /></div>
+          <div className="tv-reveal relative z-10 mx-auto max-w-3xl text-center"><h2 className="text-4xl font-black tracking-tight text-white sm:text-5xl">{"Safety roadmap for teen work."}</h2><p className="mt-6 text-xl leading-relaxed text-slate-400">{"The safer the foundation, the more confidently teens, guardians, and clients can participate."}</p></div>
+          <div className="relative z-10 mt-16 grid grid-cols-1 gap-6 lg:mt-20 lg:grid-cols-2 lg:gap-12">
+            {roadmapSteps.map((step, i) => (<div key={i} className={`tv-card-motion tv-reveal relative overflow-hidden rounded-[2rem] border p-7 backdrop-blur-2xl transition-all hover:z-10 hover:shadow-2xl sm:rounded-[2.5rem] sm:p-12 ${step.theme === 'indigo' ? 'border-indigo-500/20 bg-indigo-950/20' : 'border-fuchsia-500/20 bg-fuchsia-950/20'}`}><div className="flex items-center gap-5 border-b border-white/10 pb-6"><div className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl ${step.theme === 'indigo' ? 'bg-indigo-500/20' : 'bg-fuchsia-500/20'}`}>{step.icon}</div><h3 className="text-3xl font-black text-white">{step.title}</h3></div><ul className="mt-8 flex flex-col gap-6">{step.points.map((point, idx) => (<li key={idx} className="flex items-start gap-4"><div className={`mt-1.5 h-2 w-2 shrink-0 rounded-full ${step.theme === 'indigo' ? 'bg-indigo-400' : 'bg-fuchsia-400'}`} /><span className="text-lg leading-relaxed text-slate-300">{point}</span></li>))}</ul></div>))}
+          </div>
+          <div className="tv-reveal relative z-10 mt-12 rounded-[2rem] border border-rose-500/20 bg-rose-950/20 p-10 backdrop-blur-md"><div className="flex flex-col items-start gap-8 sm:flex-row sm:items-center"><div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-rose-500/20 text-rose-400"><AlertTriangle className="h-8 w-8" /></div><div><h4 className="text-2xl font-black text-white">{"Safety Principle"}</h4><p className="mt-2 text-lg text-slate-400">{"Teen online work should never depend on blind trust. It needs consent, moderation, reporting, identity checks, and payment protection."}</p></div></div></div>
+        </section>
+
+        <section className="relative overflow-hidden bg-gradient-to-t from-[#0f172a] to-[#030712] px-6 py-24 text-center sm:py-32">
+          <div className="tv-reveal relative z-10 mx-auto max-w-4xl"><h2 className="text-4xl font-black tracking-tight text-white sm:text-6xl">{"Build opportunity on top of safety."}</h2><p className="mx-auto mt-8 max-w-2xl text-xl leading-relaxed text-slate-400">{"TeenVerseHub is built to help teenagers grow in the digital economy while guardians, clients, and platform systems stay part of the trust layer."}</p><div className="mt-12 flex flex-col items-center justify-center gap-6 sm:flex-row"><a href={SITE.appUrl} className="inline-flex w-full items-center justify-center gap-3 rounded-full bg-indigo-500 px-10 py-5 text-lg font-black text-white transition-all hover:bg-indigo-400 hover:shadow-[0_0_40px_rgba(99,102,241,0.4)] active:scale-95 sm:w-auto">{"Open the Platform"}</a><a href={"/guardian-guide"} className="inline-flex w-full items-center justify-center gap-3 rounded-full border border-white/20 bg-white/5 px-10 py-5 text-lg font-bold text-white backdrop-blur-lg transition-colors hover:bg-white/10 sm:w-auto">{"Guardian Guide"}</a></div></div>
+        </section>
+      </main>
+
+      <SiteFooter />
     </>
   )
 }

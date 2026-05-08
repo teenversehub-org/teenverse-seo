@@ -3,7 +3,7 @@
 import { cloneElement, isValidElement, useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowRight, Check, Plus, Zap } from 'lucide-react'
+import { ArrowRight, Check, Plus, Zap, Sparkles, MoveRight, ArrowUpRight } from 'lucide-react'
 import {
   motion,
   useMotionValue,
@@ -11,7 +11,6 @@ import {
   useTransform,
   animate,
   AnimatePresence,
-  useScroll,
 } from 'framer-motion'
 
 // ─── UTILITIES ────────────────────────────────────────────────────────────────
@@ -21,122 +20,15 @@ function isExternal(href) { return href?.startsWith('http') || href?.startsWith(
 // ─── VARIANTS ─────────────────────────────────────────────────────────────────
 const STAGGER = {
   hidden: { opacity: 0 },
-  show: { opacity: 1, transition: { staggerChildren: 0.1, delayChildren: 0.06 } },
+  show: { opacity: 1, transition: { staggerChildren: 0.1, delayChildren: 0.05 } },
 }
 const RISE = {
-  hidden: { opacity: 0, y: 32 },
-  show: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 200, damping: 26 } },
+  hidden: { opacity: 0, y: 40, scale: 0.98 },
+  show: { opacity: 1, y: 0, scale: 1, transition: { type: 'spring', stiffness: 150, damping: 20 } },
 }
 const FADE = {
-  hidden: { opacity: 0, y: 16 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] } },
-}
-
-// ─── GLOBAL STYLES ────────────────────────────────────────────────────────────
-export function GlobalStyles() {
-  return (
-    <style>{`
-      @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap');
-
-      :root {
-        --bg:           #f8f7f4;
-        --bg-card:      rgba(255,255,255,0.8);
-        --bg-card-h:    rgba(255,255,255,0.97);
-        --border:       rgba(0,0,0,0.07);
-        --border-mid:   rgba(0,0,0,0.11);
-
-        /* General Gradients */
-        --grad-hero:      linear-gradient(135deg, #0e0e14 0%, #3730a3 100%);
-        --grad-features:  linear-gradient(135deg, #0c1a2e 0%, #1d4ed8 100%);
-        --grad-cta:       linear-gradient(135deg, #fff 0%, #c7d2fe 100%);
-
-        --indigo:   #4338ca;
-        --indigo-l: #818cf8;
-        --blue:     #2563eb;
-      }
-
-      .dark {
-        --bg:         #09090f;
-        --bg-card:    rgba(20,18,35,0.75);
-        --bg-card-h:  rgba(28,24,48,0.9);
-        --border:     rgba(255,255,255,0.07);
-        --border-mid: rgba(255,255,255,0.12);
-        
-        /* General Gradients */
-        --grad-features: linear-gradient(135deg, #fff 0%, #bae6fd 100%);
-        --grad-cta:      linear-gradient(135deg, #fff 0%, #c7d2fe 100%);
-      }
-
-      html { scroll-behavior: smooth }
-
-      body {
-        font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
-        background: var(--bg);
-        color: #0e0e14; /* Fallback */
-        -webkit-font-smoothing: antialiased;
-        background-image:
-          radial-gradient(ellipse 70% 55% at 15% 0%, rgba(99,102,241,0.07) 0%, transparent 65%),
-          radial-gradient(ellipse 60% 45% at 85% 100%, rgba(251,191,36,0.04) 0%, transparent 60%);
-        background-attachment: fixed;
-      }
-      
-      /* Force body color in dark mode natively */
-      .dark body { color: #f0eeff; }
-
-      h1,h2,h3,h4 {
-        font-family: 'Fraunces', Georgia, serif;
-        letter-spacing: -0.025em;
-      }
-
-      /* ─── H1 Custom Line Gradient Styling ─── */
-      .hero-title {
-        /* Light Mode: Sky Blue to Purple-Red */
-        background: linear-gradient(135deg, #38bdf8 0%, #c026d3 100%); 
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        color: transparent;
-      }
-      .hero-title::first-line {
-        /* Light Mode: First line Black */
-        -webkit-text-fill-color: #0e0e14;
-        color: #0e0e14;
-      }
-      
-      .dark .hero-title {
-        /* Dark Mode: Neon Lime to Green */
-        background: linear-gradient(135deg, #ccff00 0%, #22c55e 100%); 
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        color: transparent;
-      }
-      .dark .hero-title::first-line {
-        /* Dark Mode: First line White */
-        -webkit-text-fill-color: #ffffff;
-        color: #ffffff;
-      }
-
-      /* gradient text helpers */
-      .g-hero { background: var(--grad-hero); -webkit-background-clip: text; background-clip: text; color: transparent; display: inline }
-      .g-feat { background: var(--grad-features); -webkit-background-clip: text; background-clip: text; color: transparent; display: inline }
-      .g-cta  { background: var(--grad-cta);  -webkit-background-clip: text; background-clip: text; color: transparent; display: inline }
-
-      @keyframes pulse-dot { 0%,100% { opacity:0.5; transform:scale(1) } 50% { opacity:1; transform:scale(1.4) } }
-      @keyframes shimmer { 0% { background-position:-200% center } 100% { background-position:200% center } }
-
-      .dot-pulse { animation: pulse-dot 2.4s ease-in-out infinite }
-      .shimmer-btn { background-size: 250% auto; animation: shimmer 3.5s linear infinite }
-
-      p { margin: 0 }
-      img,svg,video { display:block; max-width:100% }
-      ::selection { background: rgba(99,102,241,0.14); color: inherit }
-      *:focus-visible { outline: 2px solid rgba(99,102,241,0.65); outline-offset: 3px }
-      ::-webkit-scrollbar { width: 8px }
-      ::-webkit-scrollbar-track { background: transparent }
-      ::-webkit-scrollbar-thumb { background: rgba(99,102,241,0.18); border-radius: 999px; border: 2px solid var(--bg) }
-      ::-webkit-scrollbar-thumb:hover { background: rgba(99,102,241,0.32) }
-    `}</style>
-  )
+  hidden: { opacity: 0, filter: 'blur(10px)' },
+  show: { opacity: 1, filter: 'blur(0px)', transition: { duration: 0.5, ease: 'easeOut' } },
 }
 
 // ─── ANIMATED COUNTER ─────────────────────────────────────────────────────────
@@ -155,16 +47,22 @@ function AnimCounter({ value, duration = 2 }) {
     })
     return () => ctrl.stop()
   }, [value, duration])
-  return <span className="tabular-nums">{disp}</span>
+  return <span className="tabular-nums tracking-tighter">{disp}</span>
 }
 
-// ─── SPOTLIGHT CARD (hover glow) ──────────────────────────────────────────────
+// ─── HIGH-END SPOTLIGHT GLASS CARD ────────────────────────────────────────────
 export function SpotlightCard({ children, className = '' }) {
   const mx = useMotionValue(0)
   const my = useMotionValue(0)
   return (
     <motion.div
-      className={cx('group relative overflow-hidden', className)}
+      className={cx(
+        'group relative overflow-hidden backdrop-blur-2xl rounded-[2rem]',
+        'bg-white/40 dark:bg-[#141414]/40',
+        'border border-white/50 dark:border-white/10',
+        'shadow-[0_8px_32px_0_rgba(31,38,135,0.07)] dark:shadow-[0_8px_32px_0_rgba(0,0,0,0.5)]',
+        className
+      )}
       onMouseMove={({ currentTarget, clientX, clientY }) => {
         const { left, top } = currentTarget.getBoundingClientRect()
         mx.set(clientX - left)
@@ -173,11 +71,11 @@ export function SpotlightCard({ children, className = '' }) {
       variants={RISE}
     >
       <motion.div
-        className="pointer-events-none absolute -inset-px rounded-[inherit] opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+        className="pointer-events-none absolute -inset-px rounded-[inherit] opacity-0 transition-opacity duration-500 group-hover:opacity-100 mix-blend-overlay"
         style={{
           background: useTransform(
             [mx, my],
-            ([x, y]) => `radial-gradient(420px circle at ${x}px ${y}px, rgba(99,102,241,0.1), transparent 72%)`
+            ([x, y]) => `radial-gradient(600px circle at ${x}px ${y}px, rgba(255,255,255,0.2), transparent 40%)`
           ),
         }}
       />
@@ -186,12 +84,12 @@ export function SpotlightCard({ children, className = '' }) {
   )
 }
 
-// ─── TILT CARD ────────────────────────────────────────────────────────────────
-export function TiltCard({ children, className = '', intensity = 10 }) {
+// ─── NEO-BRUTALIST TILT CARD ──────────────────────────────────────────────────
+export function TiltCard({ children, className = '', intensity = 15 }) {
   const ref = useRef(null)
   const x = useMotionValue(0.5)
   const y = useMotionValue(0.5)
-  const cfg = { damping: 24, stiffness: 280, mass: 0.5 }
+  const cfg = { damping: 20, stiffness: 200, mass: 0.5 }
   const xs = useSpring(x, cfg)
   const ys = useSpring(y, cfg)
   const rX = useTransform(ys, [0, 1], [intensity, -intensity])
@@ -207,7 +105,7 @@ export function TiltCard({ children, className = '', intensity = 10 }) {
       }}
       onMouseLeave={() => { x.set(0.5); y.set(0.5) }}
       style={{ rotateX: rX, rotateY: rY, transformStyle: 'preserve-3d' }}
-      whileHover={{ scale: 1.015 }}
+      whileHover={{ scale: 1.02 }}
       className={cx('relative', className)}
     >
       {children}
@@ -215,106 +113,83 @@ export function TiltCard({ children, className = '', intensity = 10 }) {
   )
 }
 
-// ─── ACTION LINK ──────────────────────────────────────────────────────────────
-export function ActionLink({ href = '#', children, variant = 'primary', className = '' }) {
-  const base = 'group inline-flex min-h-[3rem] items-center justify-center gap-2.5 rounded-full px-7 py-3 text-[14.5px] font-semibold tracking-tight transition-all duration-300'
+// ─── NEXT-GEN ACTION LINK (HYBRID STYLES) ─────────────────────────────────────
+export function ActionLink({ href = '#', children, variant = 'brutal', className = '' }) {
   const styles = {
-    primary: cx(
-      base,
-      'text-white shimmer-btn',
-      'bg-[linear-gradient(135deg,#3730a3,#4f46e5,#818cf8,#3730a3)]',
-      'shadow-[0_6px_24px_-6px_rgba(67,56,202,0.55)]',
-      'hover:shadow-[0_10px_32px_-6px_rgba(67,56,202,0.7)] hover:-translate-y-0.5',
+    // Neo-Brutalist Solid Button
+    brutal: cx(
+      'group relative inline-flex items-center justify-center gap-2 px-8 py-4 text-base font-bold uppercase tracking-wide transition-all duration-200',
+      'bg-[#ccff00] dark:bg-[#ccff00] text-black border-2 border-black dark:border-white rounded-xl',
+      'shadow-[6px_6px_0_0_#000] dark:shadow-[6px_6px_0_0_#fff]',
+      'hover:shadow-[2px_2px_0_0_#000] dark:hover:shadow-[2px_2px_0_0_#fff] hover:translate-x-1 hover:translate-y-1'
     ),
-    secondary: cx(
-      base,
-      'bg-[var(--bg-card)] text-slate-900 dark:text-white ring-1 ring-[var(--border-mid)] backdrop-blur-xl',
-      'hover:bg-[var(--bg-card-h)] hover:ring-[rgba(99,102,241,0.35)] hover:shadow-md hover:-translate-y-0.5',
+    // High-End Glass Button
+    glass: cx(
+      'group relative inline-flex items-center justify-center gap-2 px-8 py-4 text-base font-bold transition-all duration-300',
+      'bg-white/5 backdrop-blur-md border border-zinc-300/50 dark:border-white/20 text-zinc-900 dark:text-zinc-50 rounded-full',
+      'hover:bg-white/20 dark:hover:bg-white/10 hover:border-zinc-400 dark:hover:border-white/40 shadow-[0_4px_24px_rgba(0,0,0,0.1)] dark:shadow-[0_4px_24px_rgba(0,0,0,0.3)]'
     ),
     ghost: cx(
-      'group inline-flex items-center gap-1.5 text-[14px] font-semibold',
-      'bg-gradient-to-r from-[var(--indigo)] to-[var(--blue)] bg-clip-text text-transparent',
+      'group inline-flex items-center gap-2 text-base font-bold text-zinc-900 dark:text-zinc-50 hover:text-pink-600 dark:hover:text-[#ccff00] transition-colors'
     ),
   }
   const isExt = isExternal(href)
   const Comp = isExt ? 'a' : Link
   return (
-    <motion.div whileTap={{ scale: 0.96 }} className="inline-flex">
-      <Comp href={href} className={cx(styles[variant], className)}>
-        {children}
-        <ArrowRight className={cx(
-          'h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1',
-          variant === 'ghost' ? 'text-[var(--blue)]' : ''
-        )} />
-      </Comp>
-    </motion.div>
+    <Comp href={href} className={cx(styles[variant], className)}>
+      {children}
+      {variant === 'ghost' ? (
+        <MoveRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+      ) : (
+        <ArrowUpRight className="h-5 w-5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+      )}
+    </Comp>
   )
 }
 
-// ─── SECTION ──────────────────────────────────────────────────────────────────
+// ─── SECTION WRAPPER ──────────────────────────────────────────────────────────
 export function Section({ id, className = '', children }) {
   return (
     <section id={id} className={cx('relative isolate overflow-hidden px-6 py-24 sm:px-10 lg:px-16 lg:py-32', className)}>
-      <div className="mx-auto flex w-full max-w-[1160px] flex-col items-center">{children}</div>
+      <div className="mx-auto flex w-full max-w-[1280px] flex-col items-center">{children}</div>
     </section>
   )
 }
 
-// ─── EYEBROW ──────────────────────────────────────────────────────────────────
+// ─── BRUTALIST EYEBROW ────────────────────────────────────────────────────────
 function Eyebrow({ children }) {
   return (
-    <motion.span variants={RISE} className={cx(
-      'mb-6 inline-flex items-center gap-2.5 rounded-full px-4 py-1.5',
-      'text-[11px] font-bold uppercase tracking-[0.25em] text-indigo-600',
-      'bg-white/85 ring-1 ring-[var(--border-mid)] backdrop-blur-xl shadow-sm',
-      'dark:bg-white/5 dark:text-indigo-400 dark:ring-white/10',
-    )}>
-      <span className="h-1.5 w-1.5 rounded-full bg-indigo-500 dot-pulse" />
-      {children}
-    </motion.span>
+    <motion.div variants={RISE} className="mb-6 inline-block">
+      <div className="font-mono inline-flex items-center gap-2 border-2 border-black dark:border-white bg-purple-700 dark:bg-[#ccff00] px-4 py-1.5 text-xs font-bold uppercase text-white dark:text-black shadow-[4px_4px_0_0_#000] dark:shadow-[4px_4px_0_0_#fff] rounded-sm">
+        <Sparkles className="h-3 w-3" />
+        {children}
+      </div>
+    </motion.div>
   )
 }
 
 // ─── SECTION HEADING ──────────────────────────────────────────────────────────
-export function SectionHeading({ eyebrow, title, description, align = 'center', page = 'hero' }) {
-  // Map page names to specific gradient classes defined in globals.css
-  const pageClass = {
-    hero: '',
-    features: 'feat',
-    cta: 'cta',
-    faq: 'faq'
-  }[page] || ''
-
+export function SectionHeading({ eyebrow, title, description, align = 'center' }) {
   const isCentered = align === 'center'
-  
   return (
     <motion.div
       initial="hidden" whileInView="show" viewport={{ once: true, margin: '-80px' }}
       variants={STAGGER}
-      className={cx('w-full', isCentered ? 'mx-auto max-w-[760px] text-center' : 'max-w-[640px]')}
+      className={cx('w-full relative z-10', isCentered ? 'mx-auto max-w-[800px] text-center' : 'max-w-[700px]')}
     >
       {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
-      
       <motion.h2 
         variants={RISE} 
-        className={cx(
-          'section-title', // Custom CSS Class for First-Line logic
-          pageClass,       // Modifier for specific gradients (feat, cta, faq)
-          'text-[2.4rem] font-bold leading-[1.06] sm:text-5xl lg:text-[3.2rem]',
-          '[text-wrap:balance]',
-        )}
+        className="text-5xl font-black leading-[0.95] tracking-tighter md:text-6xl lg:text-7xl text-zinc-900 dark:text-white [text-wrap:balance]"
       >
         {title}
       </motion.h2>
-
       {description && (
         <motion.p 
           variants={FADE} 
           className={cx(
-            'mt-5 text-[1.05rem] leading-[1.9]',
-            /* Force secondary text color using your DM Sans tokens */
-            'text-[#4a455c] dark:text-[#fcfbff]', 
-            isCentered ? 'mx-auto max-w-xl' : 'max-w-lg',
+            'mt-6 text-lg md:text-xl font-medium leading-relaxed text-zinc-600 dark:text-zinc-400',
+            isCentered ? 'mx-auto max-w-2xl' : 'max-w-xl'
           )}
         >
           {description}
@@ -324,132 +199,105 @@ export function SectionHeading({ eyebrow, title, description, align = 'center', 
   )
 }
 
-// ─── HERO ─────────────────────────────────────────────────────────────────────
+// ─── HERO (Hybrid GenZ Aesthetic) ─────────────────────────────────────────────
 export function Hero({ eyebrow, title, description, primaryAction, secondaryAction, proof = [], image, imageAlt, children }) {
-  const { scrollY } = useScroll()
-  const blobY = useTransform(scrollY, [0, 600], [0, 100])
-
   return (
-    <section className="relative isolate overflow-hidden px-6 pb-24 pt-32 sm:px-10 lg:px-16 lg:pb-32 lg:pt-48">
-      {/* Ambient blobs – Colors forced to match the H1 gradient themes */}
-      <div className="pointer-events-none absolute inset-0 -z-10">
-        <motion.div style={{ y: blobY }}
-          className="absolute -top-24 left-[10%] h-[480px] w-[480px] rounded-full bg-sky-400/10 dark:bg-[#ccff00]/10 blur-[120px]" />
-        <motion.div style={{ y: blobY }}
-          className="absolute top-0 right-[5%] h-[360px] w-[360px] rounded-full bg-pink-500/10 dark:bg-green-500/10 blur-[100px]" />
+    <section className="relative isolate min-h-[90vh] flex items-center justify-center overflow-hidden bg-zinc-100 dark:bg-[#050505] px-6 pt-32 pb-24 sm:px-10 lg:px-16 transition-colors duration-500">
+      
+      {/* Dynamic Background Blurs with Framer Motion (Replaces CSS animations) */}
+      <div className="pointer-events-none absolute inset-0 -z-10 flex items-center justify-center">
+        <motion.div 
+          animate={{ y: [0, -20, 0] }}
+          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute h-[60vw] w-[60vw] max-h-[800px] max-w-[800px] rounded-full bg-pink-600 dark:bg-purple-600 opacity-10 dark:opacity-20 blur-[100px] mix-blend-screen" 
+        />
+        <motion.div 
+          animate={{ y: [0, 20, 0] }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+          className="absolute right-0 top-0 h-[40vw] w-[40vw] max-h-[500px] max-w-[500px] rounded-full bg-purple-700 dark:bg-[#ccff00] opacity-10 dark:opacity-10 blur-[100px]" 
+        />
       </div>
 
       <motion.div
         initial="hidden" animate="show" variants={STAGGER}
         className={cx(
-          'relative mx-auto w-full max-w-[1160px]',
-          image
-            ? 'grid gap-14 lg:grid-cols-[1.1fr_0.9fr] lg:items-center'
-            : 'flex flex-col items-center text-center',
+          'relative z-10 mx-auto w-full max-w-[1280px]',
+          image ? 'grid gap-12 lg:grid-cols-[1.2fr_0.8fr] lg:items-center' : 'flex flex-col items-center text-center'
         )}
       >
-        <div className={cx('w-full', image ? 'max-w-[600px] lg:mx-0' : 'mx-auto max-w-5xl')}>
+        <div className={cx('w-full', image ? 'max-w-[700px] lg:mx-0' : 'mx-auto max-w-5xl')}>
+          {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
 
-          {/* Eyebrow */}
-          {eyebrow && (
-            <motion.div variants={RISE} className={cx(
-              'mb-8 inline-flex items-center gap-2.5 rounded-full px-4 py-2',
-              'text-[11px] font-bold uppercase tracking-[0.25em] text-indigo-600',
-              'bg-white/90 ring-1 ring-[var(--border-mid)] backdrop-blur-xl shadow-sm',
-              'dark:bg-white/5 dark:text-indigo-400 dark:ring-white/10',
-            )}>
-              <span className="h-1.5 w-1.5 rounded-full bg-indigo-500 dot-pulse" />
-              {eyebrow}
-            </motion.div>
-          )}
+          <motion.h1 
+            variants={RISE} 
+            className={cx(
+              'font-black leading-[0.9] tracking-tighter',
+              'text-[4rem] sm:text-[5.5rem] lg:text-[7rem]',
+              '[text-wrap:balance]',
+              'text-transparent bg-clip-text bg-gradient-to-br from-zinc-900 to-pink-600 dark:from-white dark:to-purple-500',
+              !image && 'mx-auto'
+            )}
+          >
+            {title}
+          </motion.h1>
 
-          {/* H1 — First line solid, subsequent lines gradient */}
-<motion.h1 
-  variants={RISE} 
-  className={cx(
-    'hero-title', // This triggers the CSS we wrote above
-    'font-bold leading-[1.03]',
-    'text-[3.4rem] sm:text-[4.4rem] lg:text-[5.6rem]',
-    '[text-wrap:balance]',
-    image ? 'max-w-[14ch]' : 'mx-auto max-w-[16ch]',
-  )}
->
-  {title}
-</motion.h1>
+          <motion.p 
+            variants={FADE} 
+            className={cx(
+              'mt-8 text-xl sm:text-2xl font-medium leading-relaxed text-zinc-600 dark:text-zinc-400',
+              !image && 'mx-auto max-w-3xl'
+            )}
+          >
+            {description}
+          </motion.p>
 
-          {/* Description — Fixed using the .hero-description class */}
-<motion.p 
-  variants={FADE} 
-  className={cx(
-    'hero-description mt-7 text-[1.12rem] leading-[1.9]',
-    image ? 'max-w-[500px]' : 'mx-auto max-w-[600px]',
-  )}
->
-  {description}
-</motion.p>
-
-          {/* CTAs */}
           <motion.div variants={FADE} className={cx(
-            'mt-10 flex flex-col gap-3.5 sm:flex-row',
-            image ? 'lg:justify-start' : 'justify-center',
+            'mt-10 flex flex-col gap-4 sm:flex-row',
+            image ? 'lg:justify-start' : 'justify-center'
           )}>
-            <ActionLink href={primaryAction.href}>{primaryAction.label}</ActionLink>
+            <ActionLink variant="brutal" href={primaryAction.href}>{primaryAction.label}</ActionLink>
             {secondaryAction && (
-              <ActionLink href={secondaryAction.href} variant="secondary">{secondaryAction.label}</ActionLink>
+              <ActionLink variant="glass" href={secondaryAction.href}>{secondaryAction.label}</ActionLink>
             )}
           </motion.div>
 
-          {/* Proof pills */}
+          {/* Brutalist Proof Tags */}
           {proof.length > 0 && (
-            <motion.ul variants={STAGGER} className={cx(
-              'mt-12 grid gap-3 text-sm',
-              proof.length >= 3 ? 'sm:grid-cols-3' : 'sm:grid-cols-2',
-              image ? '' : 'max-w-3xl mx-auto',
+            <motion.div variants={STAGGER} className={cx(
+              'mt-12 flex flex-wrap gap-3',
+              image ? 'justify-start' : 'justify-center max-w-3xl mx-auto'
             )}>
               {proof.map(item => (
-                <motion.li variants={RISE} key={item} className={cx(
-                  'flex items-center gap-3 rounded-2xl px-4 py-3.5',
-                  'bg-white/70 text-slate-900 font-medium ring-1 ring-[var(--border)] backdrop-blur-lg',
-                  'dark:bg-white/4 dark:text-slate-200 dark:ring-white/7', // FIXED TO NATIVE TAILWIND
-                )}>
-                  <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-indigo-100 dark:bg-indigo-900/40">
-                    <Check className="h-3 w-3 text-indigo-600 dark:text-indigo-400" strokeWidth={3} />
-                  </span>
+                <motion.span variants={RISE} key={item} className="font-mono inline-flex items-center gap-2 rounded-full border border-black dark:border-white bg-zinc-100 dark:bg-black px-4 py-2 text-sm font-bold shadow-[2px_2px_0_0_#000] dark:shadow-[2px_2px_0_0_#fff] text-zinc-900 dark:text-white">
+                  <Check className="h-4 w-4 text-pink-600 dark:text-[#ccff00]" strokeWidth={3} />
                   {item}
-                </motion.li>
+                </motion.span>
               ))}
-            </motion.ul>
+            </motion.div>
           )}
           {children}
         </div>
 
-        {/* Hero image — Pushed to the right using translations */}
+        {/* Hero Image (Glass/Brutal Mix) */}
         {image && (
-          <motion.div variants={RISE} className="mx-auto w-full max-w-lg lg:justify-self-end lg:translate-x-10 xl:translate-x-16">
-            <TiltCard intensity={10}>
-              <div className={cx(
-                'relative overflow-hidden p-[2px]',
-                'rounded-[52px]',
-                'bg-[linear-gradient(135deg,#4338ca,#818cf8,#6366f1)]',
-                'shadow-[0_24px_64px_-12px_rgba(67,56,202,0.4)]',
-              )}>
-                <div className={cx(
-                  'relative overflow-hidden rounded-[50px]',
-                  'bg-white/50 p-2.5 backdrop-blur-2xl dark:bg-[#09090f]/90',
-                )}>
-                  <div className="flex items-center gap-1.5 px-3 py-2">
-                    <span className="h-2 w-2 rounded-full bg-red-400" />
-                    <span className="h-2 w-2 rounded-full bg-amber-400" />
-                    <span className="h-2 w-2 rounded-full bg-green-400" />
-                  </div>
-                  <div className="overflow-hidden rounded-[42px] bg-[#09090f]">
-                    <Image
-                      src={image} alt={imageAlt}
-                      width={1200} height={900}
-                      className="h-[300px] w-full object-cover transition-transform duration-700 hover:scale-105 sm:h-[400px] lg:h-[480px]"
-                      loading="lazy"
-                    />
-                  </div>
+          <motion.div variants={RISE} className="mx-auto w-full max-w-lg lg:max-w-none">
+            <TiltCard intensity={5}>
+              <div className="relative rounded-[2rem] border-4 border-black dark:border-white bg-zinc-100 dark:bg-[#050505] p-2 shadow-[8px_8px_0_0_#000] dark:shadow-[8px_8px_0_0_#fff]">
+                {/* Fake Browser Top */}
+                <div className="flex items-center gap-2 border-b-4 border-black dark:border-white pb-2 pt-1 px-3">
+                  <span className="h-3 w-3 rounded-full bg-red-500 border border-black dark:border-black" />
+                  <span className="h-3 w-3 rounded-full bg-yellow-400 border border-black dark:border-black" />
+                  <span className="h-3 w-3 rounded-full bg-green-500 border border-black dark:border-black" />
+                </div>
+                <div className="overflow-hidden rounded-b-xl relative">
+                  {/* Glass overlay over image */}
+                  <div className="absolute inset-0 bg-gradient-to-tr from-white/10 to-transparent mix-blend-overlay z-10 pointer-events-none" />
+                  <Image
+                    src={image} alt={imageAlt}
+                    width={1000} height={800}
+                    className="h-auto w-full object-cover grayscale-[20%] contrast-125 transition-transform duration-700 hover:scale-105 hover:grayscale-0"
+                    priority
+                  />
                 </div>
               </div>
             </TiltCard>
@@ -460,195 +308,128 @@ export function Hero({ eyebrow, title, description, primaryAction, secondaryActi
   )
 }
 
-// ─── FEATURE BENTO ────────────────────────────────────────────────────────────
+// ─── FEATURE BENTO (Glass + Brutal Mix) ───────────────────────────────────────
 export function FeatureBentoSection({ bigCard, smallCards }) {
   return (
-    <section className="relative isolate overflow-hidden px-6 py-24 sm:px-10 lg:px-16 lg:py-32">
+    <section className="relative isolate overflow-hidden px-6 py-24 sm:px-10 lg:px-16 bg-zinc-100 dark:bg-[#050505]">
       <motion.div
         initial="hidden" whileInView="show" viewport={{ once: true, margin: '-80px' }}
         variants={STAGGER}
-        className="mx-auto w-full max-w-[1160px]"
+        className="mx-auto w-full max-w-[1280px]"
       >
-        <div className="grid grid-cols-1 gap-5 lg:grid-cols-12 lg:gap-6">
-
-          {/* Big card – deep indigo */}
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-12 lg:gap-8">
+          
+          {/* Big Card - Neo Brutalist Solid */}
           <motion.div variants={RISE} className="flex flex-col lg:col-span-5">
-            <div className={cx(
-              'group relative flex h-full flex-col justify-between overflow-hidden',
-              'rounded-[40px] p-9 sm:p-11',
-              'bg-[linear-gradient(150deg,#1e1b4b_0%,#1e1440_40%,#0c1220_100%)]',
-              'ring-1 ring-white/8 shadow-[0_32px_64px_-16px_rgba(67,56,202,0.4)]',
-              'transition-all duration-500 hover:-translate-y-1.5 hover:shadow-[0_40px_80px_-16px_rgba(67,56,202,0.55)]',
-            )}>
-              {/* Inner glow */}
-              <div className="pointer-events-none absolute -top-16 -left-8 h-64 w-64 rounded-full bg-indigo-500/10 blur-[80px]" />
-
+            <div className="group relative flex h-full flex-col justify-between overflow-hidden rounded-[2.5rem] border-4 border-black dark:border-white bg-pink-600 dark:bg-purple-700 p-10 shadow-[8px_8px_0_0_#000] dark:shadow-[8px_8px_0_0_#fff] transition-transform hover:-translate-y-2 hover:shadow-[12px_12px_0_0_#000] dark:hover:shadow-[12px_12px_0_0_#fff]">
               <div className="relative z-10">
-                <span className={cx(
-                  'mb-7 inline-flex items-center gap-2 rounded-full px-3.5 py-1',
-                  'text-[10px] font-bold uppercase tracking-[0.28em] text-indigo-300',
-                  'bg-white/7 ring-1 ring-white/12',
-                )}>
-                  <span className="h-1.5 w-1.5 rounded-full bg-indigo-400" />
+                <span className="font-mono mb-6 inline-block bg-black px-4 py-1 text-sm font-bold uppercase text-white shadow-[4px_4px_0_0_#fff] dark:shadow-[4px_4px_0_0_#000]">
                   {bigCard?.eyebrow || 'Feature'}
                 </span>
-                <h2 className="text-[1.9rem] font-bold leading-[1.1] text-white sm:text-[2.1rem]">
+                <h2 className="mt-4 text-4xl font-black leading-tight text-white md:text-5xl">
                   {bigCard?.title}
                 </h2>
-                <p className="mt-4 text-[1rem] leading-[1.85] text-indigo-200/70">
+                <p className="mt-6 text-lg font-medium text-white/90">
                   {bigCard?.description}
                 </p>
                 {bigCard?.points && (
-                  <ul className="mt-7 space-y-3.5">
+                  <ul className="mt-8 space-y-4">
                     {bigCard.points.map((pt, i) => (
-                      <motion.li whileHover={{ x: 4 }} key={i}
-                        className="flex items-start gap-3.5 text-[0.93rem] leading-[1.8] text-indigo-100/80">
-                        <span className="mt-1.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-indigo-500/25 ring-1 ring-indigo-400/30">
-                          <Zap className="h-2.5 w-2.5 text-indigo-400" />
-                        </span>
+                      <li key={i} className="flex items-start gap-4 text-lg font-bold text-white">
+                        <Zap className="mt-1 h-6 w-6 shrink-0 fill-yellow-400 text-black" />
                         {pt}
-                      </motion.li>
+                      </li>
                     ))}
                   </ul>
                 )}
               </div>
-
-              <div className="relative z-10 mt-9">
-                <ActionLink href={bigCard?.link?.href || '#'}>{bigCard?.link?.label || 'Learn more'}</ActionLink>
+              <div className="relative z-10 mt-12">
+                <ActionLink variant="brutal" href={bigCard?.link?.href || '#'}>{bigCard?.link?.label || 'Learn more'}</ActionLink>
               </div>
             </div>
           </motion.div>
 
-          {/* Small cards – frosted glass */}
+          {/* Small Cards - Deep Glassmorphism */}
           <div className="lg:col-span-7">
-            <div className="grid h-full grid-cols-1 gap-5 sm:grid-cols-2">
+            <div className="grid h-full grid-cols-1 gap-6 sm:grid-cols-2">
               {smallCards.map((item, index) => {
                 const Icon = item.icon
                 const icon = isValidElement(Icon)
-                  ? cloneElement(Icon, { className: 'h-5 w-5' })
-                  : Icon ? <Icon className="h-5 w-5" /> : null
-
-                const accents = [
-                  { bg: 'bg-indigo-50 dark:bg-indigo-900/25 ring-indigo-100 dark:ring-indigo-500/15', color: 'text-indigo-600 dark:text-indigo-400' },
-                  { bg: 'bg-sky-50 dark:bg-sky-900/25 ring-sky-100 dark:ring-sky-500/15',              color: 'text-sky-600 dark:text-sky-400' },
-                  { bg: 'bg-amber-50 dark:bg-amber-900/25 ring-amber-100 dark:ring-amber-500/15',   color: 'text-amber-600 dark:text-amber-400' },
-                  { bg: 'bg-emerald-50 dark:bg-emerald-900/25 ring-emerald-100 dark:ring-emerald-500/15', color: 'text-emerald-600 dark:text-emerald-400' },
-                ]
-                const a = accents[index % accents.length]
+                  ? cloneElement(Icon, { className: 'h-6 w-6 text-pink-600 dark:text-[#ccff00]' })
+                  : Icon ? <Icon className="h-6 w-6 text-pink-600 dark:text-[#ccff00]" /> : null
 
                 return (
-                  <SpotlightCard key={index} className={cx(
-                    'flex h-full flex-col rounded-[30px] p-7',
-                    'bg-white/70 ring-1 ring-[var(--border)] shadow-sm backdrop-blur-2xl',
-                    'transition-all duration-400 hover:-translate-y-1.5 hover:bg-white/90 hover:shadow-lg',
-                    'dark:bg-[rgba(24,18,42,0.65)] dark:ring-white/7 dark:hover:bg-[rgba(32,24,56,0.8)]',
-                    index % 2 !== 0 && 'sm:mt-8',
-                  )}>
+                  <SpotlightCard key={index} className={cx('flex flex-col p-8', index % 2 !== 0 && 'sm:mt-12')}>
                     {icon && (
-                      <div className={cx(
-                        'mb-5 flex h-11 w-11 shrink-0 items-center justify-center rounded-[14px] ring-1',
-                        'transition-transform duration-400 group-hover:scale-110 group-hover:-rotate-6',
-                        a.bg, a.color,
-                      )}>
-                        {cloneElement(icon, { className: cx('h-5 w-5', a.color) })}
+                      <div className="mb-6 flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-black/5 dark:bg-white/10 shadow-inner ring-1 ring-black/10 dark:ring-white/20 backdrop-blur-md">
+                        {icon}
                       </div>
                     )}
-                    <h3 className="text-[1.1rem] font-semibold tracking-tight text-slate-900 dark:text-white">{item.title}</h3>
-                    <p className="mt-3 flex-1 text-[0.92rem] leading-[1.85] text-slate-600 dark:text-slate-300">{item.description}</p>
+                    <h3 className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-white">{item.title}</h3>
+                    <p className="mt-4 text-lg text-zinc-600 dark:text-zinc-400 font-medium leading-relaxed">{item.description}</p>
                   </SpotlightCard>
                 )
               })}
             </div>
           </div>
+
         </div>
       </motion.div>
     </section>
   )
 }
 
-// ─── STAT GRID ────────────────────────────────────────────────────────────────
+// ─── STAT GRID (Giant Typo Brutalism) ─────────────────────────────────────────
 export function StatGrid({ items }) {
-  const numGrads = [
-    'bg-[linear-gradient(135deg,#3730a3,#818cf8)] bg-clip-text text-transparent',
-    'bg-[linear-gradient(135deg,#1d4ed8,#38bdf8)] bg-clip-text text-transparent',
-    'bg-[linear-gradient(135deg,#065f46,#34d399)] bg-clip-text text-transparent',
-    'bg-[linear-gradient(135deg,#92400e,#fbbf24)] bg-clip-text text-transparent',
-  ]
   return (
     <motion.div
       initial="hidden" whileInView="show" viewport={{ once: true, margin: '-80px' }}
       variants={STAGGER}
-      className="mx-auto grid w-full max-w-[1160px] grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4"
+      className="mx-auto grid w-full max-w-[1280px] grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 px-6 py-12"
     >
       {items.map((item, i) => (
-        <SpotlightCard key={item.label} className={cx(
-          'relative flex flex-col rounded-[28px] p-8 overflow-hidden',
-          'bg-white/70 ring-1 ring-[var(--border)] shadow-sm backdrop-blur-2xl',
-          'transition-all duration-400 hover:shadow-lg hover:bg-white/90 hover:-translate-y-1.5',
-          'dark:bg-[rgba(24,18,42,0.65)] dark:ring-white/7',
-          i % 2 !== 0 && 'lg:translate-y-8',
+        <motion.div variants={RISE} key={item.label} className={cx(
+          'relative flex flex-col justify-center p-8 text-center',
+          'border-b-4 sm:border-b-0 sm:border-r-4 border-black dark:border-white border-dashed last:border-0'
         )}>
-          <div className={cx(
-            'pointer-events-none absolute -top-6 -right-6 h-24 w-24 rounded-full opacity-15 blur-2xl',
-            ['bg-indigo-400','bg-sky-400','bg-emerald-400','bg-amber-400'][i % 4],
-          )} />
-          <p className="relative text-[10px] font-bold uppercase tracking-[0.28em] text-slate-500 dark:text-slate-400">{item.label}</p>
-          <p className={cx('relative mt-3 text-[2.4rem] font-bold leading-tight', numGrads[i % numGrads.length])}>
+          <p className="text-[4rem] font-black leading-none tracking-tighter text-zinc-900 dark:text-white">
             <AnimCounter value={item.value} />
           </p>
-          <p className="relative mt-3 flex-1 text-[0.92rem] leading-[1.85] text-slate-600 dark:text-slate-300">{item.detail}</p>
-        </SpotlightCard>
+          <p className="font-mono mt-4 text-sm font-bold uppercase tracking-widest text-zinc-500 dark:text-zinc-400">{item.label}</p>
+          <p className="mt-2 text-base font-medium text-zinc-600 dark:text-zinc-400">{item.detail}</p>
+        </motion.div>
       ))}
     </motion.div>
   )
 }
 
-// ─── FEATURE GRID ─────────────────────────────────────────────────────────────
+// ─── FEATURE GRID (Glass Cards) ───────────────────────────────────────────────
 export function FeatureGrid({ items }) {
-  const palettes = [
-    { grad: 'from-indigo-500 to-violet-600', glow: 'bg-indigo-400/10' },
-    { grad: 'from-sky-500 to-cyan-500',      glow: 'bg-sky-400/10' },
-    { grad: 'from-rose-500 to-pink-500',     glow: 'bg-rose-400/10' },
-    { grad: 'from-amber-500 to-orange-400',  glow: 'bg-amber-400/10' },
-  ]
   const gridClass = items.length === 4 ? 'sm:grid-cols-2 lg:grid-cols-4' : 'sm:grid-cols-2 lg:grid-cols-3'
-
   return (
     <motion.div
       initial="hidden" whileInView="show" viewport={{ once: true, margin: '-80px' }}
       variants={STAGGER}
-      className={cx('mx-auto grid w-full max-w-[1160px] gap-5', gridClass)}
+      className={cx('mx-auto grid w-full max-w-[1280px] gap-6 px-6 py-12', gridClass)}
     >
-      {items.map((item, i) => {
-        const p = palettes[i % palettes.length]
+      {items.map((item) => {
         const Icon = item.icon
         const icon = isValidElement(Icon)
-          ? cloneElement(Icon, { className: 'h-5 w-5 text-white' })
-          : Icon ? <Icon className="h-5 w-5 text-white" /> : null
+          ? cloneElement(Icon, { className: 'h-6 w-6' })
+          : Icon ? <Icon className="h-6 w-6" /> : null
 
         return (
-          <SpotlightCard key={item.title} className={cx(
-            'group flex h-full flex-col items-start rounded-[28px] p-7',
-            'bg-white/70 ring-1 ring-[var(--border)] shadow-sm backdrop-blur-2xl',
-            'transition-all duration-400 hover:-translate-y-1.5 hover:bg-white/90 hover:shadow-xl',
-            'dark:bg-[rgba(24,18,42,0.65)] dark:ring-white/7',
-          )}>
-            <div className={cx('pointer-events-none absolute -right-6 -top-6 h-24 w-24 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500', p.glow)} />
+          <SpotlightCard key={item.title} className="flex h-full flex-col p-8">
             {icon && (
-              <div className={cx(
-                'relative mb-6 flex h-11 w-11 shrink-0 items-center justify-center rounded-[13px]',
-                'bg-gradient-to-br shadow-md ring-1 ring-white/15',
-                'transition-all duration-400 group-hover:scale-110 group-hover:-rotate-6',
-                p.grad,
-              )}>
+              <div className="mb-6 flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-zinc-900 dark:bg-white text-white dark:text-black shadow-[4px_4px_0_0_#db2777] dark:shadow-[4px_4px_0_0_#ccff00]">
                 {icon}
               </div>
             )}
-            <h3 className="relative text-[1.1rem] font-semibold tracking-tight text-slate-900 dark:text-white">{item.title}</h3>
-            <p className="relative mt-3 flex-1 text-[0.92rem] leading-[1.85] text-slate-600 dark:text-slate-300">{item.description}</p>
+            <h3 className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-white">{item.title}</h3>
+            <p className="mt-4 flex-1 text-lg font-medium leading-relaxed text-zinc-600 dark:text-zinc-400">{item.description}</p>
             {item.link && (
-              <div className="relative mt-5">
-                <ActionLink href={item.link.href} variant="ghost">{item.link.label}</ActionLink>
+              <div className="mt-8">
+                <ActionLink variant="ghost" href={item.link.href}>{item.link.label}</ActionLink>
               </div>
             )}
           </SpotlightCard>
@@ -658,93 +439,37 @@ export function FeatureGrid({ items }) {
   )
 }
 
-// ─── COMPARISON LIST ──────────────────────────────────────────────────────────
-export function ComparisonList({ items }) {
-  return (
-    <motion.div
-      initial="hidden" whileInView="show" viewport={{ once: true, margin: '-80px' }}
-      variants={STAGGER}
-      className="mx-auto grid w-full max-w-[960px] gap-6 md:grid-cols-2"
-    >
-      {items.map((item, i) => (
-        <SpotlightCard key={item.title} className={cx(
-          'flex h-full flex-col rounded-[32px] p-9 sm:p-10',
-          'bg-white/70 ring-1 ring-[var(--border)] shadow-sm backdrop-blur-2xl',
-          'transition-all duration-400 hover:shadow-xl hover:bg-white/90',
-          'dark:bg-[rgba(24,18,42,0.65)] dark:ring-white/7',
-          i === 1 && 'md:translate-y-8',
-        )}>
-          <div className="relative flex items-center gap-4">
-            <motion.div
-              whileHover={{ scale: 1.08, rotate: 6 }}
-              className={cx(
-                'flex h-10 w-10 shrink-0 items-center justify-center rounded-[12px]',
-                'text-[0.9rem] font-bold text-white shadow-md',
-                i === 0
-                  ? 'bg-gradient-to-br from-indigo-600 to-violet-600'
-                  : 'bg-gradient-to-br from-sky-500 to-cyan-500',
-              )}
-            >
-              {i + 1}
-            </motion.div>
-            <h3 className="text-[1.25rem] font-bold tracking-tight text-slate-900 dark:text-white">{item.title}</h3>
-          </div>
-          <ul className="relative mt-8 space-y-4 text-[0.97rem] leading-[1.85] text-slate-600 dark:text-slate-300">
-            {item.points.map(pt => (
-              <li key={pt} className="flex items-start gap-3.5">
-                <span className={cx(
-                  'mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full',
-                  i === 0 ? 'bg-indigo-500' : 'bg-sky-500',
-                )} />
-                {pt}
-              </li>
-            ))}
-          </ul>
-        </SpotlightCard>
-      ))}
-    </motion.div>
-  )
-}
-
-// ─── CTA BAND ─────────────────────────────────────────────────────────────────
+// ─── CTA BAND (Ultimate Brutalism Banner) ─────────────────────────────────────
 export function CtaBand({ title, description, primaryAction, secondaryAction }) {
   return (
     <motion.div
       initial="hidden" whileInView="show" viewport={{ once: true }}
       variants={RISE}
       className={cx(
-        'relative mx-auto w-full max-w-[1100px] overflow-hidden rounded-[36px]',
-        'px-10 py-16 sm:px-16 sm:py-20',
-        'bg-[linear-gradient(150deg,#1e1b4b_0%,#1a1035_40%,#0c1220_100%)]',
-        'ring-1 ring-white/8 shadow-[0_40px_100px_-20px_rgba(67,56,202,0.45)]',
+        'relative mx-auto w-full max-w-[1280px] overflow-hidden rounded-[2rem]',
+        'border-4 border-black dark:border-white bg-purple-700 dark:bg-[#ccff00] px-8 py-16 sm:px-16 sm:py-24',
+        'shadow-[12px_12px_0_0_#000] dark:shadow-[12px_12px_0_0_#fff]'
       )}
     >
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute -top-1/2 -left-1/4 h-[600px] w-[600px] rounded-full bg-indigo-600/12 blur-[100px]" />
-        <div className="absolute -bottom-1/2 -right-1/4 h-[500px] w-[500px] rounded-full bg-blue-600/10 blur-[90px]" />
-      </div>
+      {/* Brutalist Pattern Overlay */}
+      <div className="absolute inset-0 opacity-10 dark:opacity-20" style={{ backgroundImage: 'radial-gradient(circle, #000 2px, transparent 2px)', backgroundSize: '24px 24px' }} />
 
-      <div className="relative z-10 flex flex-col gap-10 lg:flex-row lg:items-center lg:justify-between">
-        <div className="max-w-[560px]">
-          <h2 className="text-[2.2rem] font-bold leading-[1.08] tracking-[-0.025em] sm:text-[2.8rem]">
-            <span className="g-cta">{title}</span>
+      <div className="relative z-10 flex flex-col gap-12 lg:flex-row lg:items-center lg:justify-between">
+        <div className="max-w-2xl">
+          <h2 className="text-5xl font-black leading-none tracking-tighter text-white dark:text-black md:text-6xl lg:text-7xl">
+            {title}
           </h2>
-          <p className="mt-4 text-[1.05rem] leading-[1.85] text-indigo-200/65">{description}</p>
+          <p className="mt-6 text-xl font-bold text-white/90 dark:text-black/80">{description}</p>
         </div>
-        <div className="flex shrink-0 flex-col gap-3.5 sm:flex-row">
-          <ActionLink href={primaryAction.href}>{primaryAction.label}</ActionLink>
+        <div className="flex shrink-0 flex-col gap-4 sm:flex-row">
+          <Link href={primaryAction.href} className="group inline-flex items-center justify-center gap-2 border-4 border-black bg-white px-8 py-4 text-lg font-black uppercase text-black shadow-[6px_6px_0_0_#000] transition-transform hover:translate-x-1 hover:translate-y-1 hover:shadow-[2px_2px_0_0_#000]">
+            {primaryAction.label}
+            <ArrowUpRight className="h-6 w-6" />
+          </Link>
           {secondaryAction && (
-            <motion.div whileTap={{ scale: 0.96 }} className="inline-flex">
-              <Link href={secondaryAction.href} className={cx(
-                'inline-flex min-h-[3rem] items-center gap-2 rounded-full px-7 py-3',
-                'text-[14.5px] font-semibold text-indigo-200 tracking-tight',
-                'bg-white/7 ring-1 ring-white/12 backdrop-blur-xl',
-                'transition-all duration-300 hover:bg-white/12 hover:text-white',
-              )}>
-                {secondaryAction.label}
-                <ArrowRight className="h-3.5 w-3.5" />
-              </Link>
-            </motion.div>
+            <Link href={secondaryAction.href} className="group inline-flex items-center justify-center gap-2 border-4 border-black bg-transparent px-8 py-4 text-lg font-black uppercase text-white dark:text-black transition-colors hover:bg-black hover:text-white dark:hover:text-white">
+              {secondaryAction.label}
+            </Link>
           )}
         </div>
       </div>
@@ -752,40 +477,33 @@ export function CtaBand({ title, description, primaryAction, secondaryAction }) 
   )
 }
 
-// ─── FAQ ──────────────────────────────────────────────────────────────────────
+// ─── FAQ LIST (Glass Accordion) ───────────────────────────────────────────────
 export function FaqList({ items }) {
   const [open, setOpen] = useState(0)
   return (
     <motion.div
       initial="hidden" whileInView="show" viewport={{ once: true }}
       variants={STAGGER}
-      className="mx-auto w-full max-w-[760px] space-y-3"
+      className="mx-auto w-full max-w-[800px] space-y-4 px-6 py-12"
     >
       {items.map((item, i) => {
         const isOpen = open === i
         return (
-          <motion.div variants={FADE} key={item.question} className={cx(
-            'overflow-hidden rounded-[20px] ring-1 backdrop-blur-2xl transition-all duration-300',
-            isOpen
-              ? 'bg-white/90 ring-indigo-500/20 shadow-md dark:bg-[rgba(32,24,56,0.85)]'
-              : 'bg-white/65 ring-[var(--border)] hover:bg-white/80 dark:bg-[rgba(24,18,42,0.55)] dark:ring-white/7',
+          <SpotlightCard key={item.question} className={cx(
+            'transition-all duration-300 rounded-[1.5rem]',
+            isOpen ? 'ring-2 ring-pink-600 dark:ring-purple-500' : ''
           )}>
             <button
               onClick={() => setOpen(isOpen ? -1 : i)}
-              className="flex w-full cursor-pointer items-center justify-between gap-5 px-6 py-5 text-left text-[1rem] font-semibold tracking-tight text-slate-900 dark:text-white sm:px-7"
+              className="flex w-full cursor-pointer items-center justify-between gap-6 px-6 py-6 text-left sm:px-8"
             >
-              <span>{item.question}</span>
-              <motion.span
-                animate={{
-                  rotate: isOpen ? 45 : 0,
-                  background: isOpen
-                    ? 'linear-gradient(135deg,#4338ca,#818cf8)'
-                    : 'rgba(238,235,255,0.8)',
-                }}
-                className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full ring-1 ring-black/8 dark:ring-white/8"
+              <span className="text-xl font-bold tracking-tight text-zinc-900 dark:text-white">{item.question}</span>
+              <motion.div
+                animate={{ rotate: isOpen ? 45 : 0 }}
+                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 border-black dark:border-white bg-[#ccff00] dark:bg-purple-600 text-black dark:text-white shadow-[2px_2px_0_0_#000] dark:shadow-[2px_2px_0_0_#fff]"
               >
-                <Plus className={cx('h-3.5 w-3.5 transition-colors duration-200', isOpen ? 'text-white' : 'text-indigo-600 dark:text-indigo-400')} />
-              </motion.span>
+                <Plus className="h-5 w-5" strokeWidth={3} />
+              </motion.div>
             </button>
             <AnimatePresence initial={false}>
               {isOpen && (
@@ -793,16 +511,16 @@ export function FaqList({ items }) {
                   initial={{ height: 0, opacity: 0 }}
                   animate={{ height: 'auto', opacity: 1 }}
                   exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+                  transition={{ duration: 0.3, ease: 'easeInOut' }}
                   className="overflow-hidden"
                 >
-                  <p className="px-6 pb-6 text-[0.95rem] leading-[1.9] text-slate-600 dark:text-slate-300 pr-12 sm:px-7 sm:pb-7">
+                  <p className="px-6 pb-8 text-lg font-medium text-zinc-600 dark:text-zinc-400 sm:px-8">
                     {item.answer}
                   </p>
                 </motion.div>
               )}
             </AnimatePresence>
-          </motion.div>
+          </SpotlightCard>
         )
       })}
     </motion.div>

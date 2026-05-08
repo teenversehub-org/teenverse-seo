@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useSyncExternalStore } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { ArrowUpRight, ChevronRight, Menu, Moon, Sparkles, Sun, X } from 'lucide-react'
@@ -52,13 +52,38 @@ const themeIconVariants = {
   exit: { scale: 0.5, opacity: 0, rotate: 45, transition: { duration: 0.2 } }
 }
 
+function getThemeSnapshot() {
+  if (typeof window === 'undefined') return false
+
+  const storedTheme = window.localStorage.getItem('tvh-theme')
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+
+  return storedTheme === 'dark' || (!storedTheme && prefersDark)
+}
+
+function subscribeTheme(callback) {
+  if (typeof window === 'undefined') return () => {}
+
+  const media = window.matchMedia('(prefers-color-scheme: dark)')
+  const notify = () => callback()
+
+  window.addEventListener('tvh-theme-change', notify)
+  window.addEventListener('storage', notify)
+  media.addEventListener('change', notify)
+
+  return () => {
+    window.removeEventListener('tvh-theme-change', notify)
+    window.removeEventListener('storage', notify)
+    media.removeEventListener('change', notify)
+  }
+}
+
 // ─── MAIN COMPONENT ──────────────────────────────────────────────────────────
 
 export default function SiteHeader() {
   const pathname = usePathname()
   const [open, setOpen] = useState(false)
-  const [mounted, setMounted] = useState(false)
-  const [darkMode, setDarkMode] = useState(false)
+  const darkMode = useSyncExternalStore(subscribeTheme, getThemeSnapshot, () => false)
   const [scrolled, setScrolled] = useState(false)
   const { scrollY } = useScroll()
 
@@ -67,16 +92,11 @@ export default function SiteHeader() {
     setScrolled(latest > 20)
   })
 
-  // Initialization & Theme setup
+  // Keep the DOM theme in sync with the stored preference.
   useEffect(() => {
-    const storedTheme = window.localStorage.getItem('tvh-theme')
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-    const isDark = storedTheme === 'dark' || (!storedTheme && prefersDark)
-    
-    setMounted(true)
-    setDarkMode(isDark)
-    document.documentElement.classList.toggle('dark', isDark)
-  }, [])
+    document.documentElement.classList.toggle('dark', darkMode)
+    document.documentElement.style.colorScheme = darkMode ? 'dark' : 'light'
+  }, [darkMode])
 
   // Lock body scroll when mobile menu is open
   useEffect(() => {
@@ -87,9 +107,10 @@ export default function SiteHeader() {
 
   const toggleTheme = () => {
     const nextTheme = !darkMode
-    setDarkMode(nextTheme)
     window.localStorage.setItem('tvh-theme', nextTheme ? 'dark' : 'light')
     document.documentElement.classList.toggle('dark', nextTheme)
+    document.documentElement.style.colorScheme = nextTheme ? 'dark' : 'light'
+    window.dispatchEvent(new Event('tvh-theme-change'))
   }
 
   return (
@@ -144,23 +165,19 @@ export default function SiteHeader() {
 
           {/* Desktop Actions */}
           <div className="hidden items-center gap-3 md:flex pr-1">
-            {mounted ? (
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={toggleTheme}
-                className="relative flex h-9 w-9 items-center justify-center rounded-full bg-slate-100/50 text-slate-600 ring-1 ring-slate-200/50 transition-colors hover:bg-slate-200/50 hover:text-slate-900 dark:bg-white/[0.03] dark:text-slate-400 dark:ring-white/10 dark:hover:bg-white/10 dark:hover:text-white"
-                aria-label="Toggle dark mode"
-              >
-                <AnimatePresence mode="wait" initial={false}>
-                  <motion.div key={darkMode ? "dark" : "light"} variants={themeIconVariants} initial="initial" animate="animate" exit="exit">
-                    {darkMode ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-                  </motion.div>
-                </AnimatePresence>
-              </motion.button>
-            ) : (
-              <div className="h-9 w-9" />
-            )}
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={toggleTheme}
+              className="relative flex h-9 w-9 items-center justify-center rounded-full bg-slate-100/50 text-slate-600 ring-1 ring-slate-200/50 transition-colors hover:bg-slate-200/50 hover:text-slate-900 dark:bg-white/[0.03] dark:text-slate-400 dark:ring-white/10 dark:hover:bg-white/10 dark:hover:text-white"
+              aria-label="Toggle dark mode"
+            >
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.div key={darkMode ? "dark" : "light"} variants={themeIconVariants} initial="initial" animate="animate" exit="exit">
+                  {darkMode ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+                </motion.div>
+              </AnimatePresence>
+            </motion.button>
             
             <Link 
               href="/hire-teen-freelancers" 
@@ -182,19 +199,18 @@ export default function SiteHeader() {
 
           {/* Mobile Actions */}
           <div className="flex items-center gap-2 md:hidden pr-1">
-            {mounted && (
-              <motion.button
-                whileTap={{ scale: 0.9 }}
-                onClick={toggleTheme}
-                className="flex h-9 w-9 items-center justify-center rounded-full bg-slate-100/50 text-slate-600 ring-1 ring-slate-200/50 dark:bg-white/[0.03] dark:text-slate-400 dark:ring-white/10"
-              >
-                <AnimatePresence mode="wait" initial={false}>
-                  <motion.div key={darkMode ? "dark" : "light"} variants={themeIconVariants} initial="initial" animate="animate" exit="exit">
-                    {darkMode ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-                  </motion.div>
-                </AnimatePresence>
-              </motion.button>
-            )}
+            <motion.button
+              whileTap={{ scale: 0.9 }}
+              onClick={toggleTheme}
+              className="flex h-9 w-9 items-center justify-center rounded-full bg-slate-100/50 text-slate-600 ring-1 ring-slate-200/50 dark:bg-white/[0.03] dark:text-slate-400 dark:ring-white/10"
+              aria-label="Toggle dark mode"
+            >
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.div key={darkMode ? "dark" : "light"} variants={themeIconVariants} initial="initial" animate="animate" exit="exit">
+                  {darkMode ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+                </motion.div>
+              </AnimatePresence>
+            </motion.button>
             <motion.button
               whileTap={{ scale: 0.9 }}
               onClick={() => setOpen((value) => !value)}
