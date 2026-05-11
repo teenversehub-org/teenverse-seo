@@ -8,7 +8,7 @@ export const SITE = {
   location: 'Mahoba, Uttar Pradesh, India',
   founder: 'Kashif Khan',
   operator: 'Mohd Asif',
-  lastUpdated: '2026-05-08',
+  lastUpdated: '2026-05-10',
   description:
     'TeenVerseHub is a secure AI-powered teen talent ecosystem where teenagers can learn digital skills, build portfolios, collaborate with startups, and earn safely through verification, moderation, guardian consent, and structured trust systems.',
 }
@@ -72,6 +72,14 @@ export const indexedPages = [
     description:
       'Learn how teens can start freelancing with one digital skill, portfolio samples, verified profiles, guardian consent, safer payments, and real beginner projects.',
     priority: 0.88,
+    changeFrequency: 'weekly',
+  },
+  {
+    path: '/blog',
+    title: 'TeenVerse Hub Blog',
+    description:
+      'SEO guides for teen freelancing, safe online jobs for teens, digital skills, startup hiring, guardian safety, and student talent growth.',
+    priority: 0.86,
     changeFrequency: 'weekly',
   },
   {
@@ -220,6 +228,7 @@ export function buildMetadata({
 
 export const primaryNav = [
   { href: '/how-to-earn-money-as-a-teenager', label: 'Earn' },
+  { href: '/blog', label: 'Blog' },
   { href: '/about', label: 'About' },
   { href: '/safety', label: 'Safety' },
   { href: '/faq', label: 'FAQ' },
@@ -233,6 +242,7 @@ export const footerGroups = [
       { href: '/', label: 'Home' },
       { href: '/hire-teen-freelancers', label: 'For Startups' },
       { href: '/freelance-jobs-for-teens', label: 'For Teen Freelancers' },
+      { href: '/blog', label: 'Blog' },
       { href: '/about', label: 'About' },
     ],
   },

@@ -1,8 +1,10 @@
 import { SITE, absoluteUrl, indexedPages } from '../lib/site'
+import { getAllBlogPosts } from '../lib/blog'
 
 export const dynamic = 'force-static'
 
 export function GET() {
+  const blogPosts = getAllBlogPosts()
   const lines = [
     `# ${SITE.name}`,
     '',
@@ -12,6 +14,9 @@ export function GET() {
     '',
     '## Core pages',
     ...indexedPages.map((page) => `- [${page.title}](${absoluteUrl(page.path)}): ${page.description}`),
+    '',
+    '## Blog guides',
+    ...blogPosts.map((post) => `- [${post.title}](${absoluteUrl(`/blog/${post.slug}`)}): ${post.description}`),
     '',
     '## Key entities',
     `- Brand: ${SITE.name}`,
