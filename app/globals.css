@@ -618,17 +618,27 @@
 
   @media (max-width: 1023px) {
     .tvh-unified-theme main > section:first-of-type {
-      min-height: auto;
+      min-height: auto !important;
+      padding-top: clamp(6.75rem, 17vw, 8rem) !important;
+      padding-bottom: clamp(3rem, 10vw, 4.5rem) !important;
     }
 
     .tvh-unified-theme main > section:first-of-type::after {
-      bottom: 2rem;
-      left: 50%;
-      right: auto;
-      top: auto;
-      width: min(44vw, 180px);
-      opacity: 0.11;
-      transform: translateX(-50%) rotate(5deg);
+      display: none;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .tvh-unified-theme main > section:first-of-type {
+      overflow-x: clip;
+      overflow-y: visible;
+      padding-left: 1rem !important;
+      padding-right: 1rem !important;
+    }
+
+    .tvh-unified-theme main > section:first-of-type::before {
+      background-size: 42px 42px;
+      opacity: 0.72;
     }
   }
 
@@ -646,6 +656,25 @@
     text-wrap: balance;
     overflow-wrap: normal;
     word-break: normal;
+  }
+
+  @media (max-width: 640px) {
+    .tvh-unified-theme main h1 {
+      max-width: 100%;
+      font-size: clamp(2.15rem, 10.2vw, 2.9rem) !important;
+      line-height: 1.05 !important;
+      text-align: center !important;
+    }
+
+    .tvh-unified-theme main h1 span[class*="bg-gradient"],
+    .tvh-unified-theme main h1 span[class*="bg-["] {
+      display: inline !important;
+    }
+
+    .tvh-unified-theme main > section:first-of-type p {
+      font-size: 1rem !important;
+      line-height: 1.65 !important;
+    }
   }
 
   .tvh-unified-theme main h1 br {
@@ -669,6 +698,41 @@
   .dark .tvh-unified-theme main h1 span[class*="bg-gradient"],
   .dark .tvh-unified-theme main h1 span[class*="bg-["] {
     background-image: var(--tvh-title-gradient-dark) !important;
+  }
+
+  .tvh-unified-theme main h1.tvh-home-title {
+    max-width: min(100%, 74rem) !important;
+    text-align: center !important;
+  }
+
+  .tvh-unified-theme main h1.tvh-home-title > span {
+    display: block !important;
+  }
+
+  .tvh-unified-theme main h1.tvh-home-title .tvh-home-title-gradient {
+    display: block !important;
+    background-image: linear-gradient(120deg, #5b245e 0%, #073b3a 48%, #c79a4b 100%) !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    color: transparent !important;
+    -webkit-text-fill-color: transparent !important;
+  }
+
+  .dark .tvh-unified-theme main h1.tvh-home-title .tvh-home-title-gradient {
+    background-image: linear-gradient(120deg, #f8f5ef 0%, #d8b4fe 44%, #6ee7b7 100%) !important;
+  }
+
+  @media (max-width: 640px) {
+    .tvh-unified-theme main h1.tvh-home-title {
+      max-width: min(100%, 21rem) !important;
+      font-size: clamp(2.05rem, 9.6vw, 2.45rem) !important;
+      line-height: 1.06 !important;
+      text-align: center !important;
+    }
+
+    .tvh-unified-theme main h1.tvh-home-title .tvh-home-title-gradient {
+      margin-top: 0.35rem !important;
+    }
   }
 
   .tvh-unified-theme main h2 {

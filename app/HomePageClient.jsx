@@ -178,14 +178,14 @@ function DashboardPreview({ priority = false }) {
       initial={{ opacity: 0, y: 34, rotate: -2, scale: 0.96 }}
       animate={{ opacity: 1, y: 0, rotate: 0, scale: 1 }}
       transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-      className="relative mx-auto w-full max-w-[420px]"
+      className="relative mx-auto w-full max-w-[170px] min-[390px]:max-w-[190px] sm:max-w-[280px] lg:max-w-[340px] xl:max-w-[380px]"
     >
-      <div className="absolute -inset-8 rounded-[3rem] bg-[radial-gradient(circle_at_30%_10%,rgba(168,85,247,0.30),transparent_38%),radial-gradient(circle_at_80%_70%,rgba(16,185,129,0.22),transparent_38%)] blur-3xl dark:bg-[radial-gradient(circle_at_30%_10%,rgba(168,85,247,0.38),transparent_40%),radial-gradient(circle_at_80%_70%,rgba(45,212,191,0.22),transparent_42%)]" />
+      <div className="absolute -inset-3 rounded-[2rem] bg-[radial-gradient(circle_at_30%_10%,rgba(168,85,247,0.20),transparent_38%),radial-gradient(circle_at_80%_70%,rgba(16,185,129,0.14),transparent_38%)] blur-xl dark:bg-[radial-gradient(circle_at_30%_10%,rgba(168,85,247,0.24),transparent_40%),radial-gradient(circle_at_80%_70%,rgba(45,212,191,0.14),transparent_42%)] sm:-inset-8 sm:rounded-[3rem] sm:blur-3xl" />
 
       <motion.div
         animate={{ y: [0, -12, 0], rotate: [0, -1.3, 0] }}
         transition={{ duration: 6.5, repeat: Infinity, ease: 'easeInOut' }}
-        className="relative overflow-hidden rounded-[2.2rem] border border-white/80 bg-white/55 p-2 shadow-[0_42px_130px_rgba(33,20,47,0.24)] backdrop-blur-2xl dark:border-white/10 dark:bg-white/[0.06] dark:shadow-[0_42px_130px_rgba(0,0,0,0.44)]"
+        className="relative overflow-hidden rounded-[1.55rem] border border-white/80 bg-white/55 p-1.5 shadow-[0_28px_80px_rgba(33,20,47,0.20)] backdrop-blur-2xl dark:border-white/10 dark:bg-white/[0.06] dark:shadow-[0_28px_90px_rgba(0,0,0,0.38)] sm:rounded-[2.2rem] sm:p-2"
       >
         <Image
           src="/graphics/dashboard-light.png"
@@ -193,7 +193,7 @@ function DashboardPreview({ priority = false }) {
           width={797}
           height={1536}
           priority={priority}
-          className="block h-auto w-full rounded-[1.75rem] dark:hidden"
+          className="block h-auto w-full rounded-[1.2rem] dark:hidden sm:rounded-[1.75rem]"
         />
         <Image
           src="/graphics/dashboard-dark.png"
@@ -201,7 +201,7 @@ function DashboardPreview({ priority = false }) {
           width={797}
           height={1536}
           priority={priority}
-          className="hidden h-auto w-full rounded-[1.75rem] dark:block"
+          className="hidden h-auto w-full rounded-[1.2rem] dark:block sm:rounded-[1.75rem]"
         />
         <motion.div
           aria-hidden
@@ -214,19 +214,19 @@ function DashboardPreview({ priority = false }) {
       <motion.div
         animate={{ y: [0, 10, 0] }}
         transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 0.4 }}
-        className="absolute -bottom-5 -left-2 rounded-2xl border border-emerald-400/30 bg-emerald-50/95 px-4 py-3 shadow-2xl backdrop-blur-xl dark:border-emerald-300/20 dark:bg-[#061d1b]/95"
+        className="absolute -bottom-3 -left-3 rounded-lg border border-emerald-400/30 bg-emerald-50/95 px-2.5 py-1.5 shadow-2xl backdrop-blur-xl dark:border-emerald-300/20 dark:bg-[#061d1b]/95 sm:-bottom-5 sm:-left-2 sm:rounded-2xl sm:px-4 sm:py-3"
       >
-        <p className="text-[10px] font-black uppercase tracking-[0.2em] text-emerald-700 dark:text-emerald-300">Verified</p>
-        <p className="mt-1 text-sm font-black text-[#101827] dark:text-white">Identity secured</p>
+        <p className="text-[8px] font-black uppercase tracking-[0.16em] text-emerald-700 dark:text-emerald-300 sm:text-[10px] sm:tracking-[0.2em]">Verified</p>
+        <p className="mt-0.5 text-[10px] font-black text-[#101827] dark:text-white sm:mt-1 sm:text-sm">Identity secured</p>
       </motion.div>
 
       <motion.div
         animate={{ y: [0, -10, 0] }}
         transition={{ duration: 5.4, repeat: Infinity, ease: 'easeInOut', delay: 0.8 }}
-        className="absolute -right-3 top-16 rounded-2xl border border-violet-300/45 bg-white/90 px-4 py-3 shadow-2xl backdrop-blur-xl dark:border-violet-300/15 dark:bg-[#130f2a]/95"
+        className="absolute -right-3 top-8 rounded-lg border border-violet-300/45 bg-white/90 px-2.5 py-1.5 shadow-2xl backdrop-blur-xl dark:border-violet-300/15 dark:bg-[#130f2a]/95 sm:-right-3 sm:top-16 sm:rounded-2xl sm:px-4 sm:py-3"
       >
-        <p className="text-[10px] font-black uppercase tracking-[0.2em] text-violet-600 dark:text-violet-300">Energy</p>
-        <p className="mt-1 text-sm font-black text-[#101827] dark:text-white">277 points</p>
+        <p className="text-[8px] font-black uppercase tracking-[0.16em] text-violet-600 dark:text-violet-300 sm:text-[10px] sm:tracking-[0.2em]">Energy</p>
+        <p className="mt-0.5 text-[10px] font-black text-[#101827] dark:text-white sm:mt-1 sm:text-sm">277 points</p>
       </motion.div>
     </motion.div>
   )
@@ -235,8 +235,8 @@ function DashboardPreview({ priority = false }) {
 export default function HomePage() {
   return (
     <MarketingShell>
-      <div className="overflow-hidden bg-[#f7f3ea] text-[#21142f] dark:bg-[#070b10] dark:text-white">
-        <section className="relative isolate min-h-[96vh] overflow-hidden px-5 pb-16 pt-32 sm:px-8 lg:px-12">
+      <div className="overflow-x-clip overflow-y-visible bg-[#f7f3ea] text-[#21142f] dark:bg-[#070b10] dark:text-white">
+        <section className="relative isolate overflow-visible px-4 pb-10 pt-24 sm:px-8 sm:pb-16 sm:pt-32 lg:min-h-[96vh] lg:overflow-hidden lg:px-12">
           <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_10%_0%,rgba(88,55,125,0.22),transparent_30%),radial-gradient(circle_at_88%_12%,rgba(9,74,70,0.18),transparent_30%),linear-gradient(135deg,#fbfaf6_0%,#eadcc5_46%,#d8eef0_100%)] dark:bg-[radial-gradient(circle_at_12%_2%,rgba(116,67,141,0.34),transparent_34%),radial-gradient(circle_at_92%_12%,rgba(19,89,83,0.24),transparent_30%),linear-gradient(135deg,#070b10_0%,#10151b_48%,#160b1f_100%)]" />
           <div className="tv-grid-mesh pointer-events-none absolute inset-0 -z-10 opacity-70" />
           <motion.div
@@ -252,47 +252,47 @@ export default function HomePage() {
             className="absolute bottom-20 right-[8%] h-28 w-28 rounded-full border border-white/60 bg-[#073b3a]/10 shadow-2xl backdrop-blur-xl dark:bg-[#d8b4fe]/10"
           />
 
-          <div className="mx-auto grid w-full max-w-7xl items-center gap-14 lg:grid-cols-[1.02fr_0.98fr]">
-            <motion.div initial="hidden" animate="show" variants={stagger}>
-              <motion.div variants={fadeUp} className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#5b245e]/15 bg-white/70 px-4 py-2 text-xs font-black uppercase tracking-[0.18em] text-[#5b245e] shadow-sm backdrop-blur-xl dark:border-white/10 dark:bg-white/10 dark:text-[#ead7ff]">
+          <div className="mx-auto grid w-full max-w-[calc(100vw-2rem)] items-center gap-7 text-center sm:max-w-7xl lg:grid-cols-[1.02fr_0.98fr] lg:gap-14 lg:text-left">
+            <motion.div initial="hidden" animate="show" variants={stagger} className="mx-auto max-w-3xl lg:mx-0 lg:max-w-none">
+              <motion.div variants={fadeUp} className="mx-auto mb-4 inline-flex items-center gap-2 rounded-full border border-[#5b245e]/15 bg-white/70 px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.14em] text-[#5b245e] shadow-sm backdrop-blur-xl dark:border-white/10 dark:bg-white/10 dark:text-[#ead7ff] sm:mb-6 sm:px-4 sm:py-2 sm:text-xs sm:tracking-[0.18em] lg:mx-0">
                 <Sparkles className="h-4 w-4" />
                 TeenVerseHub work OS
               </motion.div>
 
-              <motion.h1 variants={fadeUp} className="max-w-5xl text-5xl font-black leading-[0.95] tracking-normal text-[#21142f] sm:text-7xl lg:text-8xl dark:text-white">
-                TeenVerseHub
-                <span className="mt-2 block bg-[linear-gradient(120deg,#5b245e_0%,#073b3a_48%,#c79a4b_100%)] bg-clip-text text-transparent dark:bg-[linear-gradient(120deg,#f8f5ef_0%,#d8b4fe_44%,#6ee7b7_100%)] dark:bg-clip-text">
+              <motion.h1 variants={fadeUp} className="tvh-home-title mx-auto max-w-[18.5rem] text-[2.15rem] font-black leading-[1.05] tracking-normal text-[#21142f] min-[390px]:max-w-[20.5rem] min-[390px]:text-[2.35rem] sm:max-w-5xl sm:text-7xl lg:mx-0 lg:text-8xl dark:text-white">
+                <span className="block">TeenVerseHub</span>
+                <span className="tvh-home-title-gradient mt-2 block bg-[linear-gradient(120deg,#5b245e_0%,#073b3a_48%,#c79a4b_100%)] bg-clip-text text-transparent dark:bg-[linear-gradient(120deg,#f8f5ef_0%,#d8b4fe_44%,#6ee7b7_100%)] dark:bg-clip-text">
                   makes teen talent feel credible.
                 </span>
               </motion.h1>
 
-              <motion.p variants={fadeUp} className="mt-7 max-w-2xl text-lg leading-8 text-[#4a3f50] sm:text-xl dark:text-slate-300">
+              <motion.p variants={fadeUp} className="mx-auto mt-4 w-full max-w-[20.5rem] text-[0.94rem] leading-7 text-[#4a3f50] min-[390px]:max-w-[22rem] sm:mt-7 sm:max-w-2xl sm:text-xl sm:leading-8 lg:mx-0 dark:text-slate-300">
                 A safer platform where talented teenagers can build real portfolios, work with startups, and earn credibility online—with verification, guardian-aware flows, and protected project systems.
               </motion.p>
 
-              <motion.div variants={fadeUp} className="mt-9 flex flex-col gap-3 sm:flex-row">
+              <motion.div variants={fadeUp} className="mx-auto mt-6 flex max-w-sm flex-col gap-3 sm:mt-9 sm:max-w-none sm:flex-row lg:mx-0">
                 <PrimaryButton href={loginUrl}>Login and start</PrimaryButton>
                 <SecondaryButton href="/hire-teen-freelancers">Hire teen talent</SecondaryButton>
               </motion.div>
 
-              <motion.div variants={fadeUp} className="mt-9 grid max-w-2xl grid-cols-2 gap-3 sm:grid-cols-4">
+              <motion.div variants={fadeUp} className="mx-auto mt-6 grid max-w-sm grid-cols-2 gap-2.5 sm:mt-9 sm:max-w-2xl sm:grid-cols-4 sm:gap-3 lg:mx-0">
                 {[
                   ['Guardian aware', ShieldCheck],
                   ['Verified profiles', BadgeCheck],
                   ['Payment clarity', CircleDollarSign],
                   ['AI moderation', LockKeyhole],
                 ].map(([label, Icon]) => (
-                  <div key={label} className="rounded-2xl border border-white/70 bg-white/55 p-4 shadow-sm backdrop-blur-xl dark:border-white/10 dark:bg-white/[0.06]">
+                  <div key={label} className="rounded-xl border border-white/70 bg-white/55 p-3 shadow-sm backdrop-blur-xl dark:border-white/10 dark:bg-white/[0.06] sm:rounded-2xl sm:p-4">
                     <Icon className="h-5 w-5 text-[#073b3a] dark:text-emerald-300" />
-                    <p className="mt-3 text-sm font-black">{label}</p>
+                    <p className="mt-2 text-xs font-black sm:mt-3 sm:text-sm">{label}</p>
                   </div>
                 ))}
               </motion.div>
             </motion.div>
 
-            <motion.div initial={{ opacity: 0, x: 38, scale: 0.96 }} animate={{ opacity: 1, x: 0, scale: 1 }} transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }} className="relative">
-              <div className="absolute -inset-8 rounded-[3rem] bg-[linear-gradient(135deg,rgba(91,36,94,0.20),rgba(7,59,58,0.12),rgba(199,154,75,0.14))] blur-3xl" />
-              <div className="relative overflow-hidden rounded-[2rem] border border-white/80 bg-white/60 p-3 shadow-[0_40px_120px_rgba(33,20,47,0.20)] backdrop-blur-2xl dark:border-white/10 dark:bg-white/[0.06]">
+            <motion.div initial={{ opacity: 0, x: 38, scale: 0.96 }} animate={{ opacity: 1, x: 0, scale: 1 }} transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }} className="relative mx-auto w-full max-w-[230px] min-[390px]:max-w-[250px] sm:max-w-md lg:max-w-none">
+              <div className="absolute -inset-3 rounded-[2rem] bg-[linear-gradient(135deg,rgba(91,36,94,0.13),rgba(7,59,58,0.08),rgba(199,154,75,0.10))] blur-xl sm:-inset-8 sm:rounded-[3rem] sm:blur-3xl" />
+              <div className="relative overflow-visible rounded-[1.35rem] border border-white/80 bg-white/60 p-1.5 shadow-[0_22px_70px_rgba(33,20,47,0.14)] backdrop-blur-2xl dark:border-white/10 dark:bg-white/[0.06] sm:rounded-[2rem] sm:p-3 lg:overflow-hidden">
                 <DashboardPreview priority />
                 <motion.div
                   animate={{ x: ['-120%', '120%'] }}
@@ -300,9 +300,9 @@ export default function HomePage() {
                   className="pointer-events-none absolute inset-y-3 w-1/2 rotate-6 bg-gradient-to-r from-transparent via-white/45 to-transparent"
                 />
               </div>
-              <motion.div animate={{ y: [0, -12, 0] }} transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }} className="absolute -bottom-7 left-7 rounded-2xl border border-white/70 bg-[#fffaf0]/90 px-5 py-4 shadow-2xl backdrop-blur-xl dark:border-white/10 dark:bg-[#160b1f]/90">
-                <p className="text-xs font-black uppercase tracking-[0.2em] text-[#8a6d32] dark:text-[#f4d58d]">Real dashboard</p>
-                <p className="mt-1 text-sm font-bold">Light and dark mode ready</p>
+              <motion.div animate={{ y: [0, -12, 0] }} transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }} className="absolute -bottom-4 left-1/2 w-max -translate-x-1/2 rounded-lg border border-white/70 bg-[#fffaf0]/90 px-3 py-2 shadow-2xl backdrop-blur-xl dark:border-white/10 dark:bg-[#160b1f]/90 sm:-bottom-7 sm:left-7 sm:translate-x-0 sm:rounded-2xl sm:px-5 sm:py-4">
+                <p className="text-[9px] font-black uppercase tracking-[0.16em] text-[#8a6d32] dark:text-[#f4d58d] sm:text-xs sm:tracking-[0.2em]">Real dashboard</p>
+                <p className="mt-0.5 text-xs font-bold sm:mt-1 sm:text-sm">Light and dark mode ready</p>
               </motion.div>
             </motion.div>
           </div>
