@@ -37,6 +37,7 @@ function LogoMark() {
   )
 }
 
+
 const mobileMenuVariants = {
   hidden: { opacity: 0, backdropFilter: 'blur(0px)' },
   visible: {
@@ -261,7 +262,7 @@ export default function SiteHeader() {
               className="group flex h-9 items-center justify-center gap-2 rounded-full bg-[#21142f] pl-4 pr-3 text-sm font-bold text-white shadow-md transition-colors hover:bg-[#321747] dark:bg-[#f8f5ef] dark:text-[#21142f] dark:hover:bg-white"
               aria-label="Open TeenVerseHub app"
             >
-              Open App
+              dashboard
               <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
             </motion.a>
           </div>

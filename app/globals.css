@@ -519,13 +519,11 @@
     --tvh-gold: #c79a4b;
     --tvh-ink-soft: #5f5363;
     --tvh-light-hero:
-      radial-gradient(circle at 12% 0%, rgba(91, 36, 94, 0.20), transparent 34%),
-      radial-gradient(circle at 88% 10%, rgba(7, 59, 58, 0.18), transparent 30%),
-      linear-gradient(135deg, #fbfaf6 0%, #eadcc5 48%, #d8eef0 100%);
+      radial-gradient(circle at top left, #f2e8ff 0%, transparent 35%),
+      linear-gradient(135deg, #fffaf0 0%, #f7f1df 45%, #eef4e8 100%);
     --tvh-dark-hero:
-      radial-gradient(circle at 12% 0%, rgba(216, 180, 254, 0.18), transparent 34%),
-      radial-gradient(circle at 86% 12%, rgba(6, 95, 85, 0.20), transparent 32%),
-      linear-gradient(135deg, #070b10 0%, #10151b 52%, #160b1f 100%);
+      radial-gradient(circle at top left, #2b1646 0%, transparent 38%),
+      linear-gradient(135deg, #11091f 0%, #071018 55%, #07130f 100%);
     --tvh-title-gradient: linear-gradient(120deg, #5b245e 0%, #073b3a 52%, #c79a4b 100%);
     --tvh-title-gradient-dark: linear-gradient(120deg, #f8f5ef 0%, #d8b4fe 48%, #6ee7b7 100%);
   }
@@ -533,18 +531,16 @@
   .tvh-unified-theme main {
     background-color: var(--tvh-ghost) !important;
     background-image:
-      radial-gradient(circle at 12% 0%, rgba(91, 36, 94, 0.10), transparent 30%),
-      radial-gradient(circle at 88% 8%, rgba(7, 59, 58, 0.08), transparent 28%),
-      linear-gradient(180deg, #f8f5ef 0%, #fbfaf6 36%, #f2eadf 100%) !important;
+      radial-gradient(circle at top left, rgba(242, 232, 255, 0.92) 0%, transparent 35%),
+      linear-gradient(135deg, #fffaf0 0%, #f7f1df 45%, #eef4e8 100%) !important;
     color: var(--tvh-plum) !important;
   }
 
   .dark .tvh-unified-theme main {
     background-color: #070b10 !important;
     background-image:
-      radial-gradient(circle at 8% 0%, rgba(216, 180, 254, 0.14), transparent 32%),
-      radial-gradient(circle at 90% 6%, rgba(6, 95, 85, 0.16), transparent 30%),
-      linear-gradient(180deg, #070b10 0%, #0b0f14 46%, #130b1a 100%) !important;
+      radial-gradient(circle at top left, rgba(43, 22, 70, 0.92) 0%, transparent 38%),
+      linear-gradient(135deg, #11091f 0%, #071018 55%, #07130f 100%) !important;
     color: #f8f5ef !important;
   }
 
@@ -702,7 +698,10 @@
 
   .tvh-unified-theme main h1.tvh-home-title {
     max-width: min(100%, 74rem) !important;
-    text-align: center !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    letter-spacing: -0.035em !important;
+    text-align: left !important;
   }
 
   .tvh-unified-theme main h1.tvh-home-title > span {
@@ -724,10 +723,10 @@
 
   @media (max-width: 640px) {
     .tvh-unified-theme main h1.tvh-home-title {
-      max-width: min(100%, 21rem) !important;
-      font-size: clamp(2.05rem, 9.6vw, 2.45rem) !important;
-      line-height: 1.06 !important;
-      text-align: center !important;
+      max-width: 100% !important;
+      font-size: clamp(2.45rem, 12vw, 3.05rem) !important;
+      line-height: 1.02 !important;
+      text-align: left !important;
     }
 
     .tvh-unified-theme main h1.tvh-home-title .tvh-home-title-gradient {
