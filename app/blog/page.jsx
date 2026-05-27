@@ -141,7 +141,7 @@ export default function BlogPage() {
       <StructuredData data={[blogSchema, itemListSchema]} />
       <SiteHeader />
 
-      <main className="min-h-screen bg-[#f8fbff] text-slate-950 dark:bg-[#04070d] dark:text-white">
+      <main className="tvh-page-shell">
         {/* HERO */}
         <section className="relative isolate overflow-hidden px-4 pb-16 pt-32 sm:px-6 lg:px-8">
           <div className="absolute inset-x-0 top-0 -z-10 h-[560px] bg-[radial-gradient(circle_at_20%_10%,rgba(79,70,229,0.18),transparent_34%),radial-gradient(circle_at_78%_14%,rgba(16,185,129,0.16),transparent_30%),linear-gradient(180deg,#eef6ff,rgba(248,251,255,0))] dark:bg-[radial-gradient(circle_at_18%_8%,rgba(99,102,241,0.25),transparent_32%),radial-gradient(circle_at_78%_10%,rgba(45,212,191,0.13),transparent_30%),linear-gradient(180deg,#09111f,rgba(4,7,13,0))]" />

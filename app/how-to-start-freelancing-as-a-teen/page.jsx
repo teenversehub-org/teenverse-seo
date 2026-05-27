@@ -115,7 +115,7 @@ export default function StartFreelancingAsTeenPage() {
       <StructuredData data={pageSchema} />
       <SiteHeader />
 
-      <main className="min-h-screen bg-[#f7f9ff] text-slate-950 dark:bg-[#030712] dark:text-white">
+      <main className="tvh-page-shell">
         <section className="relative isolate overflow-hidden px-6 pb-20 pt-32 text-center">
           <div className="mx-auto max-w-5xl">
             <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-indigo-200 bg-white/80 px-5 py-2 text-sm font-bold uppercase tracking-widest text-indigo-700 shadow-xl shadow-indigo-100/70 backdrop-blur-xl dark:border-white/10 dark:bg-white/5 dark:text-indigo-300">

@@ -1,5 +1,5 @@
 /* 1. STANDARD IMPORTS MUST GO FIRST */
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=Fraunces:opsz,wght,SOFT,WONK@9..144,600..900,35,0&family=Syne:wght@400;600;700;800&display=swap');
 
 /* 2. TAILWIND IMPORT GOES SECOND */
 @import "tailwindcss";
@@ -29,6 +29,7 @@
     --border-accent: rgba(124, 58, 237, 0.25);
 
     /* ── Typography ── */
+    --font-display: 'Fraunces', 'DM Sans', Georgia, serif;
     --text-primary:   #090714;
     --text-secondary: #4a455c;
     --text-muted:     #8b86a0;
@@ -75,14 +76,14 @@
     --text-secondary: #a69ec4;
     --text-muted:     #635c7a;
 
-    --h1-gradient: linear-gradient(135deg, #ffffff 0%, #ede9fe 25%, #c4b5fd 50%, #818cf8 75%, #67e8f9 100%);
-    --h2-hero:     linear-gradient(135deg, #ffffff 0%, #ddd6fe 50%, #c4b5fd 100%);
-    --h2-features: linear-gradient(135deg, #ffffff 0%, #bae6fd 50%, #7dd3fc 100%);
-    --h2-stats:    linear-gradient(135deg, #ffffff 0%, #ede9fe 55%, #c4b5fd 100%);
-    --h2-social:   linear-gradient(135deg, #ffffff 0%, #e0e7ff 50%, #a5b4fc 100%);
-    --h2-pricing:  linear-gradient(135deg, #ffffff 0%, #ccfbf1 50%, #5eead4 100%);
-    --h2-cta:      linear-gradient(135deg, #ffffff 0%, #ede9fe 45%, #c4b5fd 100%);
-    --h2-faq:      linear-gradient(135deg, #ffffff 0%, #e2e8f0 55%, #94a3b8 100%);
+    --h1-gradient: linear-gradient(120deg, #f8f5ef 0%, #d8b4fe 58%, #93c5b7 100%);
+    --h2-hero:     linear-gradient(120deg, #f8f5ef 0%, #d8b4fe 62%, #c7b299 100%);
+    --h2-features: linear-gradient(120deg, #f8f5ef 0%, #b8d8d0 100%);
+    --h2-stats:    linear-gradient(120deg, #f8f5ef 0%, #d8b4fe 100%);
+    --h2-social:   linear-gradient(120deg, #f8f5ef 0%, #c7d2fe 100%);
+    --h2-pricing:  linear-gradient(120deg, #f8f5ef 0%, #a7d7ca 100%);
+    --h2-cta:      linear-gradient(120deg, #ffffff 0%, #eadcc5 100%);
+    --h2-faq:      linear-gradient(120deg, #f8f5ef 0%, #cbd5e1 100%);
 
     --glow-violet: 0 0 80px rgba(167, 139, 250, 0.20), 0 20px 50px rgba(167, 139, 250, 0.12);
     --glow-cobalt: 0 0 80px rgba(96, 165, 250, 0.18), 0 20px 50px rgba(96, 165, 250, 0.10);
@@ -117,19 +118,19 @@
   }
 
   .dark body {
-    /* Dark Mode Aurora - Richer, deeper blending */
-    background-image:
-      radial-gradient(ellipse 80% 60% at 10% -10%, rgba(124, 58, 237, 0.15) 0%, transparent 55%),
-      radial-gradient(ellipse 65% 50% at 90%  5%,  rgba(6, 182, 212,  0.08) 0%, transparent 50%),
-      radial-gradient(ellipse 90% 40% at 50% 115%, rgba(6, 182, 212,  0.06) 0%, transparent 60%),
-      radial-gradient(ellipse 70% 70% at 50%  50%, rgba(109, 40, 217, 0.03) 0%, transparent 70%);
-    background-attachment: fixed;
+    background-color: #070b10;
+    background-image: none;
   }
 
   /* ══ TYPOGRAPHY ══ */
+  h1 {
+    font-family: var(--font-display);
+    letter-spacing: 0;
+  }
+
   h2, h3, h4, h5, h6 {
     font-family: 'Syne', 'DM Sans', -apple-system, sans-serif;
-    letter-spacing: -0.03em;
+    letter-spacing: 0;
   }
 
 
@@ -193,8 +194,7 @@
 
   /* Force Dark Mode Logic */
   .dark .hero-title {
-    /* 1. Base Gradient (Neon Lime to Green) */
-    background: linear-gradient(135deg, #ccff00 0%, #22c55e 100%) !important;
+    background: linear-gradient(120deg, #f8f5ef 0%, #d8b4fe 58%, #93c5b7 100%) !important;
     -webkit-background-clip: text !important;
     -webkit-text-fill-color: transparent !important;
     background-clip: text !important;
@@ -234,8 +234,7 @@
   }
 
   .dark .text-force-gradient {
-    /* Dark Mode: Neon Lime to Green */
-    background: linear-gradient(135deg, #ccff00 0%, #22c55e 100%) !important;
+    background: linear-gradient(120deg, #f8f5ef 0%, #d8b4fe 58%, #93c5b7 100%) !important;
     -webkit-background-clip: text !important;
     -webkit-text-fill-color: transparent !important;
 
@@ -346,7 +345,7 @@
 
   /* ── DARK CARD (Hero/CTA) ── */
   .card-dark {
-    background: linear-gradient(145deg, #180530 0%, #1e1040 40%, #0d1222 75%, #050812 100%);
+    background: #10141c;
     border: 1px solid rgba(255,255,255,0.08);
     box-shadow: 0 30px 70px -15px rgba(91, 33, 182, 0.45);
     transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
@@ -359,7 +358,7 @@
 
   /* ── CTA BAND ── */
   .cta-band {
-    background: linear-gradient(145deg, #180530 0%, #2d1260 30%, #0d1733 65%, #050d1a 100%);
+    background: #10141c;
     border: 1px solid rgba(255,255,255,0.08);
     box-shadow: 0 50px 120px -25px rgba(109, 40, 217, 0.50);
   }
@@ -521,11 +520,9 @@
     --tvh-light-hero:
       radial-gradient(circle at top left, #f2e8ff 0%, transparent 35%),
       linear-gradient(135deg, #fffaf0 0%, #f7f1df 45%, #eef4e8 100%);
-    --tvh-dark-hero:
-      radial-gradient(circle at top left, #2b1646 0%, transparent 38%),
-      linear-gradient(135deg, #11091f 0%, #071018 55%, #07130f 100%);
+    --tvh-dark-hero: #070b10;
     --tvh-title-gradient: linear-gradient(120deg, #5b245e 0%, #073b3a 52%, #c79a4b 100%);
-    --tvh-title-gradient-dark: linear-gradient(120deg, #f8f5ef 0%, #d8b4fe 48%, #6ee7b7 100%);
+    --tvh-title-gradient-dark: linear-gradient(120deg, #f8f5ef 0%, #d8b4fe 58%, #93c5b7 100%);
   }
 
   .tvh-unified-theme main {
@@ -538,9 +535,7 @@
 
   .dark .tvh-unified-theme main {
     background-color: #070b10 !important;
-    background-image:
-      radial-gradient(circle at top left, rgba(43, 22, 70, 0.92) 0%, transparent 38%),
-      linear-gradient(135deg, #11091f 0%, #071018 55%, #07130f 100%) !important;
+    background-image: none !important;
     color: #f8f5ef !important;
   }
 
@@ -643,7 +638,7 @@
     margin-left: auto;
     margin-right: auto;
     color: var(--tvh-plum) !important;
-    font-family: 'Syne', 'DM Sans', -apple-system, sans-serif !important;
+    font-family: var(--font-display) !important;
     font-size: clamp(3rem, 6.8vw, 6.1rem) !important;
     font-weight: 800 !important;
     letter-spacing: 0 !important;
@@ -700,7 +695,7 @@
     max-width: min(100%, 74rem) !important;
     margin-left: 0 !important;
     margin-right: 0 !important;
-    letter-spacing: -0.035em !important;
+    letter-spacing: 0 !important;
     text-align: left !important;
   }
 
@@ -718,7 +713,7 @@
   }
 
   .dark .tvh-unified-theme main h1.tvh-home-title .tvh-home-title-gradient {
-    background-image: linear-gradient(120deg, #f8f5ef 0%, #d8b4fe 44%, #6ee7b7 100%) !important;
+    background-image: linear-gradient(120deg, #f8f5ef 0%, #d8b4fe 58%, #93c5b7 100%) !important;
   }
 
   @media (max-width: 640px) {
@@ -791,8 +786,8 @@
   .dark .tvh-unified-theme main article,
   .dark .tvh-unified-theme main section [class*="rounded-[1.5rem]"],
   .dark .tvh-unified-theme main section [class*="rounded-[2rem]"] {
-    border-color: rgba(255, 255, 255, 0.10) !important;
-    background-color: rgba(255, 255, 255, 0.055) !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    background-color: #101720 !important;
     box-shadow: 0 24px 80px rgba(0, 0, 0, 0.32) !important;
   }
 
@@ -802,7 +797,7 @@
   }
 
   .dark .tvh-unified-theme main [class*="rounded-[3rem]"] {
-    border-color: rgba(255, 255, 255, 0.10) !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
     box-shadow: 0 42px 130px rgba(0, 0, 0, 0.42) !important;
   }
 
@@ -837,7 +832,7 @@
   .dark .tvh-unified-theme main [class*="dark:bg-[#070b14]"],
   .dark .tvh-unified-theme main [class*="dark:bg-[#0f172a]"],
   .dark .tvh-unified-theme main [class*="dark:bg-white/"] {
-    background-color: rgba(255, 255, 255, 0.055) !important;
+    background-color: #101720 !important;
   }
 
   .tvh-unified-theme main a[href="https://app.teenversehub.in/login"],
@@ -867,6 +862,315 @@
   .dark .tvh-unified-theme main a[class*="rounded-full"],
   .dark .tvh-unified-theme main button[class*="rounded-full"] {
     box-shadow: 0 18px 60px rgba(0, 0, 0, 0.34);
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   HOMEPAGE-DERIVED UI KIT
+   Shared primitives extracted from HomePageClient.jsx so every
+   route uses the same restrained TeenVerseHub product language.
+   ══════════════════════════════════════════════════════════════ */
+@layer components {
+  .tvh-page-shell {
+    min-height: 100vh;
+    overflow-x: hidden;
+    background: rgba(255, 250, 240, 0.40);
+    color: var(--tvh-plum);
+    letter-spacing: -0.01em;
+  }
+
+  .dark .tvh-page-shell {
+    background: #070b10;
+    color: #ffffff;
+  }
+
+  .tvh-section {
+    padding: clamp(4rem, 8vw, 6rem) 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .tvh-section {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .tvh-section {
+      padding-left: 3rem;
+      padding-right: 3rem;
+    }
+  }
+
+  .tvh-section-inner {
+    width: 100%;
+    max-width: 80rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .tvh-section-soft {
+    border-top: 1px solid rgba(33, 20, 47, 0.05);
+    border-bottom: 1px solid rgba(33, 20, 47, 0.05);
+    background: rgba(248, 245, 239, 0.30);
+  }
+
+  .dark .tvh-section-soft {
+    border-color: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.005);
+  }
+
+  .tvh-section-ink {
+    border-top: 1px solid rgba(33, 20, 47, 0.30);
+    background: #21142f;
+    color: #ffffff;
+  }
+
+  .dark .tvh-section-ink {
+    border-color: rgba(255, 255, 255, 0.05);
+    background: #0b1118;
+  }
+
+  .tvh-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: 0.75rem;
+    border: 1px solid rgba(33, 20, 47, 0.08);
+    background: rgba(255, 255, 255, 0.70);
+    padding: 0.45rem 0.75rem;
+    color: var(--tvh-cyprus);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.12em !important;
+    text-transform: uppercase;
+    box-shadow:
+      0 2px 6px rgba(33, 20, 47, 0.04),
+      inset 0 1px 1px rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+
+  .dark .tvh-eyebrow {
+    border-color: rgba(255, 255, 255, 0.06);
+    background: rgba(255, 255, 255, 0.04);
+    color: #f4d58d;
+    box-shadow: none;
+  }
+
+  .tvh-display {
+    color: var(--tvh-plum);
+    font-family: var(--font-display) !important;
+    font-size: clamp(2.45rem, 9vw, 6rem);
+    font-weight: 800;
+    letter-spacing: 0 !important;
+    line-height: 0.96;
+    text-wrap: balance;
+  }
+
+  .dark .tvh-display {
+    color: #ffffff;
+  }
+
+  .tvh-title-accent {
+    background-image: linear-gradient(120deg, #5b245e 0%, #073b3a 48%, #c79a4b 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .dark .tvh-title-accent {
+    background-image: linear-gradient(120deg, #f8f5ef 0%, #d8b4fe 58%, #93c5b7 100%);
+  }
+
+  .tvh-kicker {
+    color: var(--tvh-cyprus);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.12em !important;
+    text-transform: uppercase;
+  }
+
+  .dark .tvh-kicker {
+    color: #f4d58d;
+  }
+
+  .tvh-copy {
+    color: #5c5360;
+    font-size: clamp(0.94rem, 1.25vw, 1.05rem);
+    line-height: 1.75;
+  }
+
+  .dark .tvh-copy {
+    color: rgb(203, 213, 225);
+  }
+
+  .tvh-card {
+    border: 1px solid rgba(33, 20, 47, 0.06);
+    border-top-color: rgba(255, 255, 255, 0.70);
+    border-left-color: rgba(255, 255, 255, 0.70);
+    border-radius: 1rem;
+    background: rgba(255, 255, 255, 0.50);
+    box-shadow: 0 10px 25px -5px rgba(33, 20, 47, 0.03);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+
+  .dark .tvh-card {
+    border-color: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.02);
+    box-shadow: none;
+  }
+
+  .tvh-panel {
+    border: 1px solid rgba(33, 20, 47, 0.05);
+    border-top-color: rgba(255, 255, 255, 0.70);
+    border-left-color: rgba(255, 255, 255, 0.70);
+    border-radius: 2rem;
+    background: rgba(248, 245, 239, 0.50);
+    box-shadow: inset 2px 2px 4px rgba(255, 255, 255, 0.60);
+  }
+
+  .dark .tvh-panel {
+    border-color: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.01);
+    box-shadow: none;
+  }
+
+  .tvh-primary {
+    display: inline-flex;
+    min-height: 3rem;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 0.75rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.20);
+    background: var(--tvh-plum);
+    padding: 0 1.5rem;
+    color: #ffffff !important;
+    font-size: 0.875rem;
+    font-weight: 600;
+    box-shadow:
+      0 4px 12px rgba(33, 20, 47, 0.25),
+      inset 0 1px 2px rgba(255, 255, 255, 0.20),
+      inset 0 -2px 0 rgba(0, 0, 0, 0.30);
+    transition: transform 150ms ease, background-color 150ms ease;
+  }
+
+  .tvh-primary:hover {
+    background: #321747;
+  }
+
+  .tvh-primary:active {
+    transform: scale(0.97);
+  }
+
+  .dark .tvh-primary {
+    border-top-color: rgba(255, 255, 255, 0.60);
+    background: #f8f5ef;
+    color: var(--tvh-plum) !important;
+  }
+
+  .tvh-secondary {
+    display: inline-flex;
+    min-height: 3rem;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border: 1px solid rgba(33, 20, 47, 0.10);
+    border-radius: 0.75rem;
+    background: rgba(255, 255, 255, 0.70);
+    padding: 0 1.5rem;
+    color: var(--tvh-plum) !important;
+    font-size: 0.875rem;
+    font-weight: 600;
+    box-shadow:
+      0 2px 6px rgba(33, 20, 47, 0.04),
+      inset 0 1px 1px rgba(255, 255, 255, 0.90),
+      inset 0 -1px 1px rgba(0, 0, 0, 0.05);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .dark .tvh-secondary {
+    border-color: rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.04);
+    color: #ffffff !important;
+    box-shadow: none;
+  }
+
+  .tvh-unified-theme main > section {
+    position: relative;
+  }
+
+  .tvh-unified-theme main > section:not(:first-of-type) {
+    background-image: none !important;
+  }
+
+  .tvh-unified-theme .tv-orbit {
+    opacity: 0.10 !important;
+    filter: blur(90px) !important;
+  }
+
+  .dark .tvh-unified-theme .tv-orbit {
+    display: none !important;
+  }
+
+  .tvh-unified-theme main .tv-reveal {
+    transition-duration: 220ms !important;
+  }
+
+  .tvh-unified-theme main [class*="bg-gradient-to-r"][class*="from-indigo"],
+  .tvh-unified-theme main [class*="bg-gradient-to-r"][class*="via-fuchsia"] {
+    background-image: var(--tvh-title-gradient) !important;
+  }
+
+  .dark .tvh-unified-theme main [class*="bg-gradient-to-r"][class*="from-indigo"],
+  .dark .tvh-unified-theme main [class*="bg-gradient-to-r"][class*="via-fuchsia"] {
+    background-image: var(--tvh-title-gradient-dark) !important;
+  }
+
+  .tvh-unified-theme main [class*="bg-gradient-to-br"][class*="from-indigo"],
+  .tvh-unified-theme main [class*="bg-gradient-to-br"][class*="from-emerald"],
+  .tvh-unified-theme main [class*="dark:bg-gradient-to-br"] {
+    background-image: none !important;
+    background-color: rgba(255, 255, 255, 0.55) !important;
+  }
+
+  .dark .tvh-unified-theme main [class*="bg-gradient-to-br"][class*="from-indigo"],
+  .dark .tvh-unified-theme main [class*="bg-gradient-to-br"][class*="from-emerald"],
+  .dark .tvh-unified-theme main [class*="dark:bg-gradient-to-br"] {
+    background-image: none !important;
+    background-color: #101720 !important;
+  }
+
+  .tvh-unified-theme main [class*="rounded-3xl"],
+  .tvh-unified-theme main [class*="rounded-[2.5rem]"] {
+    border-color: rgba(33, 20, 47, 0.08) !important;
+    border-radius: 1rem !important;
+    box-shadow: 0 10px 25px -5px rgba(33, 20, 47, 0.05) !important;
+  }
+
+  .dark .tvh-unified-theme main [class*="rounded-3xl"],
+  .dark .tvh-unified-theme main [class*="rounded-[2.5rem]"] {
+    border-color: rgba(255, 255, 255, 0.05) !important;
+    background-color: #101720 !important;
+    box-shadow: none !important;
+  }
+
+  .tvh-unified-theme main a[class*="rounded-full"],
+  .tvh-unified-theme main button[class*="rounded-full"] {
+    border-radius: 0.75rem !important;
+  }
+
+  .tvh-unified-theme main section[class*="bg-gradient-to-t"] {
+    background-image: none !important;
+    background-color: var(--tvh-plum) !important;
+  }
+
+  .dark .tvh-unified-theme main section[class*="bg-gradient-to-t"] {
+    background-color: #0b1118 !important;
   }
 }
 

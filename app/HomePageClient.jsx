@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useSyncExternalStore } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import {
@@ -12,7 +12,6 @@ import {
   Code2,
   Fingerprint,
   FileText,
-  LayoutDashboard,
   LockKeyhole,
   Rocket,
   Search,
@@ -34,127 +33,116 @@ import { SITE } from './lib/site'
 
 const loginUrl = SITE.appUrl
 
-// ─── Responsive animation helpers ───────────────────────────────────────────
+// ─── Precision Responsive Animation Helpers ──────────────────────────────────
 
-function useFadeUp(yDistance = 28) {
+function subscribeViewport(callback) {
+  window.addEventListener('resize', callback)
+  return () => window.removeEventListener('resize', callback)
+}
+
+function getViewportIsMobile() {
+  return window.innerWidth < 768
+}
+
+function useFadeUp(yDistance = 16) {
   const prefersReduced = useReducedMotion()
-  const [isMobile, setIsMobile] = useState(false)
-
-  useEffect(() => {
-    // This only runs on the client *after* initial hydration
-    const checkMobile = () => setIsMobile(window.innerWidth < 768)
-    
-    checkMobile() // Set initial client state
-    
-    window.addEventListener('resize', checkMobile)
-    return () => window.removeEventListener('resize', checkMobile)
-  }, [])
+  const isMobile = useSyncExternalStore(subscribeViewport, getViewportIsMobile, () => false)
 
   if (prefersReduced) {
     return {
       hidden: { opacity: 0 },
-      show: { opacity: 1, transition: { duration: 0.4 } },
+      show: { opacity: 1, transition: { duration: 0.25 } },
     }
   }
 
-  // During SSR and the very first client render, `isMobile` is false.
-  // This guarantees the server HTML matches the client HTML.
-  // Immediately after hydration, it updates to true on mobile devices.
-  const y = isMobile ? yDistance * 0.55 : yDistance
-  const blur = isMobile ? 0 : 10
+  const y = isMobile ? yDistance * 0.5 : yDistance
 
   return {
-    hidden: { opacity: 0, y, filter: `blur(${blur}px)` },
+    hidden: { opacity: 0, y },
     show: {
       opacity: 1,
       y: 0,
-      filter: 'blur(0px)',
-      transition: { duration: 0.72, ease: [0.22, 1, 0.36, 1] },
+      transition: { duration: 0.5, ease: [0.19, 1, 0.22, 1] },
     },
   }
 }
 
 const stagger = {
   hidden: {},
-  show: { transition: { staggerChildren: 0.09, delayChildren: 0.08 } },
+  show: { transition: { staggerChildren: 0.06, delayChildren: 0.02 } },
 }
 
-const staggerFast = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.06, delayChildren: 0.05 } },
-}
-
-// ─── Data ────────────────────────────────────────────────────────────────────
+// ─── Data Arrays ─────────────────────────────────────────────────────────────
 
 const skills = [
-  ['Video edits', 'Shorts, reels, creator clips', Play],
-  ['AI assisted design', 'Thumbnails, posts, pitch visuals', WandSparkles],
-  ['Frontend support', 'Landing pages and simple sites', Code2],
-  ['Content writing', 'SEO drafts, captions, scripts', MessageSquareText],
+  ['Video editing', 'Shorts, reels, and creator clips', Play],
+  ['AI-assisted design', 'Thumbnails, posts, and pitch visuals', WandSparkles],
+  ['Frontend development', 'Landing pages and simple websites', Code2],
+  ['Content writing', 'Blogs, captions, scripts, and SEO drafts', MessageSquareText],
 ]
 
 const routes = [
   {
     title: 'Teen creators',
-    text: 'Build proof, price beginner-friendly services, and get guided toward safer first paid work.',
+    text: 'Create a portfolio, show your skills, and take your first steps toward real projects.',
     href: '/freelance-jobs-for-teens',
     image: '/graphics/gemini-svg.svg',
-    color: 'from-[#f4d58d] to-[#fffaf0]',
+    color: 'from-[#fffaf0] to-[#f8f5ef] dark:from-[#21142f]/30 dark:to-[#070b10]',
   },
   {
     title: 'Startup teams',
-    text: 'Find Gen Z execution for lean creative, social, research, and web support without noisy open marketplaces.',
+    text: 'Discover young digital talent for content, design, research, social media, and web support.',
     href: '/hire-teen-freelancers',
     image: '/graphics/gemini-svg (1).svg',
-    color: 'from-[#dcecff] to-[#eef7ff]',
+    color: 'from-[#eef4e8] to-[#f8f5ef] dark:from-[#073b3a]/20 dark:to-[#070b10]',
   },
   {
     title: 'Guardians',
-    text: 'Understand consent, moderation, verification, communication boundaries, and payment protection.',
+    text: 'See how TeenVerseHub thinks about consent, safety, verification, messaging, and payments.',
     href: '/guardian-guide',
     image: '/graphics/gemini-svg (2).svg',
-    color: 'from-[#e6fff5] to-[#f8fbff]',
+    color: 'from-[#fffaf0] to-[#eef4e8] dark:from-[#5b245e]/20 dark:to-[#070b10]',
   },
 ]
 
 const seoLinks = [
   ['Teen digital skills', '/teen-digital-skills'],
-  ['Portfolio builder', '/teen-portfolio-builder'],
+  ['Teen portfolio builder', '/teen-portfolio-builder'],
   ['Student talent marketplace', '/student-talent-marketplace'],
   ['AI tools for teen freelancers', '/ai-tools-for-teen-freelancers'],
 ]
 
 const platformStats = [
-  ['14–21', 'Teen talent age focus'],
-  ['8', 'Starter skill categories'],
-  ['Under 18', 'Guardian-aware consent flow'],
+  ['14–21', 'Student and teen talent'],
+  ['8+', 'Beginner-friendly skill areas'],
+  ['Under 18', 'Guardian-aware onboarding'],
   ['10%', 'Basic plan platform fee'],
 ]
 
 const howItWorks = [
-  ['01', 'Create a profile', 'Students build a clean profile with skills, age-aware details, and portfolio proof.', UsersRound],
-  ['02', 'Verify identity and skills', 'Verification, consent rules, and sample work help make teen talent feel credible.', Fingerprint],
-  ['03', 'Match with safer projects', 'Startups discover beginner-friendly teen talent for creative, content, and web tasks.', Search],
-  ['04', 'Work with protection', 'Clear workflows, reporting, moderation, and payment clarity reduce scam risk.', ShieldCheck],
+  ['01', 'Create your profile', 'Add your skills, interests, and basic details.', UsersRound],
+  ['02', 'Verify your account', 'Complete age-aware checks and build trust.', Fingerprint],
+  ['03', 'Find projects', 'Explore beginner-friendly work that matches your skills.', Search],
+  ['04', 'Work with guidance', 'Use safer messaging, clear scopes, and protected workflows.', ShieldCheck],
 ]
 
 const comparisonRows = [
-  ['Not designed for teenagers', 'Built specifically for teen and Gen Z talent'],
-  ['Generic profiles with little proof', 'Portfolio-first profiles with skill samples'],
-  ['Risky open communication', 'Guardian-aware safety and moderation thinking'],
-  ['Hard for beginners to start', 'Guided first earning and beginner-friendly categories'],
-  ['One-size-fits-all marketplace', 'Focused ecosystem for teen work, learning, and credibility'],
+  ['Not made for teenagers', 'Built for students, teenagers, and young creators'],
+  ['Generic profiles with little proof', 'Portfolio-first profiles with real skill samples'],
+  ['Open communication can feel risky', 'Safer messaging, reporting, and guardian-aware onboarding'],
+  ['Hard for beginners to start', 'Beginner-friendly projects and simple steps'],
+  ['One-size-fits-all marketplace', 'Focused on teen skills, portfolios, learning, and trust'],
 ]
 
 const platformFeatures = [
-  ['AI skill assistant', 'Help teens understand what to improve and how to present their work.', Sparkles],
-  ['Portfolio builder', 'Turn small projects, samples, and proof into a professional profile.', FileText],
-  ['Startup matching', 'Connect startup needs with teen skills like editing, design, writing, and frontend.', Briefcase],
-  ['Safe messaging', 'Keep project communication more structured, respectful, and reportable.', MessageSquareText],
+  ['AI skill assistant', 'Get simple suggestions to improve your skills and profile.', Sparkles],
+  ['Portfolio builder', 'Show your projects, samples, and skills in one trusted profile.', FileText],
+  ['Project matching', 'Find startups looking for design, content, development, and creative help.', Briefcase],
+  ['Safe messaging', 'Chat about work inside the platform with clearer boundaries.', MessageSquareText],
   ['Teen verification', 'Age-aware checks with guardian consent for users under 18.', Fingerprint],
-  ['Earnings tracker', 'Show wallet balance, subscriptions, missions, and reputation progress.', CircleDollarSign],
-  ['Learning roadmap', 'Guide new creators from first skill to first credible portfolio.', TrendingUp],
-  ['Guardian clarity', 'Explain consent, safety, and project boundaries before work starts.', ShieldCheck],
+  ['Earnings tracker', 'Track wallet balance, project progress, subscriptions, and reputation.', CircleDollarSign],
+  ['Learning roadmap', 'Guide new creators from first skill to a stronger portfolio.', TrendingUp],
+  ['Guardian clarity', 'Help families understand consent, safety, and project boundaries.', ShieldCheck],
 ]
 
 const opportunityCategories = [
@@ -169,36 +157,36 @@ const opportunityCategories = [
 ]
 
 const safetyPillars = [
-  ['Guardian-aware onboarding', 'Users under 18 follow a consent-first flow, so families understand what is happening.'],
-  ['Verification and profile proof', 'Identity, age, and portfolio signals help make work more credible.'],
-  ['Moderation and reporting', 'A safer marketplace needs reporting paths, limits, and review systems built into the product.'],
-  ['Protected workflows', 'Clear scopes, communication boundaries, and payment clarity help reduce confusion and scams.'],
+  ['Guardian-aware onboarding', 'Users under 18 follow a consent-first flow so families understand what is happening.'],
+  ['Verification and profile proof', 'Age, identity, and portfolio signals help make profiles more credible.'],
+  ['Moderation and reporting', 'Reporting tools, limits, and review systems help keep the platform more responsible.'],
+  ['Protected workflows', 'Clear project scopes, safer communication, and payment clarity help reduce confusion.'],
 ]
 
 const storyCards = [
-  ['Video editor from India', 'Building a portfolio with reels, short-form edits, and creator-style samples.'],
-  ['Teen UI designer', 'Turning landing page concepts and dashboard screens into proof of skill.'],
-  ['Student frontend developer', 'Practicing React pages, simple websites, and startup support tasks.'],
+  ['Teen video editor', 'Shows reels, short-form edits, and creator-style samples in one portfolio.'],
+  ['Teen UI designer', 'Shares landing page concepts and dashboard screens as proof of skill.'],
+  ['Student frontend developer', 'Builds React pages, simple websites, and startup support projects.'],
 ]
 
 const roadmapItems = [
-  ['Mobile app', 'A smoother teen creator experience on phone.'],
+  ['Mobile app', 'A smoother TeenVerseHub experience on phones.'],
   ['AI mentor', 'Personal guidance for skills, profile quality, and project readiness.'],
-  ['Team collaboration', 'Better tools for startup teams and teen collaborators.'],
-  ['International payments', 'Future expansion for global teen talent opportunities.'],
-  ['Teen learning academy', 'Guided learning paths connected to real portfolio proof.'],
+  ['Team collaboration', 'Better tools for startups and teen collaborators.'],
+  ['International payments', 'Future support for global teen talent opportunities.'],
+  ['Teen learning academy', 'Guided learning paths connected to portfolio proof.'],
 ]
 
-// ─── Shared button components ────────────────────────────────────────────────
+// ─── Sleuomorphic Adaptive Clickables ────────────────────────────────────────
 
 function PrimaryButton({ href, children }) {
   return (
     <a
       href={href}
-      className="group inline-flex min-h-14 items-center justify-center gap-2 rounded-full bg-[#21142f] px-8 py-3 text-base font-black text-white shadow-[0_18px_55px_rgba(33,20,47,0.22)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#321747] hover:shadow-[0_24px_65px_rgba(33,20,47,0.30)] active:scale-[0.97] dark:bg-[#f8f5ef] dark:text-[#21142f] sm:h-16 sm:flex-1"
+      className="group inline-flex w-full sm:w-auto h-12 items-center justify-center gap-2 rounded-xl bg-[#21142f] px-6 text-sm font-semibold text-white transition-all duration-150 active:scale-[0.97] sm:h-13 border-t border-white/20 shadow-[0_4px_12px_rgba(33,20,47,0.25),inset_0_1px_2px_rgba(255,255,255,0.2),inset_0_-2px_0_rgba(0,0,0,0.3)] hover:shadow-[0_6px_16px_rgba(33,20,47,0.35),inset_0_1px_2px_rgba(255,255,255,0.3)] dark:bg-[#f8f5ef] dark:text-[#21142f] dark:border-t-white/60"
     >
       {children}
-      <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1.5" />
+      <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
     </a>
   )
 }
@@ -207,719 +195,568 @@ function SecondaryButton({ href, children }) {
   return (
     <Link
       href={href}
-      className="inline-flex min-h-14 items-center justify-center gap-2 rounded-full border border-[#21142f]/10 bg-white/70 px-8 py-3 text-base font-black text-[#21142f] shadow-sm backdrop-blur transition-all duration-300 hover:-translate-y-0.5 hover:border-[#21142f]/20 hover:bg-white active:scale-[0.97] dark:border-white/10 dark:bg-white/10 dark:text-white dark:hover:bg-white/15 sm:h-16 sm:flex-1"
+      className="inline-flex w-full sm:w-auto h-12 items-center justify-center gap-2 rounded-xl border border-[#21142f]/10 bg-white/70 px-6 text-sm font-semibold text-[#21142f] backdrop-blur-md transition-all duration-150 active:scale-[0.97] sm:h-13 shadow-[0_2px_6px_rgba(33,20,47,0.04),inset_0_1px_1px_rgba(255,255,255,0.9),inset_0_-1px_1px_rgba(0,0,0,0.05)] hover:bg-white dark:border-white/10 dark:bg-white/5 dark:text-white dark:shadow-none"
     >
       {children}
     </Link>
   )
 }
 
-// ─── Dashboard preview ────────────────────────────────────────────────────────
+// ─── Liquid Glass Adaptive Panel ─────────────────────────────────────────────
 
 function DashboardPreview({ priority = false }) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 34, rotate: -2, scale: 0.96 }}
-      animate={{ opacity: 1, y: 0, rotate: 0, scale: 1 }}
-      transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-      className="relative mx-auto w-full max-w-[170px] min-[390px]:max-w-[190px] sm:max-w-[280px] lg:max-w-[340px] xl:max-w-[380px]"
-    >
-      <div className="absolute -inset-3 rounded-[2rem] bg-[radial-gradient(circle_at_30%_10%,rgba(168,85,247,0.20),transparent_38%),radial-gradient(circle_at_80%_70%,rgba(16,185,129,0.14),transparent_38%)] blur-xl dark:bg-[radial-gradient(circle_at_30%_10%,rgba(168,85,247,0.24),transparent_40%),radial-gradient(circle_at_80%_70%,rgba(45,212,191,0.14),transparent_42%)] sm:-inset-8 sm:rounded-[3rem] sm:blur-3xl" />
+    <div className="relative w-full max-w-[280px] sm:max-w-[310px] lg:max-w-[340px] px-2 sm:px-0">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[110%] h-[110%] bg-gradient-to-tr from-[#5b245e]/10 to-[#073b3a]/5 rounded-full blur-3xl pointer-events-none" />
+
+      <div className="relative overflow-hidden rounded-2xl border-t border-l border-white/60 border-b border-r border-white/20 bg-white/40 p-2 sm:p-2.5 shadow-[0_20px_50px_rgba(33,20,47,0.06),inset_0_1px_3px_rgba(255,255,255,0.7)] backdrop-blur-xl dark:border-white/10 dark:border-b-white/5 dark:bg-[#0b1118]/40">
+        <div className="rounded-xl overflow-hidden border border-[#21142f]/5 bg-white dark:border-white/5">
+          <Image
+            src="/graphics/dashboard-light.png"
+            alt="TeenVerseHub dashboard preview"
+            width={797}
+            height={1536}
+            priority={priority}
+            className="block h-auto w-full dark:hidden"
+          />
+          <Image
+            src="/graphics/dashboard-dark.png"
+            alt="TeenVerseHub dashboard preview"
+            width={797}
+            height={1536}
+            priority={priority}
+            className="hidden h-auto w-full dark:block"
+          />
+        </div>
+      </div>
 
       <motion.div
-        animate={{ y: [0, -12, 0], rotate: [0, -1.3, 0] }}
-        transition={{ duration: 6.5, repeat: Infinity, ease: 'easeInOut' }}
-        className="relative overflow-hidden rounded-[1.55rem] border border-slate-200 bg-white p-1.5 shadow-[0_28px_80px_rgba(33,20,47,0.20)] dark:border-slate-800 dark:bg-[#0b1118] dark:shadow-[0_28px_90px_rgba(0,0,0,0.38)] sm:rounded-[2.2rem] sm:p-2"
+        animate={{ y: [0, 4, 0] }}
+        transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+        className="absolute -bottom-3 left-2 sm:-left-6 rounded-xl border border-[#21142f]/5 bg-white px-2.5 py-1.5 sm:px-3 sm:py-2 shadow-[0_8px_20px_rgba(33,20,47,0.04),inset_0_2px_4px_rgba(255,255,255,0.9)] dark:bg-[#111820] dark:border-white/5"
       >
-        <Image
-          src="/graphics/dashboard-light.png"
-          alt="TeenVerseHub light mode dashboard"
-          width={797}
-          height={1536}
-          priority={priority}
-          className="block h-auto w-full rounded-[1.2rem] dark:hidden sm:rounded-[1.75rem]"
-        />
-        <Image
-          src="/graphics/dashboard-dark.png"
-          alt="TeenVerseHub dark mode dashboard"
-          width={797}
-          height={1536}
-          priority={priority}
-          className="hidden h-auto w-full rounded-[1.2rem] dark:block sm:rounded-[1.75rem]"
-        />
+        <div className="flex items-center gap-2">
+          <span className="flex h-2 w-2 rounded-full bg-emerald-500 shadow-[inset_0_1px_1px_rgba(255,255,255,0.4)]" />
+          <p className="text-[9px] sm:text-[10px] font-bold tracking-wider text-slate-500 dark:text-slate-400 uppercase whitespace-nowrap">Safer workspace</p>
+        </div>
       </motion.div>
 
       <motion.div
-        animate={{ y: [0, 10, 0] }}
-        transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 0.4 }}
-        className="absolute -bottom-3 -left-3 rounded-lg border border-emerald-200 bg-emerald-50 px-2.5 py-1.5 shadow-2xl dark:border-emerald-900 dark:bg-[#061d1b] sm:-bottom-5 sm:-left-2 sm:rounded-2xl sm:px-4 sm:py-3"
+        animate={{ y: [0, -4, 0] }}
+        transition={{ duration: 4.4, repeat: Infinity, ease: 'easeInOut', delay: 0.2 }}
+        className="absolute right-2 sm:-right-6 top-12 sm:top-16 rounded-xl border border-[#21142f]/5 bg-[#fffaf0] p-2 sm:p-3 shadow-[0_8px_20px_rgba(33,20,47,0.04),inset_0_2px_4px_rgba(255,255,255,0.9)] dark:bg-[#111820] dark:border-white/5"
       >
-        <p className="text-[8px] font-black uppercase tracking-[0.16em] text-emerald-700 dark:text-emerald-400 sm:text-[10px] sm:tracking-[0.2em]">Verified</p>
-        <p className="mt-0.5 text-[10px] font-black text-[#101827] dark:text-white sm:mt-1 sm:text-sm">Identity secured</p>
+        <p className="text-[8px] sm:text-[9px] font-bold uppercase tracking-wider text-[#5b245e] dark:text-[#f4d58d] whitespace-nowrap">Profile XP</p>
+        <p className="text-xs sm:text-sm font-black text-[#21142f] dark:text-white mt-0.5 whitespace-nowrap">277 XP</p>
       </motion.div>
-
-      <motion.div
-        animate={{ y: [0, -10, 0] }}
-        transition={{ duration: 5.4, repeat: Infinity, ease: 'easeInOut', delay: 0.8 }}
-        className="absolute -right-3 top-8 rounded-lg border border-violet-200 bg-white px-2.5 py-1.5 shadow-2xl dark:border-violet-900 dark:bg-[#130f2a] sm:-right-3 sm:top-16 sm:rounded-2xl sm:px-4 sm:py-3"
-      >
-        <p className="text-[8px] font-black uppercase tracking-[0.16em] text-violet-600 dark:text-violet-400 sm:text-[10px] sm:tracking-[0.2em]">Energy</p>
-        <p className="mt-0.5 text-[10px] font-black text-[#101827] dark:text-white sm:mt-1 sm:text-sm">277 points</p>
-      </motion.div>
-    </motion.div>
+    </div>
   )
 }
-
-// ─── Stat card ────────────────────────────────────────────────────────────────
 
 function StatCard({ value, label }) {
-  const fadeUp = useFadeUp()
   return (
-    <motion.div
-      variants={fadeUp}
-      whileHover={{ y: -4, transition: { duration: 0.25, ease: 'easeOut' } }}
-      className="rounded-[1.5rem] border border-[#21142f]/10 bg-white/75 p-6 shadow-sm backdrop-blur-xl transition-shadow duration-300 hover:shadow-md dark:border-white/10 dark:bg-slate-800/50"
-    >
-      <p className="text-4xl font-black text-[#21142f] dark:text-white">{value}</p>
-      <p className="mt-3 text-sm font-bold leading-6 text-[#687386] dark:text-slate-300">{label}</p>
-    </motion.div>
+    <div className="rounded-2xl border-t border-l border-white/60 border-b border-r border-white/20 bg-white/40 p-5 sm:p-6 shadow-[0_4px_12px_rgba(0,0,0,0.01),inset_0_1px_2px_rgba(255,255,255,0.8)] backdrop-blur-md dark:border-white/5 dark:bg-white/[0.01]">
+      <p className="text-xl sm:text-2xl font-bold tracking-tight text-[#21142f] dark:text-white">{value}</p>
+      <p className="mt-1 text-[11px] sm:text-xs text-[#5c5360] dark:text-slate-400 font-medium leading-tight">{label}</p>
+    </div>
   )
 }
-
-// ─── Feature card ─────────────────────────────────────────────────────────────
 
 function FeatureCard({ title, text, Icon }) {
-  const fadeUp = useFadeUp()
   return (
-    <motion.div
-      variants={fadeUp}
-      whileHover={{ y: -6, transition: { duration: 0.25, ease: 'easeOut' } }}
-      className="group rounded-[1.5rem] border border-[#21142f]/10 bg-white/75 p-6 shadow-sm backdrop-blur-xl transition-shadow duration-300 hover:shadow-xl dark:border-white/10 dark:bg-slate-800/50"
-    >
-      <motion.div
-        whileHover={{ scale: 1.08 }}
-        transition={{ duration: 0.2 }}
-        className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#21142f] text-white dark:bg-white dark:text-[#21142f]"
-      >
-        <Icon className="h-6 w-6" />
-      </motion.div>
-      <h3 className="mt-5 text-lg font-black text-[#21142f] dark:text-white">{title}</h3>
-      <p className="mt-3 text-sm leading-7 text-[#5c5360] dark:text-slate-300">{text}</p>
-    </motion.div>
+    <div className="group rounded-2xl border-t border-l border-white/70 border-b border-r border-white/20 bg-white/50 p-5 sm:p-6 shadow-[0_10px_25px_-5px_rgba(33,20,47,0.03)] backdrop-blur-md transition-all duration-200 hover:bg-white dark:border-white/5 dark:bg-white/[0.02] dark:hover:bg-white/[0.04]">
+      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white shadow-[0_2px_6px_rgba(33,20,47,0.05),inset_0_1px_2px_rgba(255,255,255,0.9)] text-[#21142f] dark:bg-white/5 dark:text-white dark:shadow-none">
+        <Icon className="h-5 w-5" />
+      </div>
+      <h3 className="mt-4 text-sm font-bold text-[#21142f] dark:text-white tracking-tight">{title}</h3>
+      <p className="mt-1.5 text-xs leading-relaxed text-[#5c5360] dark:text-slate-400">{text}</p>
+    </div>
   )
 }
 
-// ─── Page ─────────────────────────────────────────────────────────────────────
+// ─── Main View Integration ──────────────────────────────────────────────────
 
 export default function HomePage() {
   const [showPopup, setShowPopup] = useState(false)
   const heroRef = useRef(null)
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] })
-  const heroBgY = useTransform(scrollYProgress, [0, 1], ['0%', '12%'])
+  const heroBgY = useTransform(scrollYProgress, [0, 1], ['0%', '6%'])
 
   const fadeUp = useFadeUp()
 
-  // Trigger popup after a delay
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowPopup(true)
-    }, 2500)
+    const timer = setTimeout(() => setShowPopup(true), 4000)
     return () => clearTimeout(timer)
   }, [])
 
   return (
     <MarketingShell>
-      <div className="overflow-x-clip overflow-y-visible bg-[radial-gradient(circle_at_top_left,#f2e8ff_0%,transparent_35%),linear-gradient(135deg,#fffaf0_0%,#f7f1df_45%,#eef4e8_100%)] text-[#21142f] dark:bg-[radial-gradient(circle_at_top_left,#2b1646_0%,transparent_38%),linear-gradient(135deg,#11091f_0%,#071018_55%,#07130f_100%)] dark:text-white">
+      <div className="min-h-screen overflow-x-hidden bg-[#fffaf0]/40 text-[#21142f] selection:bg-[#5b245e] selection:text-white dark:bg-[#070b10] dark:text-white tracking-tight">
 
-        {/* ═══════════════════ POPUP CTA (Right side) ═══════════════════ */}
+        {/* ═══════════════════ NOTIFICATION SYSTEM ═══════════════════ */}
         <AnimatePresence>
           {showPopup && (
             <motion.div
-              initial={{ opacity: 0, x: 60, y: 20 }}
-              animate={{ opacity: 1, x: 0, y: 0 }}
-              exit={{ opacity: 0, x: 60, y: 20 }}
-              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-              className="fixed bottom-5 right-5 z-50 hidden w-[calc(100vw-3rem)] max-w-[320px] rounded-[1.75rem] border border-[#21142f]/10 bg-white p-6 shadow-[0_20px_60px_rgba(33,20,47,0.15)] dark:border-white/10 dark:bg-slate-900 sm:block"
+              initial={{ opacity: 0, scale: 0.96, y: 8 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.96, y: 8 }}
+              className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 hidden w-[calc(100vw-2rem)] max-w-76 rounded-2xl border-t border-l border-white/80 border-b border-r border-white/20 bg-white/90 p-5 shadow-[0_20px_40px_rgba(33,20,47,0.12)] backdrop-blur-xl dark:border-white/10 dark:bg-[#0b1118]/90 sm:block"
             >
-              <button
-                onClick={() => setShowPopup(false)}
-                aria-label="Close"
-                className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full bg-slate-100 text-slate-500 transition-colors hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700"
-              >
-                <X className="h-4 w-4" />
+              <button onClick={() => setShowPopup(false)} className="absolute right-4 top-4 text-slate-400 hover:text-[#21142f] dark:hover:text-white">
+                <X className="h-3.5 w-3.5" />
               </button>
-
-              <div className="mb-4 inline-flex items-center gap-1.5 rounded-full bg-[#f4d58d]/35 px-2.5 py-1 text-[10px] font-black uppercase tracking-[0.14em] text-[#5b245e] dark:bg-amber-900/40 dark:text-[#f4d58d]">
-                <Star className="h-3 w-3" />
-                Ready for launch
+              <div className="flex items-center gap-1.5 text-[#5b245e] dark:text-[#f4d58d]">
+                <Star className="h-3.5 w-3.5 fill-current" />
+                <span className="text-[10px] font-bold uppercase tracking-wider">Start your TeenVerse journey</span>
               </div>
-
-              <h3 className="text-[1.35rem] font-black leading-tight text-[#21142f] dark:text-white">Start with one profile, one skill.</h3>
-              <p className="mt-2 text-sm leading-6 text-[#5c5360] dark:text-slate-300">
-                Build proof and safely earn credibility online without the noise.
+              <h3 className="mt-2 text-xs font-bold text-[#21142f] dark:text-white">Create your space.</h3>
+              <p className="mt-1 text-[11px] leading-relaxed text-[#5c5360] dark:text-slate-400">
+                Create your profile, show your skills, and find projects that match your interests.
               </p>
-
-              <div className="mt-6 flex flex-col gap-2.5">
-                <a
-                  href={loginUrl}
-                  className="group inline-flex w-full min-h-11 items-center justify-center gap-2 rounded-full bg-[#21142f] px-5 py-2 text-sm font-black text-white shadow-md transition hover:-translate-y-0.5 hover:bg-[#321747] dark:bg-white dark:text-[#21142f]"
-                >
-                  Go to login
-                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              <div className="mt-4">
+                <a href={loginUrl} className="flex h-8 items-center justify-center rounded-lg bg-[#21142f] text-[11px] font-medium text-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] hover:bg-[#321747] dark:bg-white dark:text-[#21142f] w-full">
+                  Create Profile
                 </a>
-                <Link
-                  href="/how-to-earn-money-as-a-teenager"
-                  className="inline-flex w-full min-h-11 items-center justify-center gap-2 rounded-full border border-[#21142f]/15 bg-transparent px-5 py-2 text-[13px] font-bold text-[#21142f] transition hover:bg-slate-50 dark:border-white/15 dark:text-white dark:hover:bg-slate-800"
-                >
-                  Read earning guide
-                </Link>
               </div>
             </motion.div>
           )}
         </AnimatePresence>
 
-        {/* ═══════════════════ HERO ═══════════════════ */}
-        <section
-          ref={heroRef}
-          className="relative isolate overflow-visible px-5 pb-14 pt-28 sm:px-6 sm:pb-16 sm:pt-32 lg:min-h-[calc(100vh-2rem)] lg:overflow-hidden lg:px-8"
-        >
-          {/* Parallax bg */}
-          <motion.div
-            style={{ y: heroBgY }}
-            className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top_left,#f2e8ff_0%,transparent_35%),linear-gradient(135deg,#fffaf0_0%,#f7f1df_45%,#eef4e8_100%)] dark:bg-[radial-gradient(circle_at_top_left,#2b1646_0%,transparent_38%),linear-gradient(135deg,#11091f_0%,#071018_55%,#07130f_100%)]"
-          />
-          <div className="tv-grid-mesh pointer-events-none absolute inset-0 -z-10 opacity-70" />
-
-          {/* Floating orbs */}
-          <motion.div
-            aria-hidden
-            animate={{ y: [0, -18, 0], rotate: [0, 4, 0] }}
-            transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
-            className="absolute left-[6%] top-28 h-14 w-14 rounded-[20px] border border-white/70 bg-[#fffaf0]/70 shadow-2xl shadow-[#5b245e]/10 backdrop-blur-xl dark:border-white/10 dark:bg-white/10 sm:h-20 sm:w-20 sm:rounded-[28px]"
-          />
-          <motion.div
-            aria-hidden
-            animate={{ y: [0, 22, 0], rotate: [0, -6, 0] }}
-            transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut', delay: 0.8 }}
-            className="absolute bottom-20 right-[8%] h-20 w-20 rounded-full border border-white/60 bg-[#073b3a]/10 shadow-2xl backdrop-blur-xl dark:bg-[#d8b4fe]/10 sm:h-28 sm:w-28"
-          />
-          <motion.div
-            aria-hidden
-            animate={{ scale: [1, 1.08, 1], opacity: [0.5, 0.8, 0.5] }}
-            transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut', delay: 1.2 }}
-            className="absolute right-[28%] top-1/2 hidden h-10 w-10 rounded-full border border-[#f4d58d]/50 bg-[#f4d58d]/20 backdrop-blur-xl lg:block"
-          />
-
-          {/* Grid: copy + mockup */}
-          <div className="mx-auto grid w-full max-w-7xl items-center gap-10 text-left lg:grid-cols-[0.98fr_0.78fr] lg:gap-14">
-
-            {/* LEFT: copy */}
-            <motion.div
-              initial="hidden"
-              animate="show"
-              variants={stagger}
-              className="max-w-4xl"
+        {/* ═══════════════════ HERO SECTION ═══════════════════ */}
+        <section ref={heroRef} className="relative isolate px-4 sm:px-6 pt-24 pb-16 sm:pt-36 lg:px-12">
+          <motion.div style={{ y: heroBgY }} className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_left,rgba(7,59,58,0.03),transparent_45%),radial-gradient(ellipse_at_bottom_right,rgba(91,36,94,0.04),transparent_50%)]" />
+          
+          <div className="mx-auto w-full max-w-7xl flex flex-col gap-8 sm:gap-12">
+            
+            {/* Fluid Heading Framework Row */}
+            <motion.div 
+              initial="hidden" 
+              animate="show" 
+              variants={stagger} 
+              className="mx-auto flex w-full max-w-5xl flex-col items-center justify-center text-center px-2"
             >
-              {/* Badge */}
-              <motion.div
-                variants={fadeUp}
-                className="mb-8 inline-flex w-fit max-w-full items-center gap-3 rounded-full border border-[#21142f]/10 bg-white/70 px-5 py-3 text-[10px] font-black uppercase tracking-[0.18em] text-[#5b245e] shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/10 dark:text-white/80 sm:px-6 sm:text-xs sm:tracking-[0.24em]"
+              <motion.div 
+                variants={fadeUp} 
+                className="inline-flex items-center gap-2 rounded-full border border-[#21142f]/5 bg-white px-3.5 py-1.5 text-xs font-semibold text-[#5b245e] shadow-[0_4px_12px_rgba(33,20,47,0.03),inset_0_1.5px_2px_rgba(255,255,255,0.9)] dark:border-white/5 dark:bg-white/5 dark:text-[#f4d58d]"
               >
-                <Sparkles className="h-5 w-5 shrink-0" />
-                Teens #1 choice for safer online work
+                <Sparkles className="h-3.5 w-3.5 text-[#073b3a] dark:text-[#f4d58d]" />
+                Parent-aware onboarding
               </motion.div>
 
               <motion.h1
                 variants={fadeUp}
-                className="tvh-home-title max-w-5xl text-left text-[2.8rem] font-black leading-[0.98] tracking-[-0.035em] text-[#21142f] min-[390px]:text-[3.05rem] sm:text-6xl md:text-7xl lg:text-8xl dark:text-white"
+                style={{ fontFamily: "'Josefin Sans', sans-serif" }}
+                className="
+                  mt-6 mx-auto w-full max-w-6xl px-4
+                  text-center select-none font-bold tracking-tight
+                  text-[#21142f] dark:text-white
+                  text-[1.85rem] min-[360px]:text-[2.2rem] min-[410px]:text-[2.6rem]
+                  sm:text-[4.2rem] md:text-[5.4rem]
+                  lg:text-[6.4rem] xl:text-[7.2rem]
+                  leading-[1.15] sm:leading-[0.9]
+                "
               >
-                <span className="block">TeenVerseHub</span>
-                <span className="tvh-home-title-gradient block bg-[linear-gradient(120deg,#5b245e_0%,#1f2937_45%,#c79a4b_100%)] bg-clip-text text-transparent dark:bg-[linear-gradient(120deg,#ffffff_0%,#d8b4fe_45%,#6ee7b7_100%)] dark:bg-clip-text">
-                  makes teen talent
+                {/* Fixed line mapping properties to handle adaptive scaling cleanly */}
+                <span className="block text-center whitespace-normal sm:whitespace-nowrap break-words">
+                  Build your portfolio.
                 </span>
-                <span className="tvh-home-title-gradient block bg-[linear-gradient(120deg,#5b245e_0%,#073b3a_45%,#c79a4b_100%)] bg-clip-text text-transparent dark:bg-[linear-gradient(120deg,#c7d2fe_0%,#a7f3d0_100%)] dark:bg-clip-text">
-                  feel credible.
+
+                <span
+                  className="
+                    mt-1.5 sm:mt-2 block whitespace-normal sm:whitespace-nowrap break-words
+                    bg-gradient-to-r from-[#5b245e] to-[#073b3a]
+                    bg-clip-text text-transparent
+                    dark:from-[#f4d58d] dark:to-purple-300
+                  "
+                >
+                  Find real projects.
                 </span>
               </motion.h1>
-
-              {/* Body */}
-              <motion.p
-                variants={fadeUp}
-                className="mt-7 max-w-2xl text-left text-lg leading-8 text-[#5f5363] dark:text-slate-300 sm:text-xl sm:leading-9"
-              >
-                A safer platform where talented teenagers can build real portfolios, work with startups, and earn credibility online—with verification, guardian-aware flows, and protected project systems.
-              </motion.p>
-
-              {/* CTAs */}
-              <motion.div
-                variants={fadeUp}
-                className="mt-10 flex w-full flex-col gap-4 sm:max-w-xl sm:flex-row"
-              >
-                {/* LOGIN BUTTON #1 */}
-                <PrimaryButton href={loginUrl}>Login and start</PrimaryButton>
-                <SecondaryButton href="/hire-teen-freelancers">Hire teen talent</SecondaryButton>
-              </motion.div>
-
-              {/* Trust chips */}
-              <motion.div
-                variants={staggerFast}
-                initial="hidden"
-                animate="show"
-                className="mt-12 grid gap-4 sm:grid-cols-2 lg:max-w-3xl"
-              >
-                {[
-                  ['Guardian aware', ShieldCheck],
-                  ['Verified profiles', BadgeCheck],
-                  ['Payment clarity', CircleDollarSign],
-                  ['AI moderation', LockKeyhole],
-                ].map(([label, Icon]) => (
-                  <motion.div
-                    key={label}
-                    variants={fadeUp}
-                    whileHover={{ y: -3, scale: 1.02, transition: { duration: 0.2 } }}
-                    className="flex items-center gap-4 rounded-3xl border border-[#21142f]/10 bg-white/65 px-5 py-5 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/[0.06]"
-                  >
-                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-emerald-500/10">
-                      <Icon className="h-6 w-6 text-emerald-500" />
-                    </div>
-                    <p className="text-base font-black text-[#21142f] dark:text-white">{label}</p>
-                  </motion.div>
-                ))}
-              </motion.div>
             </motion.div>
 
-            {/* RIGHT: mockup */}
-            <motion.div
-              initial={{ opacity: 0, x: 38, scale: 0.96 }}
-              animate={{ opacity: 1, x: 0, scale: 1 }}
-              transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-              className="relative mx-auto w-full max-w-[230px] min-[390px]:max-w-[250px] sm:max-w-md lg:max-w-none"
-            >
-              <div className="absolute -inset-3 rounded-[2rem] bg-[linear-gradient(135deg,rgba(91,36,94,0.13),rgba(7,59,58,0.08),rgba(199,154,75,0.10))] blur-xl sm:-inset-8 sm:rounded-[3rem] sm:blur-3xl" />
-              <div className="relative overflow-visible rounded-[1.35rem] border border-slate-200 bg-white p-1.5 shadow-[0_22px_70px_rgba(33,20,47,0.14)] dark:border-slate-800 dark:bg-[#0b1118] sm:rounded-[2rem] sm:p-3 lg:overflow-hidden">
+            {/* Bottom Row Layout Architecture (Responsive 12-Column Map) */}
+            <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:items-center mt-6 sm:mt-12 lg:mt-16">
+              
+              {/* Informational Column Block */}
+              <div className="lg:col-span-5 lg:col-start-2 flex flex-col justify-center order-2 lg:order-1 px-2 sm:px-0">
+                <p className="text-sm sm:text-base leading-relaxed text-[#5c5360] dark:text-slate-300 sm:leading-relaxed max-w-xl text-center lg:text-left">
+                  TeenVerseHub helps students and teenagers create portfolios, discover beginner-friendly projects, and work with startups in a safer, guided environment.
+                </p>
+
+                {/* Adaptive Click Target Stack */}
+                <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:max-w-md w-full mx-auto lg:mx-0">
+                  <PrimaryButton href={loginUrl}>Create Profile</PrimaryButton>
+                  <SecondaryButton href="/hire-teen-freelancers">Explore Projects</SecondaryButton>
+                </div>
+
+                {/* Grid List Rows */}
+                <div className="mt-10 grid grid-cols-2 gap-x-4 gap-y-3 max-w-xl border-t border-[#21142f]/5 pt-6 dark:border-white/5">
+                  {[
+                    ['Parent-aware onboarding', ShieldCheck],
+                    ['Portfolio profiles', BadgeCheck],
+                    ['Secure payments', CircleDollarSign],
+                    ['Safe messaging', LockKeyhole],
+                  ].map(([label, Icon]) => (
+                    <div key={label} className="flex items-center gap-2 text-xs font-semibold text-[#5c5360] dark:text-slate-300">
+                      <Icon className="h-3.5 w-3.5 text-[#073b3a] dark:text-[#f4d58d] shrink-0" />
+                      <span className="truncate leading-none">{label}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Interface Interactive Showcase Display Panel Container */}
+              <div className="lg:col-span-6 flex justify-center order-1 lg:order-2 mb-4 lg:mb-0">
                 <DashboardPreview priority />
               </div>
 
-              <motion.div
-                animate={{ y: [0, -12, 0] }}
-                transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
-                className="absolute -bottom-4 left-1/2 w-max -translate-x-1/2 rounded-lg border border-slate-200 bg-white px-3 py-2 shadow-2xl dark:border-slate-700 dark:bg-[#160b1f] sm:-bottom-7 sm:left-7 sm:translate-x-0 sm:rounded-2xl sm:px-5 sm:py-4"
-              >
-                <p className="text-[9px] font-black uppercase tracking-[0.16em] text-[#8a6d32] dark:text-[#f4d58d] sm:text-xs sm:tracking-[0.2em]">Real dashboard</p>
-                <p className="mt-0.5 text-xs font-bold text-slate-800 dark:text-slate-200 sm:mt-1 sm:text-sm">Light and dark mode ready</p>
-              </motion.div>
-            </motion.div>
+            </div>
+
           </div>
         </section>
 
-        {/* ═══════════════════ STATS ═══════════════════ */}
-        <section className="px-5 py-16 sm:px-8 lg:px-12">
+        {/* ═══════════════════ METRIC GRID ROWS ═══════════════════ */}
+        <section className="px-4 sm:px-6 py-8 lg:px-12 border-y border-[#21142f]/5 bg-white/20 dark:border-white/5 dark:bg-white/[0.005]">
           <div className="mx-auto max-w-7xl">
-            <motion.div
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, margin: '-100px' }}
-              variants={stagger}
-              className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
-            >
+            <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
               {platformStats.map(([value, label]) => (
                 <StatCard key={label} value={value} label={label} />
               ))}
-            </motion.div>
-          </div>
-        </section>
-
-        {/* ═══════════════════ HOW IT WORKS ═══════════════════ */}
-        <section className="px-5 py-20 sm:px-8 lg:px-12">
-          <div className="mx-auto max-w-7xl">
-            <div className="grid gap-6 lg:grid-cols-[0.85fr_1.15fr] lg:items-end">
-              <div>
-                <p className="text-sm font-black uppercase tracking-[0.22em] text-[#5b245e] dark:text-[#d8b4fe]">How it works</p>
-                <h2 className="mt-4 text-4xl font-black tracking-normal text-[#21142f] dark:text-white sm:text-6xl">From first profile to safer first project.</h2>
-              </div>
-              <p className="max-w-2xl text-lg leading-8 text-[#5c5360] dark:text-slate-300">
-                TeenVerseHub should feel simple the moment a user lands here. This flow explains what happens after signup for teens, guardians, and startup teams.
-              </p>
-            </div>
-            <motion.div
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, margin: '-120px' }}
-              variants={stagger}
-              className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-4"
-            >
-              {howItWorks.map(([step, title, text, Icon]) => (
-                <motion.div
-                  key={title}
-                  variants={fadeUp}
-                  whileHover={{ y: -6, transition: { duration: 0.25, ease: 'easeOut' } }}
-                  className="relative overflow-hidden rounded-[1.75rem] border border-[#21142f]/10 bg-[#fffaf0]/80 p-6 shadow-sm backdrop-blur-xl transition-shadow duration-300 hover:shadow-2xl dark:border-white/10 dark:bg-slate-800/50"
-                >
-                  <div className="absolute right-5 top-5 select-none text-5xl font-black text-[#21142f]/5 dark:text-white/5">{step}</div>
-                  <motion.div
-                    whileHover={{ rotate: 8, scale: 1.1, transition: { duration: 0.2 } }}
-                    className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#21142f] text-white dark:bg-white dark:text-[#21142f]"
-                  >
-                    <Icon className="h-6 w-6" />
-                  </motion.div>
-                  <h3 className="mt-7 text-xl font-black text-[#21142f] dark:text-white">{title}</h3>
-                  <p className="mt-3 leading-7 text-[#5c5360] dark:text-slate-300">{text}</p>
-                </motion.div>
-              ))}
-            </motion.div>
-          </div>
-        </section>
-
-        {/* ═══════════════════ COMPARISON ═══════════════════ */}
-        <section className="bg-[#f8f5ef] px-5 py-20 dark:bg-[#0c1116] sm:px-8 lg:px-12">
-          <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
-            <div>
-              <p className="text-sm font-black uppercase tracking-[0.22em] text-[#073b3a] dark:text-emerald-400">Why different</p>
-              <h2 className="mt-4 text-4xl font-black tracking-normal text-[#21142f] dark:text-white sm:text-6xl">Not another generic freelance marketplace.</h2>
-              <p className="mt-6 text-lg leading-8 text-[#5c5360] dark:text-slate-300">
-                The strongest positioning is clear: TeenVerseHub is becoming a professional operating system for teen talent, not just a place to post gigs.
-              </p>
-            </div>
-            <div className="overflow-hidden rounded-[2rem] border border-[#21142f]/10 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900">
-              <div className="grid grid-cols-2 border-b border-[#21142f]/10 bg-[#21142f] px-5 py-4 text-sm font-black text-white dark:border-slate-800 dark:bg-slate-950">
-                <span>Other platforms</span>
-                <span>TeenVerseHub</span>
-              </div>
-              {comparisonRows.map(([other, teenverse], i) => (
-                <motion.div
-                  key={other}
-                  initial={{ opacity: 0, x: -16 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, margin: '-60px' }}
-                  transition={{ delay: i * 0.07, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                  className="grid grid-cols-2 gap-4 border-b border-[#21142f]/10 px-5 py-5 last:border-b-0 dark:border-slate-800"
-                >
-                  <p className="text-sm font-bold leading-6 text-[#687386] dark:text-slate-400">{other}</p>
-                  <p className="flex gap-3 text-sm font-black leading-6 text-[#21142f] dark:text-slate-100">
-                    <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-emerald-500" />
-                    {teenverse}
-                  </p>
-                </motion.div>
-              ))}
             </div>
           </div>
         </section>
 
-        {/* ═══════════════════ PLATFORM FEATURES ═══════════════════ */}
-        <section className="px-5 py-20 sm:px-8 lg:px-12">
-          <div className="mx-auto max-w-7xl">
-            <div className="grid gap-6 lg:grid-cols-[0.82fr_1.18fr] lg:items-end">
-              <div>
-                <p className="text-sm font-black uppercase tracking-[0.22em] text-[#5b245e] dark:text-[#d8b4fe]">Platform features</p>
-                <h2 className="mt-4 text-4xl font-black tracking-normal text-[#21142f] dark:text-white sm:text-6xl">A real product ecosystem, not just a landing page.</h2>
-              </div>
-              <p className="max-w-2xl text-lg leading-8 text-[#5c5360] dark:text-slate-300">
-                The dashboard preview now connects to actual feature promises: portfolios, matching, safer messaging, verification, earnings, learning, and guardian clarity.
-              </p>
-            </div>
-            <motion.div
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, margin: '-120px' }}
-              variants={stagger}
-              className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-4"
-            >
-              {platformFeatures.map(([title, text, Icon]) => (
+        {/* ═══════════════════ WHAT YOU CAN DO UTILITY AREA ═══════════════════ */}
+        <section className="mx-auto max-w-7xl px-4 sm:px-6 py-16 sm:py-24 lg:px-12">
+          
+          <div className="max-w-xl border-l-2 border-[#073b3a] pl-4 sm:pl-6 dark:border-[#f4d58d]">
+            <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-[#21142f] dark:text-white">
+              What you can do on TeenVerseHub
+            </h2>
+            <p className="mt-1.5 text-xs leading-relaxed text-[#5c5360] dark:text-slate-400">
+              Create your profile, build a trusted portfolio, learn skills, and discover beginner-friendly projects.
+            </p>
+          </div>
+
+          <div className="mt-10 sm:mt-16 grid grid-cols-1 gap-4 md:grid-cols-12">
+            
+            {/* Highlighted Left Feature Column Block (7-Col Split Matrix) */}
+            <div className="md:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {platformFeatures.slice(0, 4).map(([title, text, Icon]) => (
                 <FeatureCard key={title} title={title} text={text} Icon={Icon} />
               ))}
-            </motion.div>
-          </div>
-        </section>
-
-        {/* ═══════════════════ SAFETY ═══════════════════ */}
-        <section className="bg-[#fbfaf6] px-5 py-20 dark:bg-[#080c13] sm:px-8 lg:px-12">
-          <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
-            <div className="sticky top-24 rounded-[2rem] border border-[#21142f]/10 bg-[#21142f] p-8 text-white shadow-[0_35px_100px_rgba(33,20,47,0.24)] dark:border-slate-800 dark:bg-slate-900">
-              <motion.div
-                animate={{ rotate: [0, 6, -6, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', repeatDelay: 3 }}
-              >
-                <ShieldCheck className="h-10 w-10 text-emerald-400" />
-              </motion.div>
-              <h2 className="mt-8 text-4xl font-black tracking-normal text-white sm:text-5xl">Safety and trust are the product.</h2>
-              <p className="mt-6 text-lg leading-8 text-white/80 dark:text-slate-300">
-                For a teen marketplace, safety cannot be a small footer line. It needs to be visible, repeated, and explained for parents, clients, and young creators.
-              </p>
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <PrimaryButton href="/guardian-guide">Read Guardian Guide</PrimaryButton>
-              </div>
             </div>
-            <div className="grid gap-4">
-              {safetyPillars.map(([title, text], index) => (
-                <motion.div
-                  key={title}
-                  initial={{ opacity: 0, x: 28 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, margin: '-80px' }}
-                  transition={{ delay: index * 0.08, duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-                  whileHover={{ x: 4, transition: { duration: 0.2 } }}
-                  className="rounded-[1.5rem] border border-[#21142f]/10 bg-white/80 p-6 shadow-sm backdrop-blur-xl dark:border-white/10 dark:bg-slate-800/50"
-                >
-                  <p className="text-sm font-black uppercase tracking-[0.18em] text-[#5b245e] dark:text-[#d8b4fe]">Trust layer {index + 1}</p>
-                  <h3 className="mt-3 text-2xl font-black text-[#21142f] dark:text-white">{title}</h3>
-                  <p className="mt-3 leading-7 text-[#5c5360] dark:text-slate-300">{text}</p>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
 
-        {/* ═══════════════════ SKILLS / DEMAND ═══════════════════ */}
-        <section className="px-5 py-20 sm:px-8 lg:px-12">
-          <div className="mx-auto max-w-7xl">
-            <div className="grid gap-6 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
+            {/* Visual Callout Matte Panel Block (5-Col Split Layout) */}
+            <div className="md:col-span-5 flex flex-col justify-between rounded-[2rem] bg-[#f8f5ef]/50 p-6 sm:p-8 border border-[#21142f]/5 shadow-[inset_2px_2px_4px_rgba(255,255,255,0.6)] dark:bg-white/[0.01] dark:border-white/5">
               <div>
-                <p className="text-sm font-black uppercase tracking-[0.22em] text-[#5b245e] dark:text-[#d8b4fe]">Demand categories</p>
-                <h2 className="mt-4 text-4xl font-black tracking-normal text-[#21142f] dark:text-white sm:text-6xl">Built around the work teens can actually start with.</h2>
+                <span className="text-[9px] font-mono font-bold uppercase tracking-wider text-[#073b3a] dark:text-[#f4d58d]">
+                  Guided Track
+                </span>
+                <h3 className="mt-2 text-base sm:text-lg font-bold text-[#21142f] dark:text-white tracking-tight">
+                  A safer workspace for teens and startups.
+                </h3>
+                <p className="mt-2 text-xs leading-relaxed text-[#5c5360] dark:text-slate-400">
+                  TeenVerseHub keeps profiles, projects, chats, and payments in one guided place, so teens can work with more clarity and trust.
+                </p>
               </div>
-              <p className="max-w-2xl text-lg leading-8 text-[#5c5360] dark:text-slate-300">
-                The site now speaks directly to search intent: teen digital skills, portfolio proof, startup hiring, safe online jobs, AI-assisted work, and guardian trust.
-              </p>
-            </div>
-            <motion.div
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, margin: '-120px' }}
-              variants={stagger}
-              className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-4"
-            >
-              {skills.map(([title, text, Icon]) => (
-                <motion.div
-                  variants={fadeUp}
-                  key={title}
-                  whileHover={{ y: -6, transition: { duration: 0.25, ease: 'easeOut' } }}
-                  className="group rounded-[1.5rem] border border-[#21142f]/10 bg-[#fffaf0]/75 p-6 shadow-sm backdrop-blur-xl transition-shadow duration-300 hover:shadow-xl dark:border-white/10 dark:bg-slate-800/50"
-                >
-                  <motion.div
-                    whileHover={{ rotate: -8, scale: 1.1 }}
-                    transition={{ duration: 0.2 }}
-                    className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#073b3a] text-white dark:bg-emerald-100 dark:text-emerald-950"
-                  >
-                    <Icon className="h-6 w-6" />
-                  </motion.div>
-                  <h3 className="mt-6 text-xl font-black text-[#21142f] dark:text-white">{title}</h3>
-                  <p className="mt-3 leading-7 text-[#5c5360] dark:text-slate-300">{text}</p>
-                </motion.div>
-              ))}
-            </motion.div>
-          </div>
-        </section>
 
-        {/* ═══════════════════ OPPORTUNITY TAGS ═══════════════════ */}
-        <section className="px-5 pb-20 sm:px-8 lg:px-12">
-          <div className="mx-auto max-w-7xl overflow-hidden rounded-[2rem] border border-[#21142f]/10 bg-[#fffaf0]/80 p-8 shadow-sm backdrop-blur-xl dark:border-white/10 dark:bg-slate-800/50 sm:p-10">
-            <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
-              <div>
-                <p className="text-sm font-black uppercase tracking-[0.22em] text-[#5b245e] dark:text-[#d8b4fe]">Opportunity categories</p>
-                <h2 className="mt-4 text-3xl font-black tracking-normal text-[#21142f] dark:text-white sm:text-5xl">Clear starting points for teen creators.</h2>
-              </div>
-              <motion.div
-                initial="hidden"
-                whileInView="show"
-                viewport={{ once: true }}
-                variants={staggerFast}
-                className="flex flex-wrap gap-3"
-              >
-                {opportunityCategories.map((category, i) => (
-                  <motion.span
-                    key={category}
-                    variants={{
-                      hidden: { opacity: 0, scale: 0.88 },
-                      show: { opacity: 1, scale: 1, transition: { delay: i * 0.05, duration: 0.4, ease: [0.22, 1, 0.36, 1] } },
-                    }}
-                    whileHover={{ scale: 1.06, y: -2, transition: { duration: 0.18 } }}
-                    className="cursor-default rounded-full border border-[#21142f]/10 bg-white/85 px-5 py-3 text-sm font-black text-[#21142f] shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
-                  >
-                    {category}
-                  </motion.span>
-                ))}
-              </motion.div>
-            </div>
-          </div>
-        </section>
-
-        {/* ═══════════════════ ROUTES ═══════════════════ */}
-        <section className="bg-[#f8f5ef] px-5 py-20 dark:bg-[#0c1116] sm:px-8 lg:px-12">
-          <div className="mx-auto max-w-7xl">
-            <div className="max-w-3xl">
-              <p className="text-sm font-black uppercase tracking-[0.22em] text-[#073b3a] dark:text-emerald-400">Connected journeys</p>
-              <h2 className="mt-4 text-4xl font-black tracking-normal text-[#21142f] dark:text-white sm:text-6xl">Every audience gets a clear next step.</h2>
-            </div>
-            <div className="mt-12 grid gap-6 lg:grid-cols-3">
-              {routes.map((route, index) => (
-                <motion.div
-                  key={route.title}
-                  initial={{ opacity: 0, y: 26 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: '-80px' }}
-                  transition={{ delay: index * 0.08, duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-                  whileHover={{ y: -6, transition: { duration: 0.25, ease: 'easeOut' } }}
-                  className="group overflow-hidden rounded-[2rem] border border-[#21142f]/10 bg-white shadow-sm transition-shadow duration-300 hover:shadow-2xl dark:border-slate-800 dark:bg-slate-900"
-                >
-                  <div className={`bg-gradient-to-br ${route.color} p-3`}>
-                    <Image src={route.image} alt={`${route.title} TeenVerseHub visual`} width={1200} height={900} className="h-auto w-full rounded-[1.35rem]" />
+              <div className="mt-6 space-y-2 border-t border-[#21142f]/5 pt-4 sm:pt-6 dark:border-white/5">
+                {[['Private by design', ShieldCheck], ['Payment clarity', CircleDollarSign]].map(([label, Icon]) => (
+                  <div key={label} className="flex items-center gap-2 text-xs font-semibold text-[#21142f] dark:text-slate-300">
+                    <Icon className="h-4 w-4 text-[#073b3a] dark:text-[#f4d58d]" />
+                    <span>{label}</span>
                   </div>
-                  <div className="p-7">
-                    <h3 className="text-2xl font-black text-[#21142f] dark:text-white">{route.title}</h3>
-                    <p className="mt-4 min-h-24 leading-7 text-[#5c5360] dark:text-slate-300">{route.text}</p>
-                    <div className="mt-7 flex items-center justify-between gap-4">
-                      <Link href={route.href} className="inline-flex items-center gap-2 text-sm font-black text-[#5b245e] dark:text-[#d8b4fe]">
-                        Explore page
-                        <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1.5" />
+                ))}
+              </div>
+            </div>
+
+          </div>
+
+          {/* Remaining Features Base Matrix layout */}
+          <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {platformFeatures.slice(4).map(([title, text, Icon]) => (
+              <FeatureCard key={title} title={title} text={text} Icon={Icon} />
+            ))}
+          </div>
+
+        </section>
+
+        {/* ═══════════════════ HOW IT WORKS STEPS TIMELINE ═══════════════════ */}
+        <section className="px-4 sm:px-6 py-16 sm:py-20 lg:px-12">
+          <div className="mx-auto max-w-7xl">
+            <div className="max-w-xl">
+              <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-[#21142f] dark:text-white">How TeenVerseHub works</h2>
+            </div>
+            
+            <div className="mt-10 sm:mt-12 grid grid-cols-1 gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-4 border-l border-[#21142f]/5 dark:border-white/5 pl-4 sm:pl-0 sm:border-l-0">
+              {howItWorks.map(([step, title, text, Icon]) => (
+                <div key={title} className="relative sm:border-t sm:border-[#21142f]/5 sm:pt-6 dark:sm:border-white/5">
+                  <div className="text-xs font-mono font-bold text-[#073b3a] dark:text-[#f4d58d]">{step}</div>
+                  <h3 className="mt-1.5 text-sm font-bold text-[#21142f] dark:text-white flex items-center gap-2">
+                    <Icon className="h-4 w-4 text-slate-400" />
+                    {title}
+                  </h3>
+                  <p className="mt-1 text-xs leading-relaxed text-[#5c5360] dark:text-slate-400">{text}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ═══════════════════ WHY WE ARE DIFFERENT SPLIT MATRIX ═══════════════════ */}
+        <section className="px-4 sm:px-6 py-16 sm:py-20 lg:px-12 bg-[#f8f5ef]/30 dark:bg-white/[0.005] border-y border-[#21142f]/5 dark:border-white/5">
+          <div className="mx-auto max-w-7xl grid grid-cols-1 gap-10 lg:grid-cols-12 lg:items-start">
+            <div className="lg:col-span-5">
+              <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-[#21142f] dark:text-white">Why TeenVerseHub is different</h2>
+              <p className="mt-1.5 text-xs leading-relaxed text-[#5c5360] dark:text-slate-400 max-w-sm">
+                Built for teenagers, students, young creators, startups, and guardians.
+              </p>
+            </div>
+            
+            {/* Minimal Liquid Glass Matrix Container */}
+            <div className="lg:col-span-7 overflow-hidden rounded-xl border border-[#21142f]/10 bg-white/60 backdrop-blur-md shadow-sm dark:border-white/5 dark:bg-[#0b1118]/60">
+              <div className="grid grid-cols-2 bg-[#f8f5ef]/80 px-4 py-2.5 sm:px-5 text-[10px] font-bold tracking-wider text-[#21142f] dark:bg-[#111820] dark:text-slate-400 border-b border-[#21142f]/5 dark:border-white/5 uppercase">
+                <span>General sites</span>
+                <span>TeenVerseHub</span>
+              </div>
+              {comparisonRows.map(([other, teenverse]) => (
+                <div key={other} className="grid grid-cols-2 gap-3 sm:gap-4 border-b border-slate-100 px-4 py-3.5 sm:px-5 last:border-b-0 dark:border-white/[0.02]">
+                  <p className="text-xs text-slate-400 dark:text-slate-500 leading-normal">{other}</p>
+                  <p className="flex items-start gap-1.5 text-xs font-semibold text-[#21142f] dark:text-slate-200 leading-normal">
+                    <CheckCircle2 className="h-3.5 w-3.5 text-[#073b3a] dark:text-emerald-400 shrink-0 mt-0.5" />
+                    {teenverse}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ═══════════════════ STICKY MONOLITH SYSTEM LAYERING ═══════════════════ */}
+        <section className="px-4 sm:px-6 py-16 sm:py-20 lg:px-12 bg-[#21142f] text-white dark:bg-[#070b10] border-t border-[#21142f]/30">
+          <div className="mx-auto max-w-7xl grid grid-cols-1 gap-10 lg:grid-cols-12 lg:items-start">
+            <div className="lg:col-span-5 lg:sticky lg:top-24">
+              <div className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-white/5 text-[#f4d58d] border border-white/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)]">
+                <ShieldCheck className="h-4 w-4" />
+              </div>
+              <h2 className="mt-4 text-2xl sm:text-3xl font-bold tracking-tight text-white">Safety comes first.</h2>
+              <p className="mt-1.5 text-xs leading-relaxed text-[#f8f5ef]/60">
+                TeenVerseHub is designed to help teens explore opportunities with clearer rules, guidance, and safety thinking.
+              </p>
+              <div className="mt-5">
+                <Link href="/guardian-guide" className="inline-flex h-9 items-center justify-center rounded-lg bg-white px-4 text-xs font-semibold text-[#21142f] hover:bg-[#f8f5ef] transition-colors shadow-[0_2px_4px_rgba(0,0,0,0.2)]">
+                  Learn about safety
+                </Link>
+              </div>
+            </div>
+            
+            <div className="lg:col-span-7 grid gap-3">
+              {safetyPillars.map(([title, text], idx) => (
+                <div key={title} className="rounded-xl border border-white/5 bg-white/[0.02] p-5 sm:p-6 shadow-[inset_0_1px_1px_rgba(255,255,255,0.02)]">
+                  <span className="text-[9px] font-mono font-bold tracking-wider text-[#f4d58d] uppercase">Safety Layer 0{idx + 1}</span>
+                  <h3 className="mt-1 text-sm font-bold text-white tracking-tight">{title}</h3>
+                  <p className="mt-1.5 text-xs leading-relaxed text-slate-300">{text}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ═══════════════════ COMPETENCY PIPELINE DISCIPLINES ═══════════════════ */}
+        <section className="px-4 sm:px-6 py-16 sm:py-20 lg:px-12">
+          <div className="mx-auto max-w-7xl">
+            <div className="max-w-xl">
+              <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-[#21142f] dark:text-white">Skills you can start with</h2>
+            </div>
+            
+            <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              {skills.map(([title, text, Icon]) => (
+                <div key={title} className="rounded-xl border border-[#21142f]/5 bg-white p-5 dark:border-white/5 dark:bg-white/[0.01]">
+                  <div className="text-[#073b3a] dark:text-[#f4d58d]">
+                    <Icon className="h-4 w-4" />
+                  </div>
+                  <h3 className="mt-3 text-xs font-bold text-[#21142f] dark:text-white tracking-tight">{title}</h3>
+                  <p className="mt-1 text-[11px] text-[#5c5360] dark:text-slate-500 leading-normal">{text}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ═══════════════════ RECOGNIZED INDEX PILL MARGINS ═══════════════════ */}
+        <section className="px-4 pb-16 sm:pb-20 lg:px-12">
+          <div className="mx-auto max-w-7xl rounded-xl border border-[#21142f]/5 bg-white/40 p-5 sm:p-6 dark:border-white/5 dark:bg-white/[0.005]">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="text-xs font-bold text-[#21142f] dark:text-slate-400 mr-1 sm:mr-2">Popular skills on TeenVerseHub:</span>
+              {opportunityCategories.map((category) => (
+                <span key={category} className="rounded-lg border border-[#21142f]/10 bg-white px-2.5 py-1 text-xs font-medium text-[#21142f] dark:border-white/5 dark:bg-white/5 dark:text-slate-300 whitespace-nowrap">
+                  {category}
+                </span>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ═══════════════════ SEGMENT CANVAS PATHS ═══════════════════ */}
+        <section className="px-4 sm:px-6 py-16 sm:py-20 lg:px-12 bg-[#f8f5ef]/20 dark:bg-white/[0.005] border-t border-[#21142f]/5 dark:border-white/5">
+          <div className="mx-auto max-w-7xl">
+            <div className="max-w-xl">
+              <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-[#21142f] dark:text-white">Choose your path</h2>
+            </div>
+            
+            <div className="mt-10 grid grid-cols-1 gap-6 lg:grid-cols-3">
+              {routes.map((route) => (
+                <div key={route.title} className="flex flex-col rounded-2xl border border-[#21142f]/10 bg-white shadow-sm overflow-hidden dark:border-white/5 dark:bg-[#0b1118]">
+                  <div className={`bg-gradient-to-br ${route.color} h-40 relative border-b border-slate-100 dark:border-white/5`}>
+                    <div className="absolute inset-0 flex items-center justify-center p-6 opacity-85">
+                      <Image src={route.image} alt={route.title} width={160} height={120} className="object-contain max-h-full" />
+                    </div>
+                  </div>
+                  <div className="p-5 sm:p-6 flex flex-1 flex-col justify-between">
+                    <div>
+                      <h3 className="text-sm font-bold text-[#21142f] dark:text-white tracking-tight">{route.title}</h3>
+                      <p className="mt-1 text-xs leading-relaxed text-[#5c5360] dark:text-slate-400">{route.text}</p>
+                    </div>
+                    <div className="mt-5 pt-4 border-t border-slate-100 dark:border-white/5">
+                      <Link href={route.href} className="inline-flex items-center gap-1.5 text-xs font-bold text-[#5b245e] dark:text-[#f4d58d] hover:text-[#21142f]">
+                        Explore
+                        <ArrowRight className="h-3.5 w-3.5" />
                       </Link>
                     </div>
                   </div>
-                </motion.div>
+                </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* ═══════════════════ BRAND IDENTITY ═══════════════════ */}
-        <section className="px-5 py-20 sm:px-8 lg:px-12">
-          <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
-            <div className="rounded-[2rem] border border-[#21142f]/10 bg-[#073b3a] p-8 text-white shadow-[0_35px_100px_rgba(7,59,58,0.22)] dark:border-slate-800 dark:bg-slate-900">
-              <LayoutDashboard className="h-10 w-10 text-[#f4d58d]" />
-              <h2 className="mt-8 text-4xl font-black tracking-normal text-white sm:text-5xl">Professional enough for clients. Human enough for first-time earners.</h2>
-              <p className="mt-6 text-lg leading-8 text-white/80 dark:text-slate-300">
-                TeenVerseHub should not feel like a generic AI website. The new experience uses product-like screens, grounded safety language, and direct pathways that sound like real humans built them for real families and teams.
-              </p>
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <PrimaryButton href="/safety">View safety features</PrimaryButton>
-              </div>
+        {/* ═══════════════════ REGISTRY DIRECTORY LAYER ═══════════════════ */}
+        <section className="px-4 sm:px-6 py-12 lg:px-12 border-y border-[#21142f]/10 bg-white dark:border-white/5 dark:bg-[#070b10]">
+          <div className="mx-auto max-w-7xl grid grid-cols-1 gap-6 lg:grid-cols-12 lg:items-center">
+            <div className="lg:col-span-4">
+              <h2 className="text-lg sm:text-xl font-bold tracking-tight text-[#21142f] dark:text-white">Helpful pages</h2>
             </div>
-            <div className="grid gap-4 sm:grid-cols-2">
-              {[
-                ['Identity', 'Verified profiles, portfolio proof, profile clarity.', Fingerprint],
-                ['Trust', 'Guardian-aware onboarding and safer project rules.', ShieldCheck],
-                ['Matching', 'Clear categories for creators and startup teams.', UsersRound],
-                ['Growth', 'SEO pages that capture high-intent teen work searches.', TrendingUp],
-              ].map(([title, text, Icon], i) => (
-                <motion.div
-                  key={title}
-                  initial={{ opacity: 0, y: 18 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: '-60px' }}
-                  transition={{ delay: i * 0.08, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                  whileHover={{ y: -4, transition: { duration: 0.2 } }}
-                  className="rounded-[1.5rem] border border-[#21142f]/10 bg-white/75 p-6 shadow-sm backdrop-blur-xl transition-shadow duration-300 hover:shadow-lg dark:border-white/10 dark:bg-slate-800/50"
-                >
-                  <Icon className="h-7 w-7 text-[#5b245e] dark:text-[#d8b4fe]" />
-                  <h3 className="mt-5 text-xl font-black text-[#21142f] dark:text-white">{title}</h3>
-                  <p className="mt-3 leading-7 text-[#5c5360] dark:text-slate-300">{text}</p>
-                </motion.div>
+            <div className="lg:col-span-8 grid grid-cols-1 gap-2 sm:grid-cols-2">
+              {seoLinks.map(([label, href]) => (
+                <Link key={href} href={href} className="flex items-center justify-between rounded-xl border border-[#21142f]/10 p-4 text-xs font-semibold text-[#21142f] bg-white/50 backdrop-blur-sm hover:bg-[#fffaf0] dark:border-white/5 dark:text-slate-300 dark:hover:bg-white/5">
+                  {label}
+                  <ArrowRight className="h-3.5 w-3.5 text-[#073b3a] dark:text-[#f4d58d]" />
+                </Link>
               ))}
             </div>
           </div>
         </section>
 
-        {/* ═══════════════════ SEO LINKS ═══════════════════ */}
-        <section className="relative overflow-hidden border-y border-[#21142f]/10 bg-[#21142f] px-5 py-20 text-white dark:border-slate-800 dark:bg-slate-950 sm:px-8 lg:px-12">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(216,180,254,0.18),transparent_34%),radial-gradient(circle_at_88%_40%,rgba(244,213,141,0.15),transparent_30%)]" />
-          <div className="relative mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
-            <div>
-              <p className="text-sm font-black uppercase tracking-[0.22em] text-[#f4d58d]">SEO growth pages</p>
-              <h2 className="mt-4 text-4xl font-black tracking-normal text-white sm:text-6xl">More relevant entry points for TeenVerseHub search.</h2>
-              <p className="mt-6 text-lg leading-8 text-white/80 dark:text-slate-300">
-                These pages connect search demand back to platform intent and every one includes a login path through the header and page CTA.
-              </p>
-            </div>
-            <div className="grid gap-3 sm:grid-cols-2">
-              {seoLinks.map(([label, href], i) => (
-                <motion.div
-                  key={href}
-                  initial={{ opacity: 0, y: 16 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.07, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                >
-                  <Link
-                    href={href}
-                    className="group flex items-center justify-between rounded-2xl border border-white/10 bg-white/10 p-5 font-black text-white backdrop-blur-xl transition-all duration-200 hover:border-white/20 hover:bg-white/15 active:scale-[0.98] dark:border-slate-700 dark:bg-slate-800"
-                  >
-                    {label}
-                    <ArrowRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1.5" />
-                  </Link>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ═══════════════════ STORY CARDS ═══════════════════ */}
-        <section className="px-5 py-20 sm:px-8 lg:px-12">
+        {/* ═══════════════════ ACTIVE PROOF PROFILES ═══════════════════ */}
+        <section className="px-4 sm:px-6 py-16 sm:py-20 lg:px-12">
           <div className="mx-auto max-w-7xl">
-            <div className="max-w-3xl">
-              <p className="text-sm font-black uppercase tracking-[0.22em] text-[#5b245e] dark:text-[#d8b4fe]">Early creator proof</p>
-              <h2 className="mt-4 text-4xl font-black tracking-normal text-[#21142f] dark:text-white sm:text-6xl">Show the kind of teens this platform is built for.</h2>
-              <p className="mt-6 text-lg leading-8 text-[#5c5360] dark:text-slate-300">
-                Early TeenVerseHub creators can build portfolios in editing, AI design, writing, and frontend development. These cards keep the story honest without pretending the platform is bigger than it is.
-              </p>
+            <div className="max-w-xl">
+              <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-[#21142f] dark:text-white">Example teen profiles</h2>
             </div>
-            <div className="mt-12 grid gap-5 lg:grid-cols-3">
-              {storyCards.map(([title, text], index) => (
-                <motion.div
-                  key={title}
-                  initial={{ opacity: 0, y: 26 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: '-80px' }}
-                  transition={{ delay: index * 0.08, duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-                  whileHover={{ y: -5, transition: { duration: 0.22 } }}
-                  className="rounded-[2rem] border border-[#21142f]/10 bg-white/75 p-7 shadow-sm backdrop-blur-xl transition-shadow duration-300 hover:shadow-xl dark:border-white/10 dark:bg-slate-800/50"
-                >
-                  <motion.div
-                    whileHover={{ rotate: 12, scale: 1.12 }}
-                    transition={{ duration: 0.2 }}
-                    className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#f4d58d]/55 text-[#8a5b09] dark:bg-amber-900/40 dark:text-[#f4d58d]"
-                  >
-                    <Star className="h-6 w-6" />
-                  </motion.div>
-                  <h3 className="mt-6 text-2xl font-black text-[#21142f] dark:text-white">{title}</h3>
-                  <p className="mt-4 leading-7 text-[#5c5360] dark:text-slate-300">{text}</p>
-                </motion.div>
+            
+            <div className="mt-10 grid grid-cols-1 gap-6 lg:grid-cols-3">
+              {storyCards.map(([title, text]) => (
+                <div key={title} className="rounded-xl border border-[#21142f]/10 bg-white/30 p-5 sm:p-6 shadow-sm backdrop-blur-sm dark:border-white/5 dark:bg-[#0b1118]/40">
+                  <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#fffaf0] text-[#5b245e] dark:bg-white/5 dark:text-[#f4d58d]">
+                    <Star className="h-3.5 w-3.5 fill-current" />
+                  </div>
+                  <h3 className="mt-4 text-sm font-bold text-[#21142f] dark:text-white tracking-tight">{title}</h3>
+                  <p className="mt-1 text-xs leading-relaxed text-[#5c5360] dark:text-slate-400">{text}</p>
+                </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* ═══════════════════ MISSION + ROADMAP ═══════════════════ */}
-        <section className="relative overflow-hidden bg-[#f8f5ef] px-5 py-20 dark:bg-[#0c1116] sm:px-8 lg:px-12 pb-32">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_15%_20%,rgba(91,36,94,0.12),transparent_32%),radial-gradient(circle_at_86%_50%,rgba(7,59,58,0.12),transparent_32%)] dark:bg-[radial-gradient(circle_at_15%_20%,rgba(168,85,247,0.14),transparent_32%),radial-gradient(circle_at_86%_50%,rgba(45,212,191,0.10),transparent_32%)]" />
-          <div className="relative mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
-            <div className="rounded-[2rem] border border-[#21142f]/10 bg-white/80 p-8 shadow-sm backdrop-blur-xl dark:border-slate-800 dark:bg-slate-900/80 sm:p-10">
-              <p className="text-sm font-black uppercase tracking-[0.22em] text-[#073b3a] dark:text-emerald-400">Founder mission</p>
-              <h2 className="mt-4 text-4xl font-black tracking-normal text-[#21142f] dark:text-white sm:text-6xl">Why TeenVerseHub exists.</h2>
-              <p className="mt-6 text-lg leading-8 text-[#5c5360] dark:text-slate-300">
-                Teenagers already have talent, but the internet does not always give them credibility, structure, or safety. TeenVerseHub exists to help young creators prove their skills, find guided opportunities, and work in a system that parents and startups can understand.
-              </p>
-              <p className="mt-5 text-lg leading-8 text-[#5c5360] dark:text-slate-300">
-                The mission is simple: make teen talent visible, trusted, and ready for real-world work without forcing beginners into unsafe or confusing marketplaces.
+        {/* ═══════════════════ FAQ AREA ═══════════════════ */}
+        <section className="px-4 sm:px-6 py-16 sm:py-20 lg:px-12 bg-[#f8f5ef]/20 dark:bg-white/[0.005] border-t border-[#21142f]/5 dark:border-white/5">
+          <div className="mx-auto max-w-4xl">
+            <div className="max-w-2xl">
+              <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-[#21142f] dark:text-white">TeenVerseHub FAQ</h2>
+              <p className="mt-2 text-xs leading-relaxed text-[#5c5360] dark:text-slate-400">
+                Simple answers for students, guardians, startups, and search engines.
               </p>
             </div>
-            <div className="rounded-[2rem] border border-[#21142f]/10 bg-[#21142f] p-8 text-white shadow-[0_35px_100px_rgba(33,20,47,0.22)] dark:border-slate-800 dark:bg-slate-950 sm:p-10">
-              <Rocket className="h-10 w-10 text-[#f4d58d]" />
-              <h3 className="mt-7 text-3xl font-black text-white sm:text-5xl">Coming soon roadmap</h3>
-              <div className="mt-8 grid gap-4">
-                {roadmapItems.map(([title, text], i) => (
-                  <motion.div
-                    key={title}
-                    initial={{ opacity: 0, x: 20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.07, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                    className="rounded-2xl border border-white/10 bg-white/10 p-5 backdrop-blur-xl transition-colors duration-200 hover:bg-white/[0.14] dark:border-slate-800 dark:bg-slate-900"
-                  >
-                    <p className="font-black text-white">{title}</p>
-                    <p className="mt-2 text-sm leading-6 text-white/80 dark:text-slate-400">{text}</p>
-                  </motion.div>
+
+            <div className="mt-8 grid grid-cols-1 gap-4">
+              {[
+                [
+                  'What is TeenVerseHub?',
+                  'TeenVerseHub is a student talent marketplace where teenagers can build portfolios, learn skills, and find beginner-friendly projects.',
+                ],
+                [
+                  'Who can use TeenVerseHub?',
+                  'TeenVerseHub is built for students and young creators aged 14 to 21, along with startups looking for young digital talent.',
+                ],
+                [
+                  'Can users under 18 join TeenVerseHub?',
+                  'Yes. Users under 18 follow a guardian-aware onboarding and consent flow before using important platform features.',
+                ],
+                [
+                  'What can teens do on TeenVerseHub?',
+                  'Teens can create a profile, showcase skills, build a portfolio, discover projects, message safely, and grow their work experience.',
+                ],
+                [
+                  'Why is TeenVerseHub different?',
+                  'TeenVerseHub focuses on teen talent, portfolio-first profiles, safer onboarding, beginner-friendly projects, and guided growth.',
+                ],
+              ].map(([question, answer]) => (
+                <div
+                  key={question}
+                  className="rounded-xl border border-[#21142f]/10 bg-white/50 p-5 shadow-sm backdrop-blur-sm dark:border-white/5 dark:bg-white/[0.03]"
+                >
+                  <h3 className="text-sm font-bold text-[#21142f] dark:text-white">{question}</h3>
+                  <p className="mt-2 text-xs leading-relaxed text-[#5c5360] dark:text-slate-400">{answer}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ═══════════════════ HIGH VALUE BOTTOM FOOTER CTA ═══════════════════ */}
+        <section className="mx-auto max-w-7xl px-4 sm:px-6 pb-16 sm:pb-20 lg:px-12">
+          <div className="relative overflow-hidden rounded-[2rem] sm:rounded-[2.5rem] border-t border-l border-white/60 border-b border-r border-white/20 bg-gradient-to-br from-white/60 to-[#fffaf0]/40 p-6 sm:p-10 text-center shadow-[0_20px_50px_rgba(33,20,47,0.03)] backdrop-blur-md dark:border-white/5 dark:from-[#0b1118]/60 dark:to-transparent">
+            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#21142f] dark:text-white md:text-4xl">
+              Ready to start?
+            </h2>
+            <p className="mx-auto mt-2.5 max-w-md text-xs sm:text-sm text-[#5c5360] dark:text-slate-400">
+              Create your TeenVerseHub profile and start building your portfolio today.
+            </p>
+            <div className="mt-6 sm:mt-8 flex flex-col justify-center gap-3 sm:flex-row max-w-xs mx-auto sm:max-w-none w-full">
+              <PrimaryButton href={loginUrl}>Create Profile</PrimaryButton>
+              <SecondaryButton href="/about">Learn More</SecondaryButton>
+            </div>
+          </div>
+        </section>
+
+        {/* ═══════════════════ CORE STATEMENT & FUTURE ROADMAP ═══════════════════ */}
+        <section className="px-4 sm:px-6 py-16 sm:py-20 lg:px-12 bg-[#21142f] text-white dark:bg-[#0b1118] border-t border-white/5 pb-32">
+          <div className="mx-auto max-w-7xl grid grid-cols-1 gap-10 lg:grid-cols-12 lg:items-start">
+            
+            <div className="lg:col-span-6 rounded-2xl border border-white/5 bg-white/[0.01] p-6 sm:p-8 backdrop-blur-md">
+              <span className="text-[9px] font-mono font-bold tracking-wider text-slate-400 uppercase">Why TeenVerseHub exists</span>
+              <h2 className="mt-1 text-2xl font-bold tracking-tight text-white">Why we built TeenVerseHub</h2>
+              <p className="mt-2.5 text-xs leading-relaxed text-slate-300">
+                We believe students and teenagers should have a clearer place to learn skills, build portfolios, and access beginner-friendly opportunities without feeling lost on large platforms.
+              </p>
+            </div>
+            
+            <div className="lg:col-span-6 rounded-2xl border border-white/5 bg-black/10 p-6 sm:p-8">
+              <div className="flex items-center gap-2 text-[#f4d58d]">
+                <Rocket className="h-4 w-4" />
+                <h3 className="text-xs font-bold uppercase tracking-wider text-white">Future roadmap</h3>
+              </div>
+              <div className="mt-5 space-y-2">
+                {roadmapItems.map(([title, text]) => (
+                  <div key={title} className="rounded-lg border border-white/5 bg-white/5 p-4">
+                    <p className="text-xs font-bold text-white tracking-tight">{title}</p>
+                    <p className="mt-1 text-[11px] text-slate-400 leading-normal">{text}</p>
+                  </div>
                 ))}
               </div>
             </div>
+
           </div>
         </section>
 

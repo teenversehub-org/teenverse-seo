@@ -37,7 +37,6 @@ function LogoMark() {
   )
 }
 
-
 const mobileMenuVariants = {
   hidden: { opacity: 0, backdropFilter: 'blur(0px)' },
   visible: {
@@ -268,17 +267,7 @@ export default function SiteHeader() {
           </div>
 
           <div className="flex shrink-0 items-center gap-2 pr-1 lg:hidden">
-            <motion.a
-              whileTap={{ scale: 0.95 }}
-              href={APP_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hidden h-9 items-center justify-center rounded-full bg-[#21142f] px-3 text-xs font-bold text-white shadow-sm dark:bg-[#f8f5ef] dark:text-[#21142f] sm:flex"
-              aria-label="Open TeenVerseHub app"
-            >
-              App
-            </motion.a>
-
+            
             <motion.button
               whileTap={{ scale: 0.9 }}
               onClick={toggleTheme}
@@ -395,7 +384,7 @@ export default function SiteHeader() {
                   onClick={() => setOpen(false)}
                   className="flex h-14 w-full items-center justify-center gap-2 rounded-2xl bg-[#21142f] px-4 text-base font-semibold text-white shadow-lg shadow-[#21142f]/20 transition-all active:scale-[0.98] dark:bg-[#f8f5ef] dark:text-[#21142f] dark:shadow-[#d8b4fe]/20"
                 >
-                  Open App
+                  dashboard
                   <ArrowUpRight className="h-5 w-5" />
                 </a>
               </motion.div>

@@ -222,7 +222,7 @@ export default function AboutPage() {
       <StructuredData data={pageSchema} />
       <SiteHeader />
 
-      <main className="min-h-screen bg-[#f7f9ff] text-slate-950 selection:bg-indigo-200 selection:text-slate-950 transition-colors duration-500 dark:bg-[#030712] dark:text-white dark:selection:bg-indigo-500/30 dark:selection:text-indigo-200">
+      <main className="tvh-page-shell selection:bg-[#5b245e] selection:text-white">
         {/* HERO */}
         <section className="relative isolate flex min-h-[90vh] flex-col items-center justify-center overflow-hidden px-6 pb-20 pt-32">
           <div className="tv-grid-mesh pointer-events-none absolute inset-0 opacity-80" />

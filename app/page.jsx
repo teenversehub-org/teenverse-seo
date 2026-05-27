@@ -1,22 +1,37 @@
-import HomePageClient from './HomePageClient'
 import { buildMetadata } from './lib/site'
+import HomePageClient from './HomePageClient'
 
 export const metadata = buildMetadata({
-  title: 'TeenVerseHub | Teen Talent Marketplace and Safer Digital Work OS',
+  title: 'TeenVerseHub | Teen Freelancing Platform for Students',
   description:
-    'TeenVerseHub is a premium teen talent marketplace and work OS for verified profiles, portfolio proof, guardian-aware trust, safer communication, and startup-ready teen digital services.',
+    'TeenVerseHub helps students and teenagers build portfolios, find beginner-friendly projects, learn digital skills, and work with startups in a safer online platform.',
+
   path: '/',
+
   keywords: [
     'TeenVerseHub',
     'TeenVerse Hub',
-    'teen talent marketplace',
     'teen freelancing platform',
+    'freelancing platform for students',
+    'student freelancing website',
+    'teen talent marketplace',
     'student talent marketplace',
+    'online jobs for teenagers',
     'safe online jobs for teens',
-    'teen digital skills',
+    'online work for students',
     'hire teen freelancers',
-    'AI tools for teen freelancers',
+    'hire student freelancers',
     'teen portfolio builder',
+    'student portfolio builder',
+    'digital skills for teens',
+    'teen digital skills',
+    'beginner freelance projects',
+    'freelance jobs for teens',
+    'freelance jobs for students',
+    'AI tools for teen freelancers',
+    'startup projects for students',
+    'student work platform India',
+    'teen freelancing India',
   ],
 })
 

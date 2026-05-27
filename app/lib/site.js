@@ -1,5 +1,5 @@
 export const SITE = {
-  name: 'TeenVerse Hub',
+  name: 'TeenVerseHub',
   shortName: 'TeenVerseHub',
   baseUrl: 'https://www.teenversehub.in',
   appUrl: 'https://app.teenversehub.in/login',
@@ -10,7 +10,7 @@ export const SITE = {
   operator: 'Mohd Asif',
   lastUpdated: '2026-05-10',
   description:
-    'TeenVerseHub is a secure AI-powered teen talent ecosystem where teenagers can learn digital skills, build portfolios, collaborate with startups, and earn safely through verification, moderation, guardian consent, and structured trust systems.',
+    'TeenVerseHub helps students and teenagers build portfolios, learn digital skills, find beginner-friendly projects, and work with startups in a safer online platform.',
 }
 
 export function absoluteUrl(path = '/') {
@@ -20,17 +20,17 @@ export function absoluteUrl(path = '/') {
 export const indexedPages = [
   {
     path: '/',
-    title: 'TeenVerseHub AI-Powered Teen Talent Ecosystem',
+    title: 'TeenVerseHub | Teen Freelancing Platform for Students',
     description:
-      'TeenVerseHub helps teenagers learn digital skills, build portfolios, collaborate with startups, and earn safely through a verified teen economic ecosystem.',
+      'TeenVerseHub helps students and teenagers build portfolios, learn digital skills, find beginner-friendly projects, and work with startups in a safer online platform.',
     priority: 1,
     changeFrequency: 'weekly',
   },
   {
     path: '/hire-teen-freelancers',
-    title: 'Hire Verified Teen Freelancers and Student Talent',
+    title: 'Hire Teen Freelancers and Student Talent',
     description:
-      'Hire teen freelancers for creative, tech, content, gaming, and AI-assisted digital work through portfolios, verification, moderation, and safer payment workflows.',
+      'Hire teen freelancers and student talent for video editing, design, content writing, frontend work, social media support, and startup projects.',
     priority: 0.95,
     changeFrequency: 'weekly',
   },
@@ -38,7 +38,7 @@ export const indexedPages = [
     path: '/freelance-jobs-for-teens',
     title: 'Freelance Jobs for Teens and Students',
     description:
-      'Explore teen freelance jobs across video editing, design, coding, content, gaming, and AI services with portfolio proof and TeenVerseHub safety systems.',
+      'Find beginner-friendly freelance jobs for teens in video editing, design, coding, content writing, AI-assisted work, and social media support.',
     priority: 0.95,
     changeFrequency: 'weekly',
   },
@@ -46,7 +46,7 @@ export const indexedPages = [
     path: '/how-to-earn-money-as-a-teenager',
     title: 'How to Earn Money as a Teenager',
     description:
-      'Learn how teenagers can earn money safely through digital skills, verified opportunities, portfolio building, guardian-aware workflows, and protected payments.',
+      'Learn how teenagers can earn money online by building digital skills, creating a portfolio, finding projects, and working safely with clients.',
     priority: 0.92,
     changeFrequency: 'weekly',
   },
@@ -54,7 +54,7 @@ export const indexedPages = [
     path: '/safe-online-jobs-for-teens',
     title: 'Safe Online Jobs for Teens',
     description:
-      'Find safer online jobs for teens and learn how guardian consent, KYC, moderation, scam detection, and protected payments reduce risk.',
+      'Explore safer online jobs for teens and learn how guardian consent, verification, safe messaging, reporting, and payment protection can reduce risk.',
     priority: 0.9,
     changeFrequency: 'weekly',
   },
@@ -62,7 +62,7 @@ export const indexedPages = [
     path: '/online-jobs-for-teens',
     title: 'Online Jobs for Teens',
     description:
-      'Explore online jobs for teens in creative, tech, content, gaming, social media, and AI-assisted services with verification and safety systems.',
+      'Explore online jobs for teens in content writing, design, video editing, coding, social media, research, and AI-assisted digital services.',
     priority: 0.88,
     changeFrequency: 'weekly',
   },
@@ -70,15 +70,15 @@ export const indexedPages = [
     path: '/how-to-start-freelancing-as-a-teen',
     title: 'How to Start Freelancing as a Teen',
     description:
-      'Learn how teens can start freelancing with one digital skill, portfolio samples, verified profiles, guardian consent, safer payments, and real beginner projects.',
+      'Learn how to start freelancing as a teen with one skill, portfolio samples, beginner projects, safe communication, and clear payment steps.',
     priority: 0.88,
     changeFrequency: 'weekly',
   },
   {
     path: '/teen-digital-skills',
-    title: 'Teen Digital Skills',
+    title: 'Digital Skills for Teens',
     description:
-      'Explore practical teen digital skills including video editing, design, coding, content writing, AI-assisted workflows, and social media support.',
+      'Learn useful digital skills for teens, including video editing, graphic design, frontend development, content writing, AI tools, and social media support.',
     priority: 0.87,
     changeFrequency: 'weekly',
   },
@@ -86,7 +86,7 @@ export const indexedPages = [
     path: '/teen-portfolio-builder',
     title: 'Teen Portfolio Builder',
     description:
-      'Build a teen portfolio with sample projects, service clarity, skill proof, verification, guardian-aware trust signals, and safer first-work guidance.',
+      'Build a teen portfolio with your skills, sample projects, profile proof, service details, and work examples that startups and clients can understand.',
     priority: 0.86,
     changeFrequency: 'weekly',
   },
@@ -94,7 +94,7 @@ export const indexedPages = [
     path: '/student-talent-marketplace',
     title: 'Student Talent Marketplace',
     description:
-      'TeenVerseHub is a student talent marketplace for startups and creators looking for teen digital services, portfolio proof, and safer project workflows.',
+      'TeenVerseHub is a student talent marketplace where startups can find young digital talent and students can showcase skills through portfolios.',
     priority: 0.86,
     changeFrequency: 'weekly',
   },
@@ -102,39 +102,39 @@ export const indexedPages = [
     path: '/ai-tools-for-teen-freelancers',
     title: 'AI Tools for Teen Freelancers',
     description:
-      'Learn how teen freelancers can use AI tools responsibly for research, design, writing, content planning, and portfolio samples.',
+      'Learn how teen freelancers can use AI tools for writing, research, design ideas, content planning, project support, and portfolio building.',
     priority: 0.84,
     changeFrequency: 'weekly',
   },
   {
     path: '/blog',
-    title: 'TeenVerse Hub Blog',
+    title: 'TeenVerseHub Blog',
     description:
-      'SEO guides for teen freelancing, safe online jobs for teens, digital skills, startup hiring, guardian safety, and student talent growth.',
+      'Read TeenVerseHub guides about teen freelancing, online jobs for students, digital skills, portfolio building, startup hiring, and online safety.',
     priority: 0.86,
     changeFrequency: 'weekly',
   },
   {
     path: '/safety',
-    title: 'TeenVerseHub Trust and Safety',
+    title: 'TeenVerseHub Safety',
     description:
-      'See how TeenVerseHub approaches teen safety with guardian consent, KYC, AI moderation, scam detection, reporting, and protected communication.',
+      'Learn how TeenVerseHub supports safer teen freelancing with guardian consent, verification, safe messaging, reporting, moderation, and protected workflows.',
     priority: 0.9,
     changeFrequency: 'monthly',
   },
   {
     path: '/verification-process',
-    title: 'Verification Process',
+    title: 'TeenVerseHub Verification Process',
     description:
-      'Learn how TeenVerseHub verification combines skill tests, portfolio reviews, verified badges, age checks, KYC, and fraud monitoring.',
+      'Learn how TeenVerseHub uses profile checks, age-aware onboarding, portfolio proof, skill signals, and verification steps to build trust.',
     priority: 0.8,
     changeFrequency: 'monthly',
   },
   {
     path: '/payments-protection',
-    title: 'Payments and Protection',
+    title: 'TeenVerseHub Payments and Protection',
     description:
-      'Understand TeenVerseHub payment protection, teen-safe payout design, Indian and international payment vision, approval steps, refunds, and disputes.',
+      'Understand how TeenVerseHub plans safer payments, client approvals, payout checks, refund handling, and dispute support for teen work.',
     priority: 0.8,
     changeFrequency: 'monthly',
   },
@@ -142,39 +142,39 @@ export const indexedPages = [
     path: '/guardian-guide',
     title: 'Parent and Guardian Guide',
     description:
-      'A guardian-friendly guide to TeenVerseHub consent flows, teen accounts, verification, KYC, payments, moderation, and safe online work expectations.',
+      'A simple guide for parents and guardians about TeenVerseHub accounts, consent, verification, communication safety, payments, and teen online work.',
     priority: 0.8,
     changeFrequency: 'monthly',
   },
   {
     path: '/about',
-    title: 'About TeenVerse Hub',
+    title: 'About TeenVerseHub',
     description:
-      'Learn how TeenVerseHub is building a teen-focused economic ecosystem for skills, safe earning, verified portfolios, and startup collaboration.',
+      'Learn why TeenVerseHub was built to help students and teenagers learn digital skills, build portfolios, find projects, and work more safely online.',
     priority: 0.7,
     changeFrequency: 'monthly',
   },
   {
     path: '/faq',
-    title: 'Frequently Asked Questions',
+    title: 'TeenVerseHub FAQ',
     description:
-      'Answers about TeenVerseHub teen freelancing, online jobs, guardian consent, KYC, AI moderation, payments, verification, and platform safety.',
+      'Find answers about TeenVerseHub, teen freelancing, student projects, guardian consent, verification, payments, safety, and online work.',
     priority: 0.7,
     changeFrequency: 'monthly',
   },
   {
     path: '/contact',
-    title: 'Contact TeenVerse Hub',
+    title: 'Contact TeenVerseHub',
     description:
-      'Contact TeenVerseHub for teen account support, guardian questions, safety concerns, verification, payments, partnerships, and startup hiring.',
+      'Contact TeenVerseHub for support, teen accounts, parent questions, safety issues, verification help, payment questions, and startup hiring.',
     priority: 0.6,
     changeFrequency: 'monthly',
   },
   {
     path: '/legal',
-    title: 'Legal Center, Terms, Privacy, and Guardian Policies',
+    title: 'TeenVerseHub Legal Center',
     description:
-      'Review TeenVerseHub legal information for terms, privacy, guardian consent, KYC, payment protection, disputes, verification, moderation, and IP rules.',
+      'Read TeenVerseHub terms, privacy information, guardian consent details, verification rules, payment policies, safety guidelines, and platform policies.',
     priority: 0.5,
     changeFrequency: 'yearly',
   },
@@ -202,24 +202,48 @@ export function buildMetadata({
   type = 'website',
 }) {
   const canonicalUrl = absoluteUrl(path)
+
   const image = {
     url: absoluteUrl('/opengraph-image'),
     width: 1200,
     height: 630,
-    alt: `${SITE.name} - safer teen freelancing and startup hiring`,
+    alt: `${SITE.name} - teen freelancing platform for students`,
   }
+
+  const defaultKeywords = [
+    'TeenVerseHub',
+    'teen freelancing platform',
+    'freelancing platform for students',
+    'student freelancing website',
+    'student talent marketplace',
+    'teen talent marketplace',
+    'online jobs for teens',
+    'online jobs for students',
+    'safe online jobs for teens',
+    'freelance jobs for teens',
+    'freelance jobs for students',
+    'hire teen freelancers',
+    'hire student freelancers',
+    'teen portfolio builder',
+    'student portfolio builder',
+    'digital skills for teens',
+    'AI tools for teen freelancers',
+    'startup projects for students',
+    'teen freelancing India',
+    'student work platform India',
+  ]
 
   return {
     title,
     description,
-    keywords,
+    keywords: [...new Set([...defaultKeywords, ...keywords])],
     applicationName: SITE.name,
     authors: [{ name: SITE.founder }],
     creator: SITE.founder,
     publisher: SITE.name,
     category: 'business',
     classification:
-      'Teen freelance marketplace, student talent platform, startup hiring, safer online jobs for teens',
+      'Teen freelancing platform, student talent marketplace, online jobs for teens, portfolio builder, startup hiring',
     referrer: 'origin-when-cross-origin',
     formatDetection: {
       email: false,
@@ -260,9 +284,9 @@ export function buildMetadata({
 
 export const primaryNav = [
   { href: '/hire-teen-freelancers', label: 'Hire' },
+  { href: '/freelance-jobs-for-teens', label: 'Projects' },
   { href: '/how-to-earn-money-as-a-teenager', label: 'Earn' },
   { href: '/teen-digital-skills', label: 'Skills' },
-  { href: '/blog', label: 'Blog' },
   { href: '/safety', label: 'Safety' },
   { href: '/faq', label: 'FAQ' },
 ]
@@ -272,39 +296,40 @@ export const footerGroups = [
     title: 'Platform',
     links: [
       { href: '/', label: 'Home' },
-      { href: '/hire-teen-freelancers', label: 'For Startups' },
-      { href: '/freelance-jobs-for-teens', label: 'For Teen Freelancers' },
-      { href: '/blog', label: 'Blog' },
-      { href: '/about', label: 'About' },
-    ],
-  },
-  {
-    title: 'Earning Guides',
-    links: [
-      { href: '/how-to-earn-money-as-a-teenager', label: 'How Teens Earn' },
-      { href: '/safe-online-jobs-for-teens', label: 'Safe Online Jobs' },
-      { href: '/online-jobs-for-teens', label: 'Online Jobs for Teens' },
-      { href: '/how-to-start-freelancing-as-a-teen', label: 'Start Freelancing' },
-      { href: '/teen-digital-skills', label: 'Teen Digital Skills' },
-      { href: '/teen-portfolio-builder', label: 'Teen Portfolio Builder' },
-    ],
-  },
-  {
-    title: 'Growth SEO',
-    links: [
+      { href: '/about', label: 'About TeenVerseHub' },
       { href: '/student-talent-marketplace', label: 'Student Talent Marketplace' },
-      { href: '/ai-tools-for-teen-freelancers', label: 'AI Tools for Teen Freelancers' },
-      { href: '/hire-teen-freelancers', label: 'Hire Teen Freelancers' },
-      { href: '/freelance-jobs-for-teens', label: 'Teen Freelance Jobs' },
+      { href: '/teen-portfolio-builder', label: 'Teen Portfolio Builder' },
+      { href: '/blog', label: 'Blog' },
     ],
   },
   {
-    title: 'Trust',
+    title: 'For Students',
     links: [
-      { href: '/safety', label: 'Trust and Safety' },
+      { href: '/freelance-jobs-for-teens', label: 'Freelance Jobs for Teens' },
+      { href: '/online-jobs-for-teens', label: 'Online Jobs for Teens' },
+      { href: '/safe-online-jobs-for-teens', label: 'Safe Online Jobs' },
+      { href: '/how-to-earn-money-as-a-teenager', label: 'How Teens Can Earn' },
+      { href: '/how-to-start-freelancing-as-a-teen', label: 'Start Freelancing' },
+      { href: '/teen-digital-skills', label: 'Digital Skills for Teens' },
+    ],
+  },
+  {
+    title: 'For Startups',
+    links: [
+      { href: '/hire-teen-freelancers', label: 'Hire Teen Freelancers' },
+      { href: '/student-talent-marketplace', label: 'Find Student Talent' },
+      { href: '/ai-tools-for-teen-freelancers', label: 'AI Tools for Teen Freelancers' },
+      { href: '/teen-portfolio-builder', label: 'View Portfolio Talent' },
+    ],
+  },
+  {
+    title: 'Safety',
+    links: [
+      { href: '/safety', label: 'TeenVerseHub Safety' },
+      { href: '/guardian-guide', label: 'Parent and Guardian Guide' },
       { href: '/verification-process', label: 'Verification Process' },
       { href: '/payments-protection', label: 'Payments and Protection' },
-      { href: '/guardian-guide', label: 'Parent and Guardian Guide' },
+      { href: '/legal', label: 'Legal Center' },
     ],
   },
   {
@@ -312,7 +337,6 @@ export const footerGroups = [
     links: [
       { href: '/faq', label: 'FAQ' },
       { href: '/contact', label: 'Contact' },
-      { href: '/legal', label: 'Legal Center' },
       { href: `mailto:${SITE.supportEmail}`, label: SITE.supportEmail },
     ],
   },
@@ -320,33 +344,48 @@ export const footerGroups = [
 
 export const faqItems = [
   {
-    question: 'Is TeenVerse Hub safe for teenagers?',
+    question: 'What is TeenVerseHub?',
     answer:
-      'TeenVerseHub is designed around guardian consent, age-aware onboarding, KYC where applicable, restricted communication, AI moderation, reporting systems, and protected payment workflows so teens, guardians, and clients can understand the trust model.',
+      'TeenVerseHub is a teen freelancing platform and student talent marketplace where students can build portfolios, learn digital skills, and find beginner-friendly projects.',
   },
   {
-    question: 'Who can join TeenVerse Hub?',
+    question: 'Who can join TeenVerseHub?',
     answer:
-      'TeenVerseHub is built for teenagers learning digital skills, plus startups, creators, and clients who want to work with emerging student talent. Users under 18 may need guardian consent, age verification, and additional safety checks before full access.',
+      'TeenVerseHub is built for students and teenagers who want to learn skills, build portfolios, and explore online work. Startups, creators, and clients can also use TeenVerseHub to find young digital talent.',
   },
   {
-    question: 'Can beginners use TeenVerse Hub?',
+    question: 'Is TeenVerseHub safe for teenagers?',
     answer:
-      'Yes. TeenVerseHub is designed for first real work experience, portfolio growth, skill testing, and beginner-friendly services such as video editing, design, writing, frontend tasks, social media support, gaming services, and AI-assisted workflows.',
+      'TeenVerseHub is designed with safer online work in mind. It includes age-aware onboarding, guardian consent for users under 18, verification, safer messaging, reporting, moderation, and protected workflows.',
   },
   {
-    question: 'How do payments work?',
+    question: 'Can beginners use TeenVerseHub?',
     answer:
-      'The payment vision is teen-safe and approval-based: the client pays through platform systems, funds are held while work is completed, the client reviews the submission, and payment is released through approved payout paths with dispute handling when needed.',
+      'Yes. TeenVerseHub is beginner-friendly. Students can start with skills like video editing, design, content writing, frontend development, social media support, research, and AI-assisted work.',
+  },
+  {
+    question: 'What can students do on TeenVerseHub?',
+    answer:
+      'Students can create a profile, build a portfolio, show their skills, explore projects, communicate safely, and grow their work experience over time.',
   },
   {
     question: 'What can startups hire teen talent for?',
     answer:
-      'Startups and creators can hire teen talent for creative, tech, content, gaming, and AI-assisted services, including short-form editing, thumbnails, UI support, websites, Discord bots, SEO writing, social media operations, and AI workflow setup.',
+      'Startups and creators can hire teen talent for video editing, thumbnails, design, content writing, social media support, landing pages, frontend tasks, research, and AI-assisted digital work.',
   },
   {
-    question: 'What should parents or guardians look at first?',
+    question: 'How does TeenVerseHub help with portfolios?',
     answer:
-      'The best starting points are the Trust and Safety page, Verification Process page, Payments and Protection page, and Parent and Guardian Guide. Those pages explain consent, identity checks, moderation, communication rules, payout protection, and reporting paths.',
+      'TeenVerseHub helps students show their projects, skills, work samples, service details, and profile proof in one place so clients can understand what they can do.',
+  },
+  {
+    question: 'How do payments work on TeenVerseHub?',
+    answer:
+      'TeenVerseHub is planned around safer payment workflows where project details, client approval, payout checks, refunds, and disputes can be handled with more clarity.',
+  },
+  {
+    question: 'What should parents or guardians check first?',
+    answer:
+      'Parents and guardians should start with the Safety page, Parent and Guardian Guide, Verification Process page, and Payments and Protection page.',
   },
 ]

@@ -99,7 +99,7 @@ export default async function BlogPostPage({ params }) {
       />
       <SiteHeader />
 
-      <main className="min-h-screen bg-[#f8fbff] text-slate-950 dark:bg-[#04070d] dark:text-white">
+      <main className="tvh-page-shell">
         <article>
           {/* ARTICLE HERO */}
           <header className="relative isolate overflow-hidden px-4 pb-16 pt-32 sm:px-6 lg:px-8">
