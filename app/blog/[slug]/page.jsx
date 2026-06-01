@@ -372,13 +372,22 @@ export default async function BlogPostPage({ params }) {
               responsible growth before jumping into random online jobs.
             </p>
 
-            <Link
-              href="/blog"
-              className="mt-9 inline-flex items-center justify-center gap-3 rounded-full bg-white px-7 py-4 text-sm font-black uppercase tracking-wide text-slate-950 transition hover:-translate-y-0.5 dark:bg-slate-950 dark:text-white"
-            >
-              Explore more guides
-              <ArrowRight className="h-4 w-4" />
-            </Link>
+            <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
+              <a
+                href={SITE.appUrl}
+                className="inline-flex items-center justify-center gap-3 rounded-full bg-white px-7 py-4 text-sm font-black uppercase tracking-wide text-slate-950 transition hover:-translate-y-0.5 dark:bg-slate-950 dark:text-white"
+              >
+                Create TeenVerseHub profile
+                <ArrowRight className="h-4 w-4" />
+              </a>
+
+              <Link
+                href="/blog"
+                className="inline-flex items-center justify-center gap-3 rounded-full border border-white/20 px-7 py-4 text-sm font-black uppercase tracking-wide text-white transition hover:-translate-y-0.5 dark:border-slate-950/15 dark:text-slate-950"
+              >
+                Explore more guides
+              </Link>
+            </div>
           </div>
         </section>
       </main>

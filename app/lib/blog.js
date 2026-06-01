@@ -569,6 +569,77 @@ export const blogPosts = [
   },
 
   {
+    slug: 'parents-guide-safe-student-freelancing-india',
+    title: "A Parent's Guide to Safe Student Freelancing in India",
+    description:
+      'A parent-focused guide to safe student freelancing in India, including age checks, guardian consent, payment rules, project review, and teen online safety.',
+    summary:
+      'A practical guide for Indian parents who want to understand how teenagers can explore online freelance work with safety, consent, and clear boundaries.',
+    category: 'Parent Guide',
+    publishedAt: '2026-06-01',
+    updatedAt: '2026-06-01',
+    readingTime: '9 min read',
+    author: defaultAuthor,
+    keywords: [
+      'parent guide safe student freelancing India',
+      'safe freelancing for students India',
+      'online jobs for teens India parents',
+      'teen freelancing safety for parents',
+      'guardian consent teen freelancing India',
+      'TeenVerseHub parent guide',
+    ],
+    accent: 'from-emerald-600 via-teal-500 to-indigo-600',
+    takeaways: [
+      'Parents should review the teen’s work category before any earning-related activity.',
+      'Users under 18 need guardian-aware consent and extra caution around identity, payments, and client communication.',
+      'Safe student freelancing starts with visible portfolio samples and small, clear projects.',
+      'TeenVerseHub is designed to make skills, portfolios, verification, and safety easier for families to understand.',
+    ],
+    sections: [
+      {
+        heading: 'Start with the work, not the earning promise',
+        body: [
+          'Parents should first ask what the student will actually do. Safer student freelance work usually has a visible output, such as an edited video, caption set, thumbnail, blog draft, research note, poster, or simple website section.',
+          'If the work cannot be explained clearly, it is not a good first project. TeenVerseHub encourages students to start with skill proof and small deliverables instead of chasing broad promises like easy money online.',
+        ],
+      },
+      {
+        heading: 'Check age, consent, and verification rules',
+        body: [
+          'For users under 18, guardian consent matters because online work can involve account setup, identity checks, payments, deadlines, communication, and client expectations. Parents should know which features the teen is using and what information is required.',
+          'TeenVerseHub explains age-aware onboarding, DigiLocker-based age verification guidance, and guardian consent for minors so families can understand the responsibility before earning-related features are used.',
+        ],
+      },
+      {
+        heading: 'Review communication and payment boundaries',
+        body: [
+          'Parents should encourage teens to keep project communication professional, written, and easy to review. Teens should avoid off-platform pressure, vague tasks, adult or illegal work, and requests for unnecessary personal information.',
+          'Before paid work begins, families should understand the project amount, platform fee, payout process, refund policy, revision limits, and dispute path. On TeenVerseHub, the Basic Plan platform deduction is listed as 10% of successful project transactions.',
+        ],
+      },
+      {
+        heading: 'Use a portfolio-first path',
+        body: [
+          'A portfolio-first path is safer because it slows the process down in a useful way. The teen chooses one skill, creates three to five practice samples, labels the samples honestly, and applies for small projects that match those samples.',
+          'This makes student freelancing easier for parents to inspect and easier for clients to understand. It also helps teenagers build confidence without pretending to be experts before they are ready.',
+        ],
+      },
+    ],
+    faq: [
+      {
+        question: 'Is student freelancing safe for teenagers in India?',
+        answer:
+          'Student freelancing can be safer when the work is age-appropriate, clearly scoped, guardian-aware, and based on visible portfolio samples. Teens should avoid vague tasks, unsafe communication, and unrealistic earning promises.',
+      },
+      {
+        question: 'What should Indian parents check before a teen starts freelancing?',
+        answer:
+          'Parents should check the work category, portfolio samples, client communication rules, platform fees, payment process, identity requirements, guardian consent, and whether the project is suitable for the teen’s age.',
+      },
+    ],
+  },
+
+  {
     slug: 'video-editing-jobs-for-teens',
     title: 'Video Editing Jobs for Teens: How to Start With Short-Form Content',
     description:

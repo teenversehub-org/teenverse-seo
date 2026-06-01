@@ -47,10 +47,10 @@ export default function SiteFooter() {
                   <span className="truncate">Operator: {SITE.operator}</span>
                 </div>
 
-                {SITE.email && (
+                {SITE.supportEmail && (
                   <div className="flex items-center gap-2.5 whitespace-nowrap">
                     <Mail className="h-3.5 w-3.5 text-slate-400 shrink-0" />
-                    <span className="truncate">{SITE.email}</span>
+                    <span className="truncate">{SITE.supportEmail}</span>
                   </div>
                 )}
               </div>

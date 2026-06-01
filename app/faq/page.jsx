@@ -48,73 +48,101 @@ export const metadata = buildMetadata({
 const faqItems = [
   {
     question: 'What is TeenVerseHub?',
-    answer:
-      'TeenVerseHub is a teen-focused digital platform that helps teenagers explore digital skills, create portfolio proof, and discover beginner-friendly online work opportunities.',
+    directAnswer:
+      'TeenVerseHub is a teen-focused student talent platform for ages 14 to 21.',
+    details:
+      'It helps teenagers explore digital skills, create portfolio proof, and discover beginner-friendly online work opportunities with clearer safety and guardian-awareness systems.',
   },
   {
     question: 'Who can use TeenVerseHub?',
-    answer:
-      'TeenVerseHub is mainly built for teenagers and young students who want to learn skills, showcase their work, and start their digital journey in a more structured way.',
+    directAnswer:
+      'TeenVerseHub is built for students and teenagers aged 14 to 21, plus startups, creators, clients, parents, and guardians.',
+    details:
+      'Students use it to learn skills and showcase work. Clients use it to discover young digital talent, while guardians use the safety and consent resources to understand how teen online work is handled.',
   },
   {
-    question: 'Is TeenVerseHub only a freelancing website?',
-    answer:
-      'No. TeenVerseHub is not only a freelancing website. It focuses on teen skills, portfolios, beginner-friendly opportunities, digital services, and long-term growth.',
+    question: 'Is TeenVerseHub safe for 14-year-olds?',
+    directAnswer:
+      'TeenVerseHub is designed for 14-year-olds with extra caution, guardian awareness, age-aware onboarding, and safer beginner work boundaries.',
+    details:
+      'Users under 18 should involve a parent or legal guardian before using earning-related features. TeenVerseHub positions work around clear skills, visible portfolio samples, reporting, moderation, and age-appropriate project expectations.',
   },
   {
-    question: 'Do I need experience to start?',
-    answer:
-      'No. You can start as a beginner. The best way to begin is to choose one skill, create sample work, build a simple profile, and apply for small projects.',
+    question: 'How does TeenVerseHub protect student data?',
+    directAnswer:
+      'TeenVerseHub limits trust-sensitive flows through age-aware verification, guardian consent for minors, and structured platform workflows.',
+    details:
+      'Students should avoid sharing unnecessary personal information with clients. The platform content explains verification, safer messaging, reporting, moderation, payment clarity, and guardian involvement so data and identity-related steps are handled with more care.',
   },
   {
-    question: 'What kind of work can teens do?',
-    answer:
-      'Teens can explore digital work like video editing, thumbnails, content writing, captions, design, social media support, basic website work, research tasks, and creator support.',
+    question: 'Does TeenVerseHub require parent or guardian consent?',
+    directAnswer:
+      'Yes. TeenVerseHub requires parent or legal guardian consent for users under 18 where age-sensitive or earning-related features apply.',
+    details:
+      'This makes the platform clearer for families, especially when projects involve communication, verification, payments, deadlines, or account responsibility.',
   },
   {
-    question: 'How can I start earning on TeenVerseHub?',
-    answer:
-      'You can start by creating your profile, choosing one service category, adding portfolio samples, and applying for suitable beginner-friendly opportunities.',
+    question: 'What kind of work can teens do on TeenVerseHub?',
+    directAnswer:
+      'Teens can explore beginner-friendly digital work like video editing, thumbnails, writing, design, social media support, research, and simple website work.',
+    details:
+      'The best work for teen beginners has clear deliverables, visible outputs, realistic deadlines, and a scope that a guardian or client can review easily.',
+  },
+  {
+    question: 'How can a teenager start earning on TeenVerseHub?',
+    directAnswer:
+      'A teenager should start by choosing one skill, creating portfolio samples, building a profile, and applying only for small, clear projects.',
+    details:
+      'TeenVerseHub encourages students to build proof before chasing income. Results depend on skill quality, communication, availability, client demand, and safe project selection.',
   },
   {
     question: 'Does TeenVerseHub guarantee jobs or income?',
-    answer:
-      'No. TeenVerseHub does not guarantee jobs, clients, income, or project success. Your results depend on your skills, portfolio quality, communication, and client demand.',
+    directAnswer:
+      'No. TeenVerseHub does not guarantee jobs, clients, income, or project success.',
+    details:
+      'The platform can help students present skills and explore opportunities, but outcomes depend on portfolio quality, communication, consistency, demand, and client decisions.',
   },
   {
-    question: 'Is TeenVerseHub safe for teenagers?',
-    answer:
-      'TeenVerseHub is built with a safety-first mindset. Teens should keep communication professional, avoid unclear offers, and choose work that is easy to understand and review.',
+    question: 'How do TeenVerseHub payments and platform fees work?',
+    directAnswer:
+      'TeenVerseHub charges a platform deduction on successful transactions, with the Basic Plan listed as a 10% project fee.',
+    details:
+      'Higher plans may reduce the deduction according to the active plan. Teens and guardians should review the current plan, project amount, payout rules, refunds, and dispute process before accepting paid work.',
   },
   {
-    question: 'Can parents or guardians be involved?',
-    answer:
-      'Yes. TeenVerseHub encourages guardian awareness because online work can involve communication, payments, deadlines, and responsibility.',
-  },
-  {
-    question: 'How do payments and platform fees work?',
-    answer:
-      'TeenVerseHub charges a platform deduction on successful transactions. For the Basic Plan, the platform fee is 10% of the project amount. Higher plans may reduce the deduction according to the active plan.',
+    question: 'Is TeenVerseHub only a freelancing website?',
+    directAnswer:
+      'No. TeenVerseHub is broader than a basic freelancing website.',
+    details:
+      'It focuses on teen skills, portfolios, beginner-friendly opportunities, digital services, guardian-aware safety, and long-term growth for young creators.',
   },
   {
     question: 'Is there any fee to join TeenVerseHub?',
-    answer:
-      'TeenVerseHub may offer basic access and plan-based features. Any applicable plan fee or platform deduction should be checked on the platform before using paid features.',
+    directAnswer:
+      'TeenVerseHub may offer basic access and plan-based features, so users should check the active platform pricing before using paid features.',
+    details:
+      'Any applicable plan fee, transaction deduction, or upgraded-plan benefit should be reviewed on the live platform because pricing and plan rules can change.',
   },
   {
     question: 'What should teens avoid while freelancing online?',
-    answer:
-      'Teens should avoid fast-money promises, vague work, adult or illegal tasks, unsafe communication, and projects that are not clear enough for a parent or guardian to review.',
+    directAnswer:
+      'Teens should avoid fast-money promises, vague tasks, adult or illegal work, unsafe communication, and projects that pressure them off-platform.',
+    details:
+      'A good teen project should be clear enough for a trusted adult to understand. If the work feels secretive, confusing, uncomfortable, or too good to be true, the teen should pause and ask for help.',
   },
   {
     question: 'How does TeenVerseHub help beginners look professional?',
-    answer:
-      'TeenVerseHub encourages teens to create skill-based profiles, add portfolio samples, explain services clearly, start with small projects, and improve over time.',
+    directAnswer:
+      'TeenVerseHub helps beginners look professional by encouraging skill-based profiles, portfolio samples, clear services, and small starter projects.',
+    details:
+      'This gives startups and clients proof to review, while helping teens avoid vague promises and build confidence one project at a time.',
   },
   {
     question: 'What is the best way to start as a teen freelancer?',
-    answer:
-      'Start with one skill, create 3 to 5 portfolio samples, write a clear service description, apply for small projects, and improve after every completed task.',
+    directAnswer:
+      'The best first step is to pick one skill and create 3 to 5 honest portfolio samples before applying for projects.',
+    details:
+      'After that, write a clear service description, apply for small age-appropriate projects, keep communication professional, and improve after every completed task.',
   },
 ]
 
@@ -140,7 +168,7 @@ const pageSchema = {
     name: item.question,
     acceptedAnswer: {
       '@type': 'Answer',
-      text: item.answer,
+      text: `${item.directAnswer} ${item.details}`,
     },
   })),
 }
@@ -566,8 +594,12 @@ export default function FaqPage() {
                         {faq.question}
                       </h3>
 
-                      <p className="mt-4 text-lg leading-relaxed text-slate-600 dark:text-slate-300">
-                        {faq.answer}
+                      <p className="mt-4 text-lg font-black leading-relaxed text-slate-950 dark:text-white">
+                        {faq.directAnswer}
+                      </p>
+
+                      <p className="mt-3 text-lg leading-relaxed text-slate-600 dark:text-slate-300">
+                        {faq.details}
                       </p>
                     </div>
                   </div>

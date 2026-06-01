@@ -61,7 +61,47 @@ const organizationSchema = {
     '@type': 'Person',
     name: SITE.founder,
   },
+  foundingLocation: {
+    '@type': 'Place',
+    name: SITE.location,
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Mahoba',
+      addressRegion: 'Uttar Pradesh',
+      addressCountry: 'IN',
+    },
+  },
   description: SITE.description,
+  knowsAbout: [
+    'teen freelancing',
+    'student talent marketplaces',
+    'safe online jobs for teens',
+    'student portfolio building',
+    'guardian consent for teen platforms',
+    'startup hiring for student creators',
+  ],
+  slogan:
+    'A safer student talent marketplace for teen portfolios, skills, and startup projects.',
+  audience: {
+    '@type': 'PeopleAudience',
+    name: SITE.audience,
+    suggestedMinAge: SITE.minimumAge,
+    suggestedMaxAge: SITE.maximumAge,
+    geographicArea: {
+      '@type': 'Country',
+      name: 'India',
+    },
+  },
+  areaServed: [
+    {
+      '@type': 'Country',
+      name: 'India',
+    },
+    {
+      '@type': 'AdministrativeArea',
+      name: 'Uttar Pradesh',
+    },
+  ],
   address: {
     '@type': 'PostalAddress',
     addressLocality: 'Mahoba',
@@ -74,6 +114,45 @@ const organizationSchema = {
     email: SITE.supportEmail,
     areaServed: 'IN',
     availableLanguage: ['en', 'hi'],
+  },
+}
+
+const webApplicationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebApplication',
+  '@id': `${SITE.baseUrl}/#webapplication`,
+  name: SITE.name,
+  alternateName: SITE.shortName,
+  url: SITE.baseUrl,
+  applicationCategory: SITE.appCategory,
+  operatingSystem: 'Web browser',
+  browserRequirements: 'Requires a modern mobile or desktop web browser.',
+  description: SITE.description,
+  inLanguage: 'en-IN',
+  isAccessibleForFree: true,
+  audience: {
+    '@type': 'PeopleAudience',
+    name: SITE.audience,
+    suggestedMinAge: SITE.minimumAge,
+    suggestedMaxAge: SITE.maximumAge,
+    geographicArea: {
+      '@type': 'Country',
+      name: 'India',
+    },
+  },
+  contentRating: 'Ages 14-21 with guardian consent required for users under 18',
+  featureList: SITE.features,
+  offers: {
+    '@type': 'Offer',
+    category: 'Student freelancing and portfolio platform',
+    availability: 'https://schema.org/OnlineOnly',
+    eligibleRegion: {
+      '@type': 'Country',
+      name: 'India',
+    },
+  },
+  publisher: {
+    '@id': `${SITE.baseUrl}/#organization`,
   },
 }
 
@@ -105,7 +184,9 @@ export default function RootLayout({
     >
       <body className="tvh-unified-theme antialiased">
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
-        <StructuredData data={[organizationSchema, websiteSchema]} />
+        <StructuredData
+          data={[organizationSchema, webApplicationSchema, websiteSchema]}
+        />
         {children}
       </body>
     </html>

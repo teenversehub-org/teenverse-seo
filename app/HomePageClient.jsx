@@ -106,9 +106,13 @@ const routes = [
 ]
 
 const seoLinks = [
+  ['Browse creative portfolios', '/portfolios'],
   ['Teen digital skills', '/teen-digital-skills'],
+  ['Video editing for students', '/skills/video-editing-for-students'],
+  ['Graphic design gigs under 18', '/skills/graphic-design-gigs-under-18'],
   ['Teen portfolio builder', '/teen-portfolio-builder'],
   ['Student talent marketplace', '/student-talent-marketplace'],
+  ['TeenVerseHub vs Funngro', '/versus/funngro'],
   ['AI tools for teen freelancers', '/ai-tools-for-teen-freelancers'],
 ]
 

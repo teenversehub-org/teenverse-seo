@@ -8,7 +8,23 @@ export const SITE = {
   location: 'Mahoba, Uttar Pradesh, India',
   founder: 'Kashif Khan',
   operator: 'Mohd Asif',
-  lastUpdated: '2026-05-10',
+  lastUpdated: '2026-06-01',
+  audience: 'Students and teenagers aged 14 to 21, parents and guardians, Indian startups, creators, and small businesses',
+  audienceAgeRange: '14-21',
+  minimumAge: 14,
+  maximumAge: 21,
+  locationFocus: 'India, with an initial focus on Mahoba, Uttar Pradesh and student talent across Indian cities',
+  appCategory: 'Teen freelancing platform and student talent marketplace',
+  features: [
+    'Age-aware onboarding for 14 to 21-year-old students',
+    'Guardian consent flow for users under 18',
+    'DigiLocker-based age verification guidance',
+    'Portfolio builder for student work samples',
+    'Beginner-friendly freelance project discovery',
+    'Safe messaging, reporting, and moderation workflows',
+    'Payment clarity and platform-fee education',
+    'Startup hiring pages for young digital talent',
+  ],
   description:
     'TeenVerseHub helps students and teenagers build portfolios, learn digital skills, find beginner-friendly projects, and work with startups in a safer online platform.',
 }
@@ -83,11 +99,35 @@ export const indexedPages = [
     changeFrequency: 'weekly',
   },
   {
+    path: '/skills/video-editing-for-students',
+    title: 'Video Editing for Students',
+    description:
+      'Learn how students can start video editing with reels, Shorts, subtitles, creator clips, portfolio samples, and safer beginner freelance projects.',
+    priority: 0.84,
+    changeFrequency: 'weekly',
+  },
+  {
+    path: '/skills/graphic-design-gigs-under-18',
+    title: 'Graphic Design Gigs Under 18',
+    description:
+      'A student-friendly guide to graphic design gigs for users under 18, including thumbnails, social posts, portfolios, guardian awareness, and safe scopes.',
+    priority: 0.84,
+    changeFrequency: 'weekly',
+  },
+  {
     path: '/teen-portfolio-builder',
     title: 'Teen Portfolio Builder',
     description:
       'Build a teen portfolio with your skills, sample projects, profile proof, service details, and work examples that startups and clients can understand.',
     priority: 0.86,
+    changeFrequency: 'weekly',
+  },
+  {
+    path: '/portfolios',
+    title: 'Browse Creative Student Portfolios',
+    description:
+      'Browse the public TeenVerseHub creative portfolio index for teen video editors, designers, writers, frontend learners, and student creators.',
+    priority: 0.84,
     changeFrequency: 'weekly',
   },
   {
@@ -97,6 +137,14 @@ export const indexedPages = [
       'TeenVerseHub is a student talent marketplace where startups can find young digital talent and students can showcase skills through portfolios.',
     priority: 0.86,
     changeFrequency: 'weekly',
+  },
+  {
+    path: '/versus/funngro',
+    title: 'TeenVerseHub vs Funngro',
+    description:
+      'Compare TeenVerseHub and Funngro for teen freelancing, student portfolios, guardian-aware safety, verification, beginner projects, and startup hiring.',
+    priority: 0.82,
+    changeFrequency: 'monthly',
   },
   {
     path: '/ai-tools-for-teen-freelancers',
@@ -285,10 +333,11 @@ export function buildMetadata({
 export const primaryNav = [
   { href: '/hire-teen-freelancers', label: 'Hire' },
   { href: '/freelance-jobs-for-teens', label: 'Projects' },
+  { href: '/portfolios', label: 'Portfolios' },
   { href: '/how-to-earn-money-as-a-teenager', label: 'Earn' },
   { href: '/teen-digital-skills', label: 'Skills' },
   { href: '/safety', label: 'Safety' },
-  { href: '/faq', label: 'FAQ' },
+ 
 ]
 
 export const footerGroups = [
@@ -299,6 +348,7 @@ export const footerGroups = [
       { href: '/about', label: 'About TeenVerseHub' },
       { href: '/student-talent-marketplace', label: 'Student Talent Marketplace' },
       { href: '/teen-portfolio-builder', label: 'Teen Portfolio Builder' },
+      { href: '/portfolios', label: 'Browse Creative Portfolios' },
       { href: '/blog', label: 'Blog' },
     ],
   },
@@ -311,6 +361,8 @@ export const footerGroups = [
       { href: '/how-to-earn-money-as-a-teenager', label: 'How Teens Can Earn' },
       { href: '/how-to-start-freelancing-as-a-teen', label: 'Start Freelancing' },
       { href: '/teen-digital-skills', label: 'Digital Skills for Teens' },
+      { href: '/skills/video-editing-for-students', label: 'Video Editing for Students' },
+      { href: '/skills/graphic-design-gigs-under-18', label: 'Design Gigs Under 18' },
     ],
   },
   {
@@ -320,6 +372,7 @@ export const footerGroups = [
       { href: '/student-talent-marketplace', label: 'Find Student Talent' },
       { href: '/ai-tools-for-teen-freelancers', label: 'AI Tools for Teen Freelancers' },
       { href: '/teen-portfolio-builder', label: 'View Portfolio Talent' },
+      { href: '/versus/funngro', label: 'TeenVerseHub vs Funngro' },
     ],
   },
   {
