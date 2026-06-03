@@ -6,11 +6,17 @@ import {
   ArrowRight,
   BadgeCheck,
   CheckCircle2,
+  Code2,
+  FileSearch,
+  FileText,
+  HelpCircle,
+  LayoutDashboard,
+  Search,
   ShieldCheck,
   Sparkles,
+  UsersRound,
   Video,
-  Code2,
-  HelpCircle // Fallback icon just in case
+  WandSparkles,
 } from 'lucide-react'
 import { motion, useReducedMotion, useMotionValue, useTransform, useSpring, useScroll, useVelocity, AnimatePresence } from 'framer-motion'
 
@@ -21,9 +27,16 @@ import { SITE } from '../lib/site'
 
 // ─── ICON SERIALIZATION MAP ──────────────────────────────────────────────────
 const ICON_REGISTRY = {
+  badge: BadgeCheck,
   video: Video,
   code: Code2,
-  shield: ShieldCheck
+  fileSearch: FileSearch,
+  fileText: FileText,
+  layoutDashboard: LayoutDashboard,
+  search: Search,
+  shield: ShieldCheck,
+  users: UsersRound,
+  wand: WandSparkles,
 }
 
 function LiquidMorphBackground() {

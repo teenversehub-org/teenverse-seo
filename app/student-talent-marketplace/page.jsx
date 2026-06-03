@@ -1,9 +1,3 @@
-import {
-  Search,
-  ShieldCheck,
-  UsersRound,
-} from 'lucide-react'
-
 import SeoGrowthPage from '../components/SeoGrowthPage'
 import { SITE, buildMetadata } from '../lib/site'
 
@@ -44,17 +38,17 @@ export default function StudentTalentMarketplacePage() {
       primaryKeyword="student talent marketplace"
       sections={[
         {
-          icon: Search,
+          icon: 'search',
           title: 'Focused discovery',
           text: 'Clients can think in categories such as video edits, social content, research, writing, design support, websites, AI tasks, and creator operations.',
         },
         {
-          icon: UsersRound,
+          icon: 'users',
           title: 'Student-first profiles',
           text: 'Instead of forcing teens to compete like senior freelancers, TeenVerseHub can emphasize samples, interests, learning stage, and clear service boundaries.',
         },
         {
-          icon: ShieldCheck,
+          icon: 'shield',
           title: 'Responsible hiring',
           text: 'A student talent marketplace needs scope clarity, respectful feedback, safer communication, age-aware rules, and protected payment expectations.',
         },

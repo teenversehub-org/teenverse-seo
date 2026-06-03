@@ -125,7 +125,7 @@ export default function SiteHeader() {
             rel="noopener noreferrer"
             className="inline-flex h-9 items-center justify-center gap-2 rounded-lg bg-[#191724] px-4 text-sm font-semibold text-white transition hover:bg-[#2a2636] dark:bg-white dark:text-[#191724] dark:hover:bg-slate-100"
           >
-            Open app
+            dashboard
             <ArrowUpRight className="h-4 w-4" />
           </a>
         </div>
@@ -176,7 +176,7 @@ export default function SiteHeader() {
               onClick={() => setOpen(false)}
               className="flex h-11 items-center justify-center gap-2 rounded-lg bg-[#191724] text-sm font-semibold text-white dark:bg-white dark:text-[#191724]"
             >
-              Open app
+              dashboard
               <ArrowUpRight className="h-4 w-4" />
             </a>
           </div>

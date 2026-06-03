@@ -1,9 +1,3 @@
-import {
-  FileSearch,
-  ShieldCheck,
-  WandSparkles,
-} from 'lucide-react'
-
 import SeoGrowthPage from '../components/SeoGrowthPage'
 import { SITE, buildMetadata } from '../lib/site'
 
@@ -44,17 +38,17 @@ export default function AiToolsForTeenFreelancersPage() {
       primaryKeyword="AI tools for teen freelancers"
       sections={[
         {
-          icon: WandSparkles,
+          icon: 'wand',
           title: 'Creative acceleration',
           text: 'Teens can use AI for thumbnail ideas, captions, outlines, moodboards, prompt drafts, and content variations while keeping the final work reviewed and human.',
         },
         {
-          icon: FileSearch,
+          icon: 'fileSearch',
           title: 'Research support',
           text: 'AI can organize notes, summarize source material, create checklists, and structure drafts, but facts and client-specific details still need verification.',
         },
         {
-          icon: ShieldCheck,
+          icon: 'shield',
           title: 'Safety and honesty',
           text: 'Responsible AI use means no plagiarism, no fake portfolio claims, no unsafe content, no private-data sharing, and clear disclosure when AI materially assists the work.',
         },

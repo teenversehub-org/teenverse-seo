@@ -1,9 +1,3 @@
-import {
-  BadgeCheck,
-  FileText,
-  LayoutDashboard,
-} from 'lucide-react'
-
 import SeoGrowthPage from '../components/SeoGrowthPage'
 import { SITE, buildMetadata } from '../lib/site'
 
@@ -44,17 +38,17 @@ export default function TeenPortfolioBuilderPage() {
       primaryKeyword="teen portfolio builder"
       sections={[
         {
-          icon: FileText,
+          icon: 'fileText',
           title: 'Sample projects',
           text: 'A strong teen portfolio can start with mock edits, design concepts, writing samples, website sections, AI workflow demos, or research deliverables.',
         },
         {
-          icon: LayoutDashboard,
+          icon: 'layoutDashboard',
           title: 'Service clarity',
           text: 'Profiles should explain what the teen can deliver, what is included, what is not included, expected timelines, and how revisions work.',
         },
         {
-          icon: BadgeCheck,
+          icon: 'badge',
           title: 'Trust signals',
           text: 'Portfolio proof becomes stronger when paired with verification, guardian consent where required, safer messaging, and protected payment expectations.',
         },
